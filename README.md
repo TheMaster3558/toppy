@@ -3,6 +3,13 @@
 A simple API wrapper for Top.gg made in Python.
 Specifically meant for discord.py or and similar forks.
 
+-----
+## Installation
+**Python 3.9 or higher is needed**
+```shell
+pip install -U git+https://github.com/chawkk6404/top_gg
+```
+
 
 ## Example
 

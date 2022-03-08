@@ -51,9 +51,3 @@ class HTTPClient:
         })
         async with self.session.post(f'{self.BASE}/bots/{bot_id}/stats', data=data) as resp:
             return resp
-
-
-
-
-
-

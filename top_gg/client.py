@@ -68,7 +68,7 @@ class TopGGClient:
         """Cancels the task of auto posting stats to Top.gg"""
         self.task.cancel()
 
-    def end(self):
+    def finish(self):
         """Equivalent to `stop` but posts a final time"""
         self.stop()
         self.bot.loop.create_task(self.post_stats())

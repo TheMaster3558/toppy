@@ -52,7 +52,9 @@ class TopGGClient:
         self.token = token
         self.interval = interval
         self.post_shard_count = post_shard_count
-
+        
+        if bot.__class__.__name__ == 'CommandTree':
+            bot = bot.client
         self.bot = bot
         self.bot.loop.create_task(self.http_init())
         self.task = None

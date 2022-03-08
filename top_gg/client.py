@@ -171,10 +171,3 @@ class TopGGClient:
         while not self.bot.is_closed():
             await self.post_stats()
             await asyncio.sleep(self.interval)
-
-
-
-
-
-
-

@@ -32,6 +32,7 @@ class TopGGClient:
         ----------
         bot: :class:`discord.Client`
             The Discord Bot instance. Any Client derived from :class:`discord.Client` will work.
+            :class:`discord.ext.app_commands.AppCommandTree` is also supported.
         token: :class:`str`
             The DBL token found in the Webhooks tab of the bots owner only section.
         interval: Optional[:class:`int`]

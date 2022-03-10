@@ -35,7 +35,21 @@ setuptools.setup(
     long_description_content_type='md',
     include_package_data=True,
     install_requires=requirements,
-    python_requires='>=3.10.0'
+    python_requires='>=3.10.0',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'License :: OSI Approved :: MIT License',
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.10',
+        'Topic :: Internet',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities',
+        'Typing :: Typed',
+      ]
+)
 )
 
 

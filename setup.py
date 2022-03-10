@@ -48,9 +48,12 @@ setuptools.setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',
         'Typing :: Typed',
-      ]
+      ],
+    packages=[
+        'top_gg'
+    ]
 )
-)
+
 
 
 

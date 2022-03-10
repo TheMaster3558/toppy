@@ -1,4 +1,4 @@
-from typing import TypeVar, Optional, Union, Generator
+from typing import TypeVar, Optional, Union, AsyncIterator
 
 import aiohttp
 
@@ -19,7 +19,7 @@ class TopGGClient:
             /,
             token: str,
             *,
-            interval: Optional[int] = 600,
+            interval: Optional[int] = None,
             post_shard_count: Optional[bool] = False,
             start_on_ready: Optional[bool] = True
     ):
@@ -50,7 +50,11 @@ class TopGGClient:
         # filled in on login for the bots user id
 
         self.token = token
+        
+        if interval is None:
+            interval = 600
         self.interval = interval
+        
         self.post_shard_count = post_shard_count
         
         if bot.__class__.__name__ == 'CommandTree':
@@ -113,7 +117,7 @@ class TopGGClient:
         data = await self.http.search_one_bot(bot_id)
         return Bot(data)
 
-    async def last_1000_votes(self, bot_id: Optional[Union[int, str]] = None, /) -> Generator[User]:
+    async def last_1000_votes(self, bot_id: Optional[Union[int, str]] = None, /) -> AsyncIterator[User]:
         """Get the last 1000 votes of a bot on Top.gg
 
         Parameters

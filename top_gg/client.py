@@ -9,7 +9,7 @@ from .user import User
 import asyncio
 
 
-BotT = TypeVar('BotT', bound='Client')
+BotT = TypeVar('BotT')
 
 
 class TopGGClient:

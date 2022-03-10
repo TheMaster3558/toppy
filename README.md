@@ -1,7 +1,7 @@
 # top_gg
 
 A simple API wrapper for Top.gg made in Python.
-Specifically meant for discord.py or and similar forks.
+Specifically meant for discord.py
 
 -----
 ## Installation

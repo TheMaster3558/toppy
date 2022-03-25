@@ -87,7 +87,7 @@ https://top.gg/
 
 `await search_one_bot(bot_id: Union[int, str], /)` Search a single bot on Top.gg 
 
-`await last_1000_votes(bot_id: Optional[Union[int, str]] = None, /) -> Generator[User]`: 'Get the last 1000 bots of a bot' 
+`await last_1000_votes(bot_id: Optional[Union[int, str]] = None, /) -> AsyncIterable[User]`: Get the last 1000 bots of a bot
 
 `await check_if_voted(bot_id: Optional[Union[int, str]], user_id: Union[int, str]) -> bool`: 'Check if a user has voted on a bot' 
 

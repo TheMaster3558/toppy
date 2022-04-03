@@ -1,3 +1,4 @@
+import asyncio
 from typing import TypeVar, Optional, Union, AsyncIterator
 
 import aiohttp
@@ -6,7 +7,6 @@ from .http import HTTPClient
 from .bot import Bot
 from .user import User
 
-import asyncio
 
 
 BotT = TypeVar('BotT')

@@ -1,5 +1,8 @@
+from __future__ import annotations 
+
 import asyncio
 from typing import TypeVar, Optional, Union, AsyncIterator
+from numbers import Number
 
 import aiohttp
 
@@ -18,9 +21,9 @@ class TopGGClient:
             /,
             token: str,
             *,
-            interval: Optional[int] = None,
-            post_shard_count: Optional[bool] = False,
-            start_on_ready: Optional[bool] = True
+            interval: Optional[Number] = None,
+            post_shard_count: bool = False,
+            start_on_ready: bool = True
     ):
         """A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
         and accessing data about other Discord Bots on Top.gg
@@ -34,13 +37,13 @@ class TopGGClient:
             :class:`discord.ext.app_commands.AppCommandTree` is also supported.
         token: :class:`str`
             The DBL token found in the Webhooks tab of the bots owner only section.
-        interval: Optional[:class:`int`]
+        interval: Optional[:class:`Number`]
             The interval in seconds to auto-post the stats.
             Defaults to 600.
-        post_shard_count: Optional[:class:`bool`]
+        post_shard_count: :class:`bool`
             Decides whether to post the shard count along with the server count.
             Defaults to False.
-        start_on_ready: Optional[:class:`bool`]
+        start_on_ready: :class:`bool`:
             Whether to start the auto post task when the bot is ready.
             If False then it must be manually started with `start`
             Defaults to True
@@ -49,37 +52,46 @@ class TopGGClient:
         self.http: HTTPClient = None  # type: ignore
         # filled in on login for the bots user id
 
-        self.token = token
+        self.token: str = token
         
         if interval is None:
             interval = 600
-        self.interval = interval
+        self.interval: Number = interval
         
-        self.post_shard_count = post_shard_count
+        self.post_shard_count: bool = post_shard_count
         
         if bot.__class__.__name__ == 'CommandTree':
             bot = bot.client
-        self.bot = bot
-        self.bot.loop.create_task(self.http_init())
-        self.task = None
+        self.bot: BotT = bot
+        
+        self.task: Optional[asyncio.Task] = None
 
         if start_on_ready:
             self.start()
 
-    def start(self):
-        """Starts the autopost task."""
-        self.task: asyncio.Task = self.bot.loop.create_task(self._post_task(), 'top_gg_autopost')
+    def _merge_setup_hooks(self) -> None:
+        old = self.bot.setup_hook
+        
+        async def setup_hook(self: BotT) -> None:
+            await old
+            self.bot.loop.create_task(self.http_init())
+        
+        bot.setup_hook = setup_hook
 
-    def stop(self):
+    def start(self) -> None:
+        """Starts the autopost task."""
+        self.task = self.bot.loop.create_task(self._post_task(), 'top_gg_autopost')
+
+    def cancel(self) -> None:
         """Cancels the task of auto posting stats to Top.gg"""
         self.task.cancel()
 
-    def finish(self):
+    def finish(self) -> Non:
         """Equivalent to `stop` but posts a final time"""
         self.stop()
-        self.bot.loop.create_task(self.post_stats())
+        asyncio.create_task(self.post_stats())
 
-    async def http_init(self):
+    async def http_init(self) -> None:
         await self.bot.wait_until_ready()
         self.http = HTTPClient(self.token, self.bot.user.id, loop=self.bot.loop)
 
@@ -103,7 +115,7 @@ class TopGGClient:
         raw_bots = await self.http.search_bots(query, limit=limit, offset=offset)
         return [Bot(bot) for bot in raw_bots]
 
-    async def search_one_bot(self, bot_id: Union[int, str], /):
+    async def search_one_bot(self, bot_id: Union[int, str], /) -> Bot:
         """Search a single bot on Top.gg
 
         Parameters

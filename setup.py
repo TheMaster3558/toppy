@@ -2,7 +2,7 @@ import re
 import setuptools
 
 
-with open('top_gg/__init__.py', 'r') as v:
+with open('toppy/__init__.py', 'r') as v:
     version = re.search(
         "'?__version__'? = '?\d\.\d\.\d'?",
         v.read()
@@ -19,12 +19,12 @@ with open('README.md', 'r') as rm:
 
 
 packages = [
-    'top_gg'
+    'toppy'
 ]
 
 
 setuptools.setup(
-    name='top_gg',
+    name='toppy',
     author='The Master',
     version=version,
     packages=packages,
@@ -35,22 +35,21 @@ setuptools.setup(
     long_description_content_type='md',
     include_package_data=True,
     install_requires=requirements,
-    python_requires='>=3.10.0',
+    python_requires='>=3.8.0',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Topic :: Internet',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities',
         'Typing :: Typed',
-      ],
-    packages=[
-        'top_gg'
     ]
 )
 

@@ -1,4 +1,4 @@
-top_gg
+Top.py
 ======
 
 A simple API wrapper for Top.gg made in Python.
@@ -11,7 +11,7 @@ Installation
 
 .. code:: sh
 
-    $ pip install -U git+https://github.com/chawkk6404/top_gg
+    $ pip install -U git+https://github.com/chawkk6404/Top.py
 
 
 

@@ -29,7 +29,7 @@ class TopGGClient:
 
     Parameters
     ----------
-    bot: :class:`Client`
+    client: :class:`Client`
         The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
     token: :class:`str`
         The DBL token found in the Webhooks tab of the bots owner only section.
@@ -48,7 +48,7 @@ class TopGGClient:
 
     def __init__(
             self,
-            bot: Client,
+            client: Client,
             /,
             token: str,
             *,
@@ -67,7 +67,7 @@ class TopGGClient:
         
         self.post_shard_count: bool = post_shard_count
 
-        self.bot = bot
+        self.client = client
         
         self.__task: asyncio.Task = MISSING
 
@@ -78,21 +78,21 @@ class TopGGClient:
     def task(self) -> asyncio.Task:
         return self.__task
 
-    def _merge_setup_hooks(self) -> None:
-        old = self.bot.start
-        # used over start for fork support
+    def _merge_starts(self) -> None:
+        old = self.client.start
+        # used over setup_hook for fork support
         
         async def start(*args, **kwargs) -> None:
-            self.bot.loop.create_task(self.http_init())
+            self.client.loop.create_task(self.http_init())
             await old(*args, **kwargs)
         
-        self.bot.start = start  # type: ignore # "Cannot assign to method"
+        self.client.start = start  # type: ignore # "Cannot assign to method"
 
     def _get_bot_id(self) -> int:
-        if self.bot.application_id:
-            return self.bot.application_id
-        if self.bot.user:
-            return self.bot.user.id
+        if self.client.application_id:
+            return self.client.application_id
+        if self.client.user:
+            return self.client.user.id
         raise ClientNotReady()
 
     def start(self) -> None:
@@ -109,8 +109,8 @@ class TopGGClient:
         asyncio.create_task(self.post_stats())
 
     async def http_init(self) -> None:
-        await self.bot.wait_until_ready()
-        self.http = HTTPClient(self.token, self.bot.user.id, loop=self.bot.loop)
+        await self.client.wait_until_ready()
+        self.http = HTTPClient(self.token, self.client.user.id, loop=self.client.loop)
 
     async def search_bots(self, query: str, *, limit: Optional[int] = None, offset: Optional[int] = None
                           ) -> list[Bot]:
@@ -185,7 +185,7 @@ class TopGGClient:
         --------
         :class:`bool`
         """
-        bot_id = bot_id or self.bot.user.id
+        bot_id = bot_id or self.client.user.id
 
         return await self.http.user_vote(bot_id, user_id)
 
@@ -199,22 +199,22 @@ class TopGGClient:
         bot_id = self._get_bot_id()
 
         kwargs = {
-            'server_count': len(self.bot.guilds or [])
+            'server_count': len(self.client.guilds or [])
         }
 
         if self.post_shard_count:
-            kwargs['shard_count'] = self.bot.shard_count or 1
+            kwargs['shard_count'] = self.client.shard_count or 1
 
         resp = await self.http.post_stats(bot_id, **kwargs)
         try:
             resp.raise_for_status()
         except aiohttp.ClientResponseError as exc:
-            self.bot.dispatch('autopost_error', exc)
+            self.client.dispatch('autopost_error', exc)
         else:
-            self.bot.dispatch('autopost_success')
+            self.client.dispatch('autopost_success')
 
     async def _post_task(self) -> None:
-        await self.bot.wait_until_ready()
-        while not self.bot.is_closed():
+        await self.client.wait_until_ready()
+        while not self.client.is_closed():
             await self.post_stats()
             await asyncio.sleep(self.interval)

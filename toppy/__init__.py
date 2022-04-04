@@ -16,7 +16,7 @@ from .bot import Bot
 __title__ = 'toppy'
 __author__ = 'The Master'
 __license__ = 'MIT'
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 
 

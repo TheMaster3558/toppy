@@ -152,7 +152,7 @@ class TopGGClient:
             Defaults to the Bot initialized with.
             Positional only.
         ----------
-        Returns a `generator` with :class:`User`
+        yields :class:`User`
         """
         bot_id = bot_id or self._get_bot_id()
 

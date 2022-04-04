@@ -2,6 +2,8 @@ from functools import cached_property
 
 
 class User:
+    __slots__ = ('_data',)
+
     def __init__(self, data):
         self._data = data
 

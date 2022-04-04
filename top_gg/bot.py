@@ -4,6 +4,8 @@ from datetime import datetime
 
 
 class Bot:
+    __slots__ = ('_data',)
+
     def __init__(self, data):
         self._data = data
 

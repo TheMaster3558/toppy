@@ -11,7 +11,7 @@ def cleanup_params(params: dict) -> dict:
 class HTTPClient:
     BASE = 'https://top.gg/api'
 
-    def __init__(self, token, bot_id, loop: asyncio.BaseEventLoop = None):
+    def __init__(self, token, bot_id, loop: asyncio.AbstractEventLoop = None):
         self.token = token
         self.bot_id = bot_id
         self.session = aiohttp.ClientSession(headers=self.headers, loop=loop)
@@ -20,7 +20,7 @@ class HTTPClient:
     def headers(self):
         return {'Authorization': self.token}
 
-    async def search_bots(self, search: str, *, limit: Optional[str] = None,
+    async def search_bots(self, search: str, *, limit: Optional[int] = None,
                           offset: Optional[int] = None) -> list[dict[str, Any]]:
         params = cleanup_params({
             'search': search,

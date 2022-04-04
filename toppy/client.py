@@ -22,6 +22,30 @@ class ClientNotReady(Exception):
 
 
 class TopGGClient:
+    """A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
+    and accessing data about other Discord Bots on Top.gg
+
+    https://top.gg/
+
+    Parameters
+    ----------
+    bot: :class:`Client`
+        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
+    token: :class:`str`
+        The DBL token found in the Webhooks tab of the bots owner only section.
+    interval: Optional[:class:`float`]
+        The interval in seconds to auto-post the stats.
+        Defaults to 600.
+    post_shard_count: :class:`bool`
+        Decides whether to post the shard count along with the server count.
+        Defaults to False.
+    start_on_ready: :class:`bool`:
+        Whether to start the auto post task when the bot is ready.
+        If False then it must be manually started with `start`
+        Defaults to True
+
+    """
+
     def __init__(
             self,
             bot: Client,
@@ -32,30 +56,6 @@ class TopGGClient:
             post_shard_count: bool = False,
             start_on_ready: bool = True
     ):
-        """A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
-        and accessing data about other Discord Bots on Top.gg
-
-        https://top.gg/
-
-        Parameters
-        ----------
-        bot: :class:`discord.Client`
-            The Discord Bot instance. Any Client derived from :class:`discord.Client` will work.
-            :class:`discord.ext.app_commands.AppCommandTree` is also supported.
-        token: :class:`str`
-            The DBL token found in the Webhooks tab of the bots owner only section.
-        interval: Optional[:class:`Number`]
-            The interval in seconds to auto-post the stats.
-            Defaults to 600.
-        post_shard_count: :class:`bool`
-            Decides whether to post the shard count along with the server count.
-            Defaults to False.
-        start_on_ready: :class:`bool`:
-            Whether to start the auto post task when the bot is ready.
-            If False then it must be manually started with `start`
-            Defaults to True
-
-        """
         self.http: HTTPClient = None  # type: ignore
         # filled in on login for the bots user id
 
@@ -69,10 +69,14 @@ class TopGGClient:
 
         self.bot = bot
         
-        self.task: asyncio.Task = MISSING
+        self.__task: asyncio.Task = MISSING
 
         if start_on_ready:
             self.start()
+
+    @property
+    def task(self) -> asyncio.Task:
+        return self.__task
 
     def _merge_setup_hooks(self) -> None:
         old = self.bot.start
@@ -93,7 +97,7 @@ class TopGGClient:
 
     def start(self) -> None:
         """Starts the autopost task."""
-        self.task = asyncio.create_task(self._post_task(), name='top_gg_autopost')
+        self.__task = asyncio.create_task(self._post_task(), name='top_gg_autopost')
 
     def cancel(self) -> None:
         """Cancels the task of auto posting stats to Top.gg"""
@@ -122,8 +126,10 @@ class TopGGClient:
         offset: Optional[:class:`int`]
             The amount of bots to skip in the results.
             Keyword only.
-        ---------
-        Returns a list of :class:`Bot`
+
+        Returns
+        --------
+        list[:class:`Bot`]:
         """
         raw_bots = await self.http.search_bots(query, limit=limit, offset=offset)
         return [Bot(bot) for bot in raw_bots]
@@ -136,8 +142,10 @@ class TopGGClient:
         bot_id: Union[:class:`int`, :class:`str`]
             The ID to search.
             Positional only.
-        ----------
-        Returns :class:`Bot`
+
+        Returns
+        --------
+        :class:`Bot`:
         """
         data = await self.http.search_one_bot(bot_id)
         return Bot(data)
@@ -151,8 +159,10 @@ class TopGGClient:
             The ID of the bot.
             Defaults to the Bot initialized with.
             Positional only.
-        ----------
-        yields :class:`User`
+
+        Yields
+        -------
+        :class:`User`
         """
         bot_id = bot_id or self._get_bot_id()
 
@@ -170,6 +180,10 @@ class TopGGClient:
             Defaults to the Bot initialized with.
         user_id: Union[:class:`int`, :class:`str`]
             The ID of the user.
+
+        Returns
+        --------
+        :class:`bool`
         """
         bot_id = bot_id or self.bot.user.id
 

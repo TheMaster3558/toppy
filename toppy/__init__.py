@@ -1,5 +1,5 @@
 """
-top_gg
+toppy
 -------------------------------
 A simple API wrapper for Top.gg
 
@@ -13,7 +13,7 @@ from .user import User
 from .bot import Bot
 
 
-__title__ = 'top_gg'
+__title__ = 'toppy'
 __author__ = 'The Master'
 __license__ = 'MIT'
 __version__ = '1.0.2'

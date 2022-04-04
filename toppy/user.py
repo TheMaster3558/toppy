@@ -2,6 +2,11 @@ from functools import cached_property
 
 
 class User:
+    """
+    A class that represents a user on Top.gg, not on discord.
+    It will be initialized automatically. Not manually.
+    """
+
     __slots__ = ('_data',)
 
     def __init__(self, data):

@@ -4,6 +4,11 @@ from datetime import datetime
 
 
 class Bot:
+    """
+    A class that represents a bot on Top.gg, not on discord.
+    It will be initialized automatically. Not manually.
+    """
+
     __slots__ = ('_data',)
 
     def __init__(self, data):

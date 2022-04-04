@@ -14,7 +14,7 @@ with open('requirements.txt', 'r') as r:
     requirements = r.read().splitlines()
 
 
-with open('README.md', 'r') as rm:
+with open('README.rst', 'r') as rm:
     readme = rm.read()
 
 

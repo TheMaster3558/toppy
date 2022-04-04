@@ -16,8 +16,7 @@ Installation
 
 
 Example
-
-----------
+---------
 
 .. code:: py
 

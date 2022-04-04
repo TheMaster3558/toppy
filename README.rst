@@ -10,7 +10,8 @@ Installation
 **Python 3.9 or higher is needed**
 
 .. code:: sh
-    pip install -U git+https://github.com/chawkk6404/top_gg
+
+    $ pip install -U git+https://github.com/chawkk6404/top_gg
 
 
 
@@ -19,6 +20,7 @@ Example
 ----------
 
 .. code:: py
+
     from discord.ext import commands
     import top_gg
     import aiohttp

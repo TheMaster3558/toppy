@@ -8,9 +8,10 @@ Specifically meant for discord.py
 Installation
 ------------
 **Python 3.9 or higher is needed**
-```shell
-pip install -U git+https://github.com/chawkk6404/top_gg
-```
+
+.. code:: sh
+    pip install -U git+https://github.com/chawkk6404/top_gg
+
 
 
 Example

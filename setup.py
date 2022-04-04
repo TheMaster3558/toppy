@@ -32,7 +32,7 @@ setuptools.setup(
     description='A simple API wrapper for Top.gg',
     url='https://github.com/chawkk6404/top_gg',
     long_description=readme,
-    long_description_content_type='md',
+    long_description_content_type='rst',
     include_package_data=True,
     install_requires=requirements,
     python_requires='>=3.8.0',

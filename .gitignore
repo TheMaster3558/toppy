@@ -4,3 +4,4 @@ __pycache__
 main.py
 venv/
 .mypy_cache
+*.log

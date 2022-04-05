@@ -66,13 +66,12 @@ class TopGGClient:
         self.interval: float = interval
         
         self.post_shard_count: bool = post_shard_count
+        self.start_on_ready: bool = start_on_ready
 
         self.client = client
         
         self.__task: asyncio.Task = MISSING
-
-        if start_on_ready:
-            self.start()
+        self._merge_starts()
 
     @property
     def task(self) -> asyncio.Task:
@@ -84,6 +83,9 @@ class TopGGClient:
         
         async def start(*args, **kwargs) -> None:
             self.client.loop.create_task(self.http_init())
+            if self.start_on_ready:
+                self.start()
+
             await old(*args, **kwargs)
         
         self.client.start = start  # type: ignore # "Cannot assign to method"
@@ -97,7 +99,7 @@ class TopGGClient:
 
     def start(self) -> None:
         """Starts the autopost task."""
-        self.__task = asyncio.create_task(self._post_task(), name='top_gg_autopost')
+        self.__task = self.client.loop.create_task(self._post_task(), name='top_gg_autopost')
 
     def cancel(self) -> None:
         """Cancels the task of auto posting stats to Top.gg"""
@@ -106,11 +108,11 @@ class TopGGClient:
     def finish(self) -> None:
         """Equivalent to `stop` but posts a final time"""
         self.cancel()
-        asyncio.create_task(self.post_stats())
+        self.client.loop.create_task(self.post_stats())
 
     async def http_init(self) -> None:
         await self.client.wait_until_ready()
-        self.http = HTTPClient(self.token, self.client.user.id, loop=self.client.loop)
+        self.http = HTTPClient(self.token, self._get_bot_id(), loop=self.client.loop)
 
     async def search_bots(self, query: str, *, limit: Optional[int] = None, offset: Optional[int] = None
                           ) -> list[Bot]:
@@ -170,22 +172,22 @@ class TopGGClient:
         for user in users:
             yield User(user)
 
-    async def check_if_voted(self, bot_id: Optional[Union[int, str]], user_id: Union[int, str]) -> bool:
+    async def check_if_voted(self, bot_id: Optional[int], user_id: int) -> bool:
         """Check if a user has voted on a bot
 
         Parameters
         ----------
-        bot_id: Optional[Union[:class:`int`, :class:`str`]]
+        bot_id: Optional:class:`int`
             The ID of the bot.
             Defaults to the Bot initialized with.
-        user_id: Union[:class:`int`, :class:`str`]
+        user_id: :class:`int`
             The ID of the user.
 
         Returns
         --------
         :class:`bool`
         """
-        bot_id = bot_id or self.client.user.id
+        bot_id = bot_id or self._get_bot_id()
 
         return await self.http.user_vote(bot_id, user_id)
 

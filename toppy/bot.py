@@ -5,6 +5,11 @@ from typing import Optional
 from datetime import datetime
 
 
+__all__ = (
+    'Bot'
+)
+
+
 class Bot:
     """
     A class that represents a bot on Top.gg, not on discord.

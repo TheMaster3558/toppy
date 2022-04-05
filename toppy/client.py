@@ -12,6 +12,12 @@ from .protocols import Client
 from . import utils
 
 
+__all__ = (
+    'ClientNotReady',
+    'TopGGClient'
+)
+
+
 MISSING = utils.MISSING
 
 

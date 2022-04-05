@@ -1,6 +1,11 @@
 from typing import Any
 
 
+__all__ = (
+    'MISSING'  # still shouldn't really be using this
+)
+
+
 class _MissingSentinel:
     def __eq__(self, other):
         return False

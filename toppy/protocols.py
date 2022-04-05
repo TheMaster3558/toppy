@@ -4,6 +4,9 @@ from typing import Protocol, Any, Optional
 import asyncio
 
 
+__all__ = ()
+
+
 class Snowflake(Protocol):
     """A protocol that represents the discord snowflake"""
     id: int

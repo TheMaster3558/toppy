@@ -8,9 +8,25 @@ A simple API wrapper for Top.gg
 """
 
 
-from .client import TopGGClient
+from .client import TopGGClient, ClientNotReady
 from .user import User
 from .bot import Bot
+from .http import HTTPClient
+from .errors import HTTPException, BadRequest, Unauthorized, Forbidden, RateLimited
+
+
+__all__ = (
+    'BadRequest',
+    'Bot',
+    'ClientNotReady',
+    'Forbidden',
+    'HTTPClient',
+    'HTTPException',
+    'RateLimited',
+    'TopGGClient',
+    'Unauthorized',
+    'User'
+)
 
 
 __title__ = 'toppy'

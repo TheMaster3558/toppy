@@ -1,6 +1,11 @@
 from functools import cached_property
 
 
+__all__ = (
+    'User'
+)
+
+
 class User:
     """
     A class that represents a user on Top.gg, not on discord.

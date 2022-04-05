@@ -3,6 +3,15 @@ from typing import Optional
 from aiohttp import ClientResponse
 
 
+__all__ = (
+    'BadRequest',
+    'Forbidden',
+    'HTTPException',
+    'RateLimited',
+    'Unauthorized'
+)
+
+
 class HTTPException(Exception):
     """The base HTTP exception class"""
     def __init__(self, resp: Optional[ClientResponse] = None, message: str = None):

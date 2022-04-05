@@ -142,12 +142,12 @@ class TopGGClient:
         raw_bots = await self.http.search_bots(query, limit=limit, offset=offset)
         return [Bot(bot) for bot in raw_bots]
 
-    async def search_one_bot(self, bot_id: Union[int, str], /) -> Bot:
+    async def search_one_bot(self, bot_id: int, /) -> Bot:
         """Search a single bot on Top.gg
 
         Parameters
         ----------
-        bot_id: Union[:class:`int`, :class:`str`]
+        bot_id: :class:`int`
             The ID to search.
             Positional only.
 
@@ -158,12 +158,12 @@ class TopGGClient:
         data = await self.http.search_one_bot(bot_id)
         return Bot(data)
 
-    async def last_1000_votes(self, bot_id: Optional[Union[int, str]] = None, /) -> AsyncIterator[User]:
+    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncIterator[User]:
         """Get the last 1000 votes of a bot on Top.gg
 
         Parameters
         ----------
-        bot_id: Optional[Union[:class:`int`, :class:`str`]]
+        bot_id: Optional[:class:`int`]
             The ID of the bot.
             Defaults to the Bot initialized with.
             Positional only.

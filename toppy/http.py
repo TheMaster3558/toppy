@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Union, Any
+from typing import Union, Any, Optional
 import asyncio
 import logging
 
@@ -63,15 +63,15 @@ class HTTPClient:
             data = await resp.json()
         return data.get('results')
 
-    async def search_one_bot(self, bot_id, /) -> dict[str, Any]:
+    async def search_one_bot(self, bot_id: int, /) -> dict[str, Any]:
         async with await self.request('GET', f'/bots/{bot_id}') as resp:
             return await resp.json()
 
-    async def last_1000_votes(self, bot_id, /) -> list[dict[str, Union[str, list[str]]]]:
+    async def last_1000_votes(self, bot_id: int, /) -> list[dict[str, Union[str, list[str]]]]:
         async with await self.request('GET', f'/bots/{bot_id}/votes') as resp:
             return await resp.json()
 
-    async def user_vote(self, bot_id, user_id) -> bool:
+    async def user_vote(self, bot_id: int, user_id: int) -> bool:
         async with await self.request('GET', f'/bots/{bot_id}/check', params={'userId': user_id}) as resp:
             data = await resp.json()
             return data['voted'] is True

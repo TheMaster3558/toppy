@@ -29,7 +29,7 @@ class HTTPClient:
         return {'Authorization': self.token}
 
     async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
-        resp = await self.session.request(method, url, **kwargs)
+        resp = await self.session.request(method, self.BASE + url, **kwargs)
         json = await resp.json()
 
         _log.info(f'{resp.method} {resp.url} has returned with {resp.status} {json}')
@@ -54,20 +54,20 @@ class HTTPClient:
             'limit': limit,
             'offset': offset,
         })
-        async with await self.request('GET', f'{self.BASE}/bots', params=params) as resp:
+        async with await self.request('GET', '/bots', params=params) as resp:
             data = await resp.json()
         return data.get('results')
 
     async def search_one_bot(self, bot_id, /) -> dict[str, Any]:
-        async with await self.request('GET', f'{self.BASE}/bots/{bot_id}') as resp:
+        async with await self.request('GET', f'/bots/{bot_id}') as resp:
             return await resp.json()
 
     async def last_1000_votes(self, bot_id, /) -> list[dict[str, Union[str, list[str]]]]:
-        async with await self.request('GET', f'{self.BASE}/bots/{bot_id}/votes') as resp:
+        async with await self.request('GET', f'/bots/{bot_id}/votes') as resp:
             return await resp.json()
 
     async def user_vote(self, bot_id, user_id) -> bool:
-        async with await self.request('GET', f'{self.BASE}/bots/{bot_id}/check', params={'userId': user_id}) as resp:
+        async with await self.request('GET', f'/bots/{bot_id}/check', params={'userId': user_id}) as resp:
             data = await resp.json()
             return data['voted'] is True
 
@@ -77,5 +77,5 @@ class HTTPClient:
             'server_count': server_count,
             'shard_count': shard_count
         })
-        async with await self.request('POST', f'{self.BASE}/bots/{bot_id}/stats', data=data) as resp:
+        async with await self.request('POST', f'/bots/{bot_id}/stats', data=data) as resp:
             return resp

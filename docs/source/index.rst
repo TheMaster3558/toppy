@@ -22,3 +22,7 @@ A simple API wrapper for **Top.gg** in **Python** with many *simple* yet *powerf
 .. autoclass:: toppy.Bot
   :members:
   :undoc-members:
+
+.. automodule:: toppy.errors
+  :members:
+  :undoc-members:

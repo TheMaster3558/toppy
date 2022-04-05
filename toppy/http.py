@@ -1,13 +1,19 @@
 from __future__ import annotations
 
-from typing import Optional, Union, Any
+from typing import Union, Any
 import asyncio
+import logging
 
 import aiohttp
+
+from .errors import *
 
 
 def cleanup_params(params: dict) -> dict:
     return {k: v for k, v in params.items() if v is not None}
+
+
+_log = logging.getLogger(__name__)
 
 
 class HTTPClient:
@@ -22,6 +28,25 @@ class HTTPClient:
     def headers(self):
         return {'Authorization': self.token}
 
+    async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
+        resp = await self.session.request(method, url, **kwargs)
+        json = await resp.json()
+
+        _log.info(f'{resp.method} {resp.url} has returned with {resp.status} {json}')
+
+        if resp.ok:
+            return resp
+
+        if resp.status == 400:
+            raise BadRequest(resp)
+        elif resp.status == 401:
+            raise Unauthorized(resp)
+        elif resp.status == 403:
+            raise Forbidden(resp)
+        elif resp.status == 429:
+            raise RateLimited(json['retry-after'], resp)
+        raise HTTPException()
+
     async def search_bots(self, search: str, *, limit: Optional[int] = None,
                           offset: Optional[int] = None) -> list[dict[str, Any]]:
         params = cleanup_params({
@@ -29,20 +54,20 @@ class HTTPClient:
             'limit': limit,
             'offset': offset,
         })
-        async with self.session.get(f'{self.BASE}/bots', params=params) as resp:
+        async with await self.request('GET', f'{self.BASE}/bots', params=params) as resp:
             data = await resp.json()
         return data.get('results')
 
     async def search_one_bot(self, bot_id, /) -> dict[str, Any]:
-        async with self.session.get(f'{self.BASE}/bots/{bot_id}') as resp:
+        async with await self.request('GET', f'{self.BASE}/bots/{bot_id}') as resp:
             return await resp.json()
 
     async def last_1000_votes(self, bot_id, /) -> list[dict[str, Union[str, list[str]]]]:
-        async with self.session.get(f'{self.BASE}/bots/{bot_id}/votes') as resp:
+        async with await self.request('GET', f'{self.BASE}/bots/{bot_id}/votes') as resp:
             return await resp.json()
 
     async def user_vote(self, bot_id, user_id) -> bool:
-        async with self.session.get(f'{self.BASE}/bots/{bot_id}/check', params={'userId': user_id}) as resp:
+        async with await self.request('GET', f'{self.BASE}/bots/{bot_id}/check', params={'userId': user_id}) as resp:
             data = await resp.json()
             return data['voted'] is True
 
@@ -52,5 +77,5 @@ class HTTPClient:
             'server_count': server_count,
             'shard_count': shard_count
         })
-        async with self.session.post(f'{self.BASE}/bots/{bot_id}/stats', data=data) as resp:
+        async with await self.request('POST', f'{self.BASE}/bots/{bot_id}/stats', data=data) as resp:
             return resp

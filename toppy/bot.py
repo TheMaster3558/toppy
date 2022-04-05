@@ -11,8 +11,6 @@ class Bot:
     It will be initialized automatically. Not manually.
     """
 
-    __slots__ = ('_data',)
-
     def __init__(self, data):
         self._data = data
 

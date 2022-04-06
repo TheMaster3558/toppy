@@ -4,7 +4,10 @@ from typing import Protocol, Any, Optional
 import asyncio
 
 
-__all__ = ()
+__all__ = (
+    'Client',
+    'Snowflake'
+)
 
 
 class Snowflake(Protocol):

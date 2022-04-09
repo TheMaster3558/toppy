@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Optional, Union, AsyncIterator, Awaitable
+from typing import TYPE_CHECKING, Optional, Union, AsyncIterator
 
 import aiohttp
 
@@ -114,7 +114,7 @@ class Client:
             if self.__topgg.start_on_ready:
                 self.__topgg.start()
 
-            await old(*args, **kwargs)  # type: ignore  # not sure why this happens
+            await old(*args, **kwargs)
 
         self.client.start = start  # type: ignore # "Cannot assign to method"
 

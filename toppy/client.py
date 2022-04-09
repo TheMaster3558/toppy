@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Optional, overload, Union, AsyncIterator, Awaitable
+from typing import TYPE_CHECKING, Optional, Union, AsyncIterator, Awaitable
 
 import aiohttp
 
@@ -9,7 +9,7 @@ from .dbl import DBLClient
 from .topgg import TopGGClient
 
 if TYPE_CHECKING:
-    from .protocols import Client as ClientProtocol
+    from .protocols import ClientProtocol
     from .topgg.bot import Bot
     from .topgg.user import User
 
@@ -20,8 +20,9 @@ class Client:
 
     Parameters
     ----------
-    client: :class:`Client`
+    client: :class:`ClientProtocol`
         The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
+        It must fit the :class:`ClientProtocol`
     dbl_token: :class:`str`
         The authorization token for Discord Bot List
     topgg_token: :class:`str`
@@ -52,6 +53,7 @@ class Client:
             session: Optional[aiohttp.ClientSession] = None
     ):
         self.client = client
+        session = session or aiohttp.ClientSession()
 
         self.__dbl: DBLClient = DBLClient(
             client, token=dbl_token,

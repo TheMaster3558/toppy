@@ -5,7 +5,7 @@ import asyncio
 
 
 __all__ = (
-    'Client',
+    'ClientProtocol',
     'Snowflake'
 )
 
@@ -15,7 +15,7 @@ class Snowflake(Protocol):
     id: int
 
 
-class Client(Protocol):
+class ClientProtocol(Protocol):
     """A bot protocol that allows this library to support forks."""
     loop: asyncio.AbstractEventLoop
     shard_count: Optional[int]

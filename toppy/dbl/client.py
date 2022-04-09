@@ -10,7 +10,7 @@ from .. import utils
 from ..errors import ClientNotReady
 
 if TYPE_CHECKING:
-    from ..protocols import Client
+    from ..protocols import ClientProtocol
 
 
 MISSING = utils.MISSING
@@ -44,7 +44,7 @@ class DBLClient:
     """
     def __init__(
             self,
-            client: Client,
+            client: ClientProtocol,
             /,
             token: str,
             *,

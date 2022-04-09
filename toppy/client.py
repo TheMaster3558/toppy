@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class Client:
-    """A class designed to handle both Top.gg and Discord Bot List
+    """A class designed to handle both Top.gg and Discord Bot List.
     For individual handling use :class:`DBLClient` or :class:`TopGGClient`
 
     Parameters

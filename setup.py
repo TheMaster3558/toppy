@@ -4,7 +4,7 @@ import setuptools
 
 with open('toppy/__init__.py', 'r') as v:
     version = re.search(
-        "'?__version__'? = '?\d\.\d\.\d'?",
+        r"'?__version__'? = '?\d\.\d\.\d'?",
         v.read()
     ).group().replace("'", '')
     version = version[version.index('=')+1:]

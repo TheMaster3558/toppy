@@ -10,6 +10,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import re
 import os
 import sys
 
@@ -22,7 +23,12 @@ copyright = '2022, The Master and chawkk6404'
 author = 'The Master and chawkk6404'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.3'
+with open('toppy/__init__.py', 'r') as v:
+    version = re.search(
+        r"'?__version__'? = '?\d\.\d\.\d'?",
+        v.read()
+    ).group().replace("'", '')
+    version = version[version.index('=')+1:]
 
 # -- General configuration ---------------------------------------------------
 
@@ -30,7 +36,7 @@ release = '1.0.3'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

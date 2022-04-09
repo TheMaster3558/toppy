@@ -80,6 +80,15 @@ class Client:
 
     @intervals.setter
     def intervals(self, new: Union[float, tuple[Optional[float], Optional[float]]]) -> None:
+        """Set new intervals.
+         If you pass in :class:`float` both the dbl and topgg client's interval will be set to it.
+         If you pass in tuple[Optional[:class:`float`, Optional[:class:`float`]] then the first
+         will set the dbl client and the second will set the topgg client.
+
+         Raises
+         -------
+         :class:`TypeError` If it didn't receive :class:`float`, :class:`int`, or :class:`tuple`
+         """
         if isinstance(new, (float, int)):
             self.__dbl.interval = new
             self.__topgg.interval = new

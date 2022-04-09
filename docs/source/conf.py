@@ -16,9 +16,6 @@ import sys
 
 sys.path.insert(0, os.path.abspath('C:\\Users\chawk_jbu1gcm\\PycharmProjects\\topgg5'))
 
-
-os.system('pip install .')
-
 # -- Project information -----------------------------------------------------
 
 project = 'Top.py'

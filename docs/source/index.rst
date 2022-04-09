@@ -9,52 +9,11 @@ Welcome to toppy's documentation!
 A simple API wrapper for **Top.gg** and **Discord Bot List** in **Python** with many *simple* yet *powerful* features.
 
 
-Top.gg and Discord Bot List
------------------------------
+.. toctree::
+  :maxdepth: 1
 
-.. autoclass:: toppy.Client
-  :members:
-
-------------
-
-Discord Bot List
-----------------
-
-.. autoclass:: toppy.dbl.DBLClient
-  :members:
-  :undoc-members:
-
--------------
-
-Top.gg
---------
-
-.. autoclass:: toppy.topgg.TopGGClient
-  :members:
-
------------
-
-Errors
--------
-
-.. automodule:: toppy.errors
-  :members:
-
----------
-
-Event Reference
-----------------
-
-.. code:: py
-
-   async def on_topgg_autopost_success():
-      ...
-
-   async def on_topgg_autopost_error(error: aiohttp.ClientResponseError):
-      ...
-
-   async def on_dbl_autopost_success():
-      ...
-
-   async def on_dbl_autopost_error(error: aiohttp.ClientResponseError):
-      ...
+  both.rst
+  dbl.rst
+  topgg.rst
+  errors.rst
+  events.rst

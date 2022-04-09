@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to toppy’s documentation! &mdash; Top.py 1.0.3 documentation</title>
+  <title>Event Reference &mdash; Top.py 1.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="toppy - Discord Bot List and Top.gg" href="both.html" /> 
+    <link rel="next" title="toppy.errors" href="errors.html" />
+    <link rel="prev" title="toppy.topgg - Top.gg" href="topgg.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -26,7 +27,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Top.py
+            <a href="index.html" class="icon icon-home"> Top.py
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -36,11 +37,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="both.html"><code class="docutils literal notranslate"><span class="pre">toppy</span></code> - Discord Bot List and Top.gg</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dbl.html"><code class="docutils literal notranslate"><span class="pre">toppy.dbl</span></code> - Discord Bot List</a></li>
 <li class="toctree-l1"><a class="reference internal" href="topgg.html"><code class="docutils literal notranslate"><span class="pre">toppy.topgg</span></code> - Top.gg</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Event Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Event Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html"><code class="docutils literal notranslate"><span class="pre">toppy.errors</span></code></a></li>
 </ul>
 
@@ -50,17 +51,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Top.py</a>
+          <a href="index.html">Top.py</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Welcome to toppy’s documentation!</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Event Reference</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/events.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -68,17 +69,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-toppy-s-documentation">
-<h1>Welcome to toppy’s documentation!<a class="headerlink" href="#welcome-to-toppy-s-documentation" title="Permalink to this headline"></a></h1>
-<p>A simple API wrapper for <strong>Top.gg</strong> and <strong>Discord Bot List</strong> in <strong>Python</strong> with many <em>simple</em> yet <em>powerful</em> features.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="both.html"><code class="docutils literal notranslate"><span class="pre">toppy</span></code> - Discord Bot List and Top.gg</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dbl.html"><code class="docutils literal notranslate"><span class="pre">toppy.dbl</span></code> - Discord Bot List</a></li>
-<li class="toctree-l1"><a class="reference internal" href="topgg.html"><code class="docutils literal notranslate"><span class="pre">toppy.topgg</span></code> - Top.gg</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Event Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="errors.html"><code class="docutils literal notranslate"><span class="pre">toppy.errors</span></code></a></li>
-</ul>
+  <section id="event-reference">
+<h1>Event Reference<a class="headerlink" href="#event-reference" title="Permalink to this headline"></a></h1>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">on_topgg_autopost_success</span><span class="p">():</span>
+   <span class="o">...</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_topgg_autopost_error</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientResponseError</span><span class="p">):</span>
+   <span class="o">...</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_dbl_autopost_success</span><span class="p">():</span>
+   <span class="o">...</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_dbl_autopost_error</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientResponseError</span><span class="p">):</span>
+   <span class="o">...</span>
+</pre></div>
 </div>
 </section>
 
@@ -86,7 +90,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="both.html" class="btn btn-neutral float-right" title="toppy - Discord Bot List and Top.gg" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="topgg.html" class="btn btn-neutral float-left" title="toppy.topgg - Top.gg" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="errors.html" class="btn btn-neutral float-right" title="toppy.errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

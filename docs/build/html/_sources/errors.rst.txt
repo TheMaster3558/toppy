@@ -1,0 +1,5 @@
+``toppy.errors``
+==================
+
+.. automodule:: toppy.errors
+  :members:

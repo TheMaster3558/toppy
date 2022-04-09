@@ -76,7 +76,7 @@
 <h2>Top.gg<a class="headerlink" href="#top-gg" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="toppy.topgg.TopGGClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">TopGGClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">toppy.protocols.Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_shard_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.TopGGClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">TopGGClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_shard_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">aiohttp.ClientSession</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.TopGGClient" title="Permalink to this definition"></a></dt>
 <dd><p>A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
 and accessing data about other Discord Bots on Top.gg</p>
 <p><a class="reference external" href="https://top.gg/">https://top.gg/</a></p>
@@ -95,11 +95,17 @@ Defaults to False.</p>
 If False then it must be manually started with <cite>start</cite>
 Defaults to True</p>
 </dd>
+<dt>session: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientSession</span></code>]</dt><dd><p>The session for the HTTP Client.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>interval: <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></dt><dd><p>The interval in seconds to auto-post the stats.</p>
+</dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="toppy.topgg.TopGGClient.cancel">
 <span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.cancel" title="Permalink to this definition"></a></dt>
-<dd><p>Cancels the task of auto posting stats to Top.gg</p>
+<dd><p>Cancels the task of auto posting stats</p>
 </dd></dl>
 
 <dl class="py method">
@@ -176,7 +182,7 @@ Positional only.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="toppy.topgg.TopGGClient.task">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_asyncio.Task</span></em><a class="headerlink" href="#toppy.topgg.TopGGClient.task" title="Permalink to this definition"></a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></p>
+<dd><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code> object for autopost.</p>
 </dd></dl>
 
 </dd></dl>
@@ -184,7 +190,7 @@ Positional only.</p>
 <hr class="docutils" />
 <dl class="py class">
 <dt class="sig sig-object py" id="toppy.topgg.User">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.User" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.User" title="Permalink to this definition"></a></dt>
 <dd><p>A class that represents a user on Top.gg, not on discord.
 It will be initialized automatically. Not manually.</p>
 <dl class="py property">
@@ -207,7 +213,7 @@ It will be initialized automatically. Not manually.</p>
 <hr class="docutils" />
 <dl class="py class">
 <dt class="sig sig-object py" id="toppy.topgg.Bot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">Bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.Bot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">Bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.Bot" title="Permalink to this definition"></a></dt>
 <dd><p>A class that represents a bot on Top.gg, not on discord.
 It will be initialized automatically. Not manually.</p>
 <dl class="py property">
@@ -322,7 +328,7 @@ It will be initialized automatically. Not manually.</p>
 <h2>Discord Bot List<a class="headerlink" href="#discord-bot-list" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="toppy.dbl.DBLClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.dbl.</span></span><span class="sig-name descname"><span class="pre">DBLClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">toppy.protocols.Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.dbl.DBLClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.dbl.</span></span><span class="sig-name descname"><span class="pre">DBLClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">aiohttp.ClientSession</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.dbl.DBLClient" title="Permalink to this definition"></a></dt>
 <dd><p>A Client to access the Discord Bot List API. This includes auto-posting Discord Bot Stats.</p>
 <p><a class="reference external" href="https://discordbotlist.com/">https://discordbotlist.com/</a></p>
 <dl class="simple">
@@ -337,11 +343,17 @@ Defaults to 600.</p>
 If False then it must be manually started with <cite>start</cite>
 Defaults to True</p>
 </dd>
+<dt>session: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientSession</span></code>]</dt><dd><p>The session for the HTTP Client.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>interval: <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></dt><dd><p>The interval in seconds to auto-post the stats.</p>
+</dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="toppy.dbl.DBLClient.cancel">
 <span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.dbl.DBLClient.cancel" title="Permalink to this definition"></a></dt>
-<dd><p>Cancels the task of auto posting stats to Discord Bot List</p>
+<dd><p>Cancels the task of auto posting stats</p>
 </dd></dl>
 
 <dl class="py method">
@@ -362,7 +374,7 @@ or <cite>dbl_autopost_success</cite> with no arguments</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="toppy.dbl.DBLClient.task">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_asyncio.Task</span></em><a class="headerlink" href="#toppy.dbl.DBLClient.task" title="Permalink to this definition"></a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></p>
+<dd><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code> object for autopost.</p>
 </dd></dl>
 
 </dd></dl>

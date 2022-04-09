@@ -9,6 +9,8 @@ Welcome to toppy's documentation!
 A simple API wrapper for **Top.gg**  and **Discord Bot List** in **Python** with many *simple* yet *powerful* features.
 
 
+Top.gg and Discord Bot List
+------------------------
 .. autoclass:: toppy.client.Client
   :members:
 

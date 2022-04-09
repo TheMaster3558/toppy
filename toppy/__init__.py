@@ -11,6 +11,9 @@ in Python with many *simple* yet powerful features.
 from .client import Client
 from .errors import HTTPException, BadRequest, Unauthorized, Forbidden, RateLimited, ClientNotReady
 
+from .dbl import DBLClient
+from .topgg import TopGGClient
+
 
 __all__ = (
     'Client',
@@ -19,7 +22,9 @@ __all__ = (
     'Unauthorized',
     'Forbidden',
     'RateLimited',
-    'ClientNotReady'
+    'ClientNotReady',
+    'DBLClient',
+    'TopGGClient'
 )
 
 
@@ -27,4 +32,4 @@ __title__ = 'toppy'
 __authors__ = ('The Master', 'chawkk6404')
 __license__ = 'MIT'
 __copyright__ = '2022-present The Master and chawkk6404'
-__version__ = '1.1.0'
+__version__ = '1.1.1'

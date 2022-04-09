@@ -43,6 +43,7 @@ class Forbidden(HTTPException):
 
 
 class RateLimited(HTTPException):
+    """Status 429"""
     def __init__(self, retry_after: Optional[int] = None, resp: Optional[ClientResponse] = None):
         self.retry_after = retry_after
         super().__init__(resp, f'We have been ratelimited for the next {self.retry_after} seconds.')

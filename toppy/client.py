@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 from typing import TYPE_CHECKING, Optional, overload, Union, AsyncIterator, Awaitable
 
@@ -73,14 +75,6 @@ class Client:
         Returns tuple[:class:`float`]
         """
         return self.__dbl.interval, self.__topgg.interval
-
-    @overload  # type: ignore # type checker doesn't want decorators over properties
-    @intervals.setter
-    def intervals(self, new: float) -> None: ...
-
-    @overload  # type: ignore # type checker doesn't want decorators over properties
-    @intervals.setter
-    def intervals(self, new: tuple[Optional[float], Optional[float]]) -> None: ...
 
     @intervals.setter
     def intervals(self, new: Union[float, tuple[Optional[float], Optional[float]]]) -> None:
@@ -203,7 +197,7 @@ class Client:
 
         Parameters
         ----------
-        bot_id: Optional:class:`int`
+        bot_id: Optional[:class:`int`]
             The ID of the bot.
             Defaults to the Bot initialized with.
         user_id: :class:`int`

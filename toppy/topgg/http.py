@@ -1,40 +1,39 @@
 from __future__ import annotations
 
-from typing import Union, Any, Optional
-import asyncio
+from typing import Union, Any, Optional, TYPE_CHECKING
 import logging
 
 import aiohttp
 
-from .errors import *
+from ..errors import *
+from ..utils import cleanup_params
+
+if TYPE_CHECKING:
+    import asyncio
 
 
 __all__ = (
-    'HTTPClient'
+    'TopGGHTTPClient'
 )
-
-
-def cleanup_params(params: dict) -> dict:
-    return {k: v for k, v in params.items() if v is not None}
 
 
 _log = logging.getLogger(__name__)
 
 
-class HTTPClient:
-    BASE = 'https://top.gg/api'
+class TopGGHTTPClient:
+    TOPGG_BASE = 'https://top.gg/api'
 
-    def __init__(self, token, bot_id, loop: asyncio.AbstractEventLoop = None):
+    def __init__(self, token, *, loop: Optional[asyncio.AbstractEventLoop] = None,
+                 session: Optional[aiohttp.ClientSession] = None):
         self.token = token
-        self.bot_id = bot_id
-        self.session = aiohttp.ClientSession(headers=self.headers, loop=loop)
+        self.session = session or aiohttp.ClientSession(loop=loop)
 
     @property
     def headers(self):
         return {'Authorization': self.token}
 
     async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
-        resp = await self.session.request(method, self.BASE + url, **kwargs)
+        resp = await self.session.request(method, self.TOPGG_BASE + url, **kwargs, headers=self.headers)
         json = await resp.json()
 
         _log.info(f'{resp.method} {resp.url} has returned with {resp.status} {json}')
@@ -76,7 +75,7 @@ class HTTPClient:
             data = await resp.json()
             return data['voted'] is True
 
-    async def post_stats(self, bot_id, /, *, server_count: Union[int, list], shard_count: Optional[int] = None
+    async def post_stats(self, bot_id: int, /, *, server_count: Union[int, list], shard_count: Optional[int] = None
                          ) -> aiohttp.ClientResponse:
         data = cleanup_params({
             'server_count': server_count,

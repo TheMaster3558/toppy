@@ -1,44 +1,29 @@
-from __future__ import annotations 
-
 import asyncio
-from typing import Optional, Union, AsyncIterator
+from typing import TYPE_CHECKING, Optional, overload, Union, AsyncIterator, Awaitable
 
 import aiohttp
 
-from .http import HTTPClient
-from .bot import Bot
-from .user import User
-from .protocols import Client
-from . import utils
+from .dbl import DBLClient
+from .topgg import TopGGClient
+
+if TYPE_CHECKING:
+    from .protocols import Client as ClientProtocol
+    from .topgg.bot import Bot
+    from .topgg.user import User
 
 
-__all__ = (
-    'ClientNotReady',
-    'TopGGClient'
-)
-
-
-MISSING = utils.MISSING
-
-
-class ClientNotReady(Exception):
-    def __init__(self):
-        message = 'The bot is not ready and does not have an application ID set so no ID could be found'
-        super().__init__(message)
-
-
-class TopGGClient:
-    """A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
-    and accessing data about other Discord Bots on Top.gg
-
-    https://top.gg/
+class Client:
+    """A class designed to handle both Top.gg and Discord Bot List
+    For individual handling use :class:`DBLClient` or :class:`TopGGClient`
 
     Parameters
     ----------
     client: :class:`Client`
         The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
-    token: :class:`str`
-        The DBL token found in the Webhooks tab of the bots owner only section.
+    dbl_token: :class:`str`
+        The authorization token for Discord Bot List
+    topgg_token: :class:`str`
+        The authorization token for Top.gg
     interval: Optional[:class:`float`]
         The interval in seconds to auto-post the stats.
         Defaults to 600.
@@ -49,76 +34,117 @@ class TopGGClient:
         Whether to start the auto post task when the bot is ready.
         If False then it must be manually started with `start`
         Defaults to True
-
+    session: Optional[:class:`aiohttp.ClientSession`]
+        The session for the HTTP Client.
     """
-
     def __init__(
             self,
-            client: Client,
+            client: ClientProtocol,
             /,
-            token: str,
+            dbl_token: str,
+            topgg_token: str,
             *,
             interval: Optional[float] = None,
             post_shard_count: bool = False,
-            start_on_ready: bool = True
+            start_on_ready: bool,
+            session: Optional[aiohttp.ClientSession] = None
     ):
-        self.http: HTTPClient = None  # type: ignore
-        # filled in on login for the bots user id
-
-        self.token: str = token
-        
-        if interval is None:
-            interval = 600
-        self.interval: float = interval
-        
-        self.post_shard_count: bool = post_shard_count
-        self.start_on_ready: bool = start_on_ready
-
         self.client = client
-        
-        self.__task: asyncio.Task = MISSING
-        self._merge_starts()
+
+        self.__dbl: DBLClient = DBLClient(
+            client, token=dbl_token,
+            interval=interval,
+            start_on_ready=start_on_ready,
+            session=session
+        )
+
+        self.__topgg: TopGGClient = TopGGClient(
+            client,
+            token=topgg_token,
+            interval=interval,
+            post_shard_count=post_shard_count,
+            start_on_ready=start_on_ready,
+            session=session
+        )
 
     @property
-    def task(self) -> asyncio.Task:
-        return self.__task
+    def intervals(self) -> tuple[float, float]:
+        """Returns the intervals of the autopost task. First the dbl, then the topgg.
+        Returns tuple[:class:`float`]
+        """
+        return self.__dbl.interval, self.__topgg.interval
+
+    @overload  # type: ignore # type checker doesn't want decorators over properties
+    @intervals.setter
+    def intervals(self, new: float) -> None: ...
+
+    @overload  # type: ignore # type checker doesn't want decorators over properties
+    @intervals.setter
+    def intervals(self, new: tuple[Optional[float], Optional[float]]) -> None: ...
+
+    @intervals.setter
+    def intervals(self, new: Union[float, tuple[Optional[float], Optional[float]]]) -> None:
+        if isinstance(new, (float, int)):
+            self.__dbl.interval = new
+            self.__topgg.interval = new
+        elif isinstance(new, tuple):
+            dbl, topgg = new
+
+            if dbl is not None:
+                self.__dbl.interval = dbl
+            if topgg is not None:
+                self.__topgg.interval = topgg
+
+        else:
+            raise TypeError(f'Expected `float` or `tuple[float, float]` not {new.__class__.__name__!r}')
 
     def _merge_starts(self) -> None:
         old = self.client.start
-        # used over setup_hook for fork support
-        
-        async def start(*args, **kwargs) -> None:
-            self.client.loop.create_task(self.http_init())
-            if self.start_on_ready:
-                self.start()
 
-            await old(*args, **kwargs)
-        
+        # used over setup_hook for fork support
+
+        async def start(*args, **kwargs) -> None:
+            if self.__dbl.start_on_ready:
+                self.__dbl.start()
+            if self.__topgg.start_on_ready:
+                self.__topgg.start()
+
+            await old(*args, **kwargs)  # type: ignore  # not sure why this happens
+
         self.client.start = start  # type: ignore # "Cannot assign to method"
 
-    def _get_bot_id(self) -> int:
-        if self.client.application_id:
-            return self.client.application_id
-        if self.client.user:
-            return self.client.user.id
-        raise ClientNotReady()
+    def start(self):
+        """Starts the autopost task"""
+        self.__dbl.start()
+        self.__topgg.start()
 
-    def start(self) -> None:
-        """Starts the autopost task."""
-        self.__task = self.client.loop.create_task(self._post_task(), name='top_gg_autopost')
+    def cancel(self):
+        """Cancels the task of auto posting stats"""
+        self.__dbl.cancel()
+        self.__topgg.cancel()
 
-    def cancel(self) -> None:
-        """Cancels the task of auto posting stats to Top.gg"""
-        self.task.cancel()
+    @property
+    def dbl_task(self) -> asyncio.Task:
+        """
+        Returns
+        --------
+        The :class:`asyncio.Task` object for dbl autopost.
+        """
+        return self.__dbl.task
 
-    def finish(self) -> None:
-        """Equivalent to `stop` but posts a final time"""
-        self.cancel()
-        self.client.loop.create_task(self.post_stats())
+    @property
+    def topgg_task(self) -> asyncio.Task:
+        """
+        Returns
+        --------
+        The :class:`asyncio.Task` object for topgg autopost.
+        """
+        return self.__topgg.task
 
-    async def http_init(self) -> None:
-        await self.client.wait_until_ready()
-        self.http = HTTPClient(self.token, self._get_bot_id(), loop=self.client.loop)
+    async def post_stats(self) -> None:
+        """Post your bots stats to Discord Bot List and Top.gg
+        All stats are automatically found and posted."""
+        await asyncio.gather(self.__dbl.post_stats(), self.__topgg.post_stats())
 
     async def search_bots(self, query: str, *, limit: Optional[int] = None, offset: Optional[int] = None
                           ) -> list[Bot]:
@@ -139,8 +165,7 @@ class TopGGClient:
         --------
         list[:class:`Bot`]:
         """
-        raw_bots = await self.http.search_bots(query, limit=limit, offset=offset)
-        return [Bot(bot) for bot in raw_bots]
+        return await self.__topgg.search_bots(query=query, limit=limit, offset=offset)
 
     async def search_one_bot(self, bot_id: int, /) -> Bot:
         """Search a single bot on Top.gg
@@ -155,8 +180,7 @@ class TopGGClient:
         --------
         :class:`Bot`:
         """
-        data = await self.http.search_one_bot(bot_id)
-        return Bot(data)
+        return await self.search_one_bot(bot_id)
 
     async def last_1000_votes(self, bot_id: int = None, /) -> AsyncIterator[User]:
         """Get the last 1000 votes of a bot on Top.gg
@@ -172,11 +196,7 @@ class TopGGClient:
         -------
         :class:`User`
         """
-        bot_id = bot_id or self._get_bot_id()
-
-        users = await self.http.last_1000_votes(bot_id)
-        for user in users:
-            yield User(user)
+        return self.__topgg.last_1000_votes(bot_id)
 
     async def check_if_voted(self, bot_id: Optional[int], user_id: int) -> bool:
         """Check if a user has voted on a bot
@@ -193,36 +213,4 @@ class TopGGClient:
         --------
         :class:`bool`
         """
-        bot_id = bot_id or self._get_bot_id()
-
-        return await self.http.user_vote(bot_id, user_id)
-
-    async def post_stats(self) -> None:
-        """Post your bots stats to Top.gg
-        All stats are automatically found and posted
-
-        dispatches `autopost_error` with the argument :class:`aiohttp.ClientResponseError`
-        or `autopost_success` with no arguments
-        """
-        bot_id = self._get_bot_id()
-
-        kwargs = {
-            'server_count': len(self.client.guilds or [])
-        }
-
-        if self.post_shard_count:
-            kwargs['shard_count'] = self.client.shard_count or 1
-
-        resp = await self.http.post_stats(bot_id, **kwargs)
-        try:
-            resp.raise_for_status()
-        except aiohttp.ClientResponseError as exc:
-            self.client.dispatch('autopost_error', exc)
-        else:
-            self.client.dispatch('autopost_success')
-
-    async def _post_task(self) -> None:
-        await self.client.wait_until_ready()
-        while not self.client.is_closed():
-            await self.post_stats()
-            await asyncio.sleep(self.interval)
+        return await self.__topgg.check_if_voted(bot_id, user_id)

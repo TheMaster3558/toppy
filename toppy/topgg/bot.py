@@ -16,7 +16,7 @@ class Bot:
     It will be initialized automatically. Not manually.
     """
 
-    def __init__(self, data):
+    def __init__(self, data: dict) -> None:
         self._data = data
 
     @cached_property

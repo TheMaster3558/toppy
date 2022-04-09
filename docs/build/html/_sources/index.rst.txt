@@ -3,26 +3,40 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Top.py's documentation!
+Welcome to toppy's documentation!
 ==================================
 
-A simple API wrapper for **Top.gg** in **Python** with many *simple* yet *powerful* features.
+A simple API wrapper for **Top.gg**  and **Discord Bot List** in **Python** with many *simple* yet *powerful* features.
 
-.. autoclass:: toppy.TopGGClient
+
+Top.gg
+-------
+
+.. autoclass:: toppy.topgg.TopGGClient
   :members:
 
 ---------
 
-.. autoclass:: toppy.User
+.. autoclass:: toppy.topgg.User
   :members:
   :undoc-members:
 
 ---------
 
-.. autoclass:: toppy.Bot
+.. autoclass:: toppy.topgg.Bot
   :members:
   :undoc-members:
 
+
+Discord Bot List
+----------------
+.. autoclass:: toppy.dbl.DBLClient
+  :members:
+
+
+Errors
+-------
 .. automodule:: toppy.errors
   :members:
   :undoc-members:
+

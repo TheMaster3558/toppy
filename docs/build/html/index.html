@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Top.py’s documentation! &mdash; Top.py 1.0.3 documentation</title>
+  <title>Welcome to toppy’s documentation! &mdash; Top.py 1.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,7 +37,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to Top.py’s documentation!</a></li>
+<li><a class="reference internal" href="#">Welcome to toppy’s documentation!</a><ul>
+<li><a class="reference internal" href="#top-gg">Top.gg</a></li>
+<li><a class="reference internal" href="#discord-bot-list">Discord Bot List</a></li>
+<li><a class="reference internal" href="#module-toppy.errors">Errors</a></li>
+</ul>
+</li>
 </ul>
 </div>
         </div>
@@ -54,7 +59,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Welcome to Top.py’s documentation!</li>
+      <li>Welcome to toppy’s documentation!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -64,12 +69,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-top-py-s-documentation">
-<h1>Welcome to Top.py’s documentation!<a class="headerlink" href="#welcome-to-top-py-s-documentation" title="Permalink to this headline"></a></h1>
-<p>A simple API wrapper for <strong>Top.gg</strong> in <strong>Python</strong> with many <em>simple</em> yet <em>powerful</em> features.</p>
+  <section id="welcome-to-toppy-s-documentation">
+<h1>Welcome to toppy’s documentation!<a class="headerlink" href="#welcome-to-toppy-s-documentation" title="Permalink to this headline"></a></h1>
+<p>A simple API wrapper for <strong>Top.gg</strong>  and <strong>Discord Bot List</strong> in <strong>Python</strong> with many <em>simple</em> yet <em>powerful</em> features.</p>
+<section id="top-gg">
+<h2>Top.gg<a class="headerlink" href="#top-gg" title="Permalink to this headline"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="toppy.TopGGClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.</span></span><span class="sig-name descname"><span class="pre">TopGGClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">toppy.protocols.Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_shard_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.TopGGClient" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">TopGGClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">toppy.protocols.Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_shard_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.TopGGClient" title="Permalink to this definition"></a></dt>
 <dd><p>A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
 and accessing data about other Discord Bots on Top.gg</p>
 <p><a class="reference external" href="https://top.gg/">https://top.gg/</a></p>
@@ -90,14 +97,14 @@ Defaults to True</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.cancel">
-<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.TopGGClient.cancel" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.cancel" title="Permalink to this definition"></a></dt>
 <dd><p>Cancels the task of auto posting stats to Top.gg</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.check_if_voted">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_if_voted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#toppy.TopGGClient.check_if_voted" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.check_if_voted">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_if_voted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.check_if_voted" title="Permalink to this definition"></a></dt>
 <dd><p>Check if a user has voted on a bot</p>
 <dl class="simple">
 <dt>bot_id: Optional:class:<cite>int</cite></dt><dd><p>The ID of the bot.
@@ -110,211 +117,269 @@ Defaults to the Bot initialized with.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.finish">
-<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.TopGGClient.finish" title="Permalink to this definition"></a></dt>
-<dd><p>Equivalent to <cite>stop</cite> but posts a final time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.last_1000_votes">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_1000_votes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncIterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#toppy.User" title="toppy.user.User"><span class="pre">toppy.user.User</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#toppy.TopGGClient.last_1000_votes" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.last_1000_votes">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_1000_votes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncIterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#toppy.topgg.User" title="toppy.topgg.user.User"><span class="pre">toppy.topgg.user.User</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.last_1000_votes" title="Permalink to this definition"></a></dt>
 <dd><p>Get the last 1000 votes of a bot on Top.gg</p>
 <dl class="simple">
-<dt>bot_id: Optional[Union[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</dt><dd><p>The ID of the bot.
+<dt>bot_id: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</dt><dd><p>The ID of the bot.
 Defaults to the Bot initialized with.
 Positional only.</p>
 </dd>
 </dl>
-<p><a class="reference internal" href="#toppy.User" title="toppy.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+<p><a class="reference internal" href="#toppy.topgg.User" title="toppy.topgg.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.post_stats">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">post_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.TopGGClient.post_stats" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.post_stats">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">post_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.post_stats" title="Permalink to this definition"></a></dt>
 <dd><p>Post your bots stats to Top.gg
 All stats are automatically found and posted</p>
-<p>dispatches <cite>autopost_error</cite> with the argument <code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientResponseError</span></code>
-or <cite>autopost_success</cite> with no arguments</p>
+<p>dispatches <cite>topgg_autopost_error</cite> with the argument <code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientResponseError</span></code>
+or <cite>topgg_autopost_success</cite> with no arguments</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.search_bots">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search_bots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#toppy.Bot" title="toppy.bot.Bot"><span class="pre">toppy.bot.Bot</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#toppy.TopGGClient.search_bots" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.search_bots">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search_bots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#toppy.topgg.Bot" title="toppy.topgg.bot.Bot"><span class="pre">toppy.topgg.bot.Bot</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.search_bots" title="Permalink to this definition"></a></dt>
 <dd><p>Search up bots on Top.gg</p>
 <dl class="simple">
 <dt>query: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The query to use when searching.</p>
 </dd>
-<dt>limit: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</dt><dd><p>The limit of <a class="reference internal" href="#toppy.Bot" title="toppy.Bot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></a> to return.
+<dt>limit: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</dt><dd><p>The limit of <a class="reference internal" href="#toppy.topgg.Bot" title="toppy.topgg.Bot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></a> to return.
 Keyword only.</p>
 </dd>
 <dt>offset: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</dt><dd><p>The amount of bots to skip in the results.
 Keyword only.</p>
 </dd>
 </dl>
-<p>list[<a class="reference internal" href="#toppy.Bot" title="toppy.Bot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></a>]:</p>
+<p>list[<a class="reference internal" href="#toppy.topgg.Bot" title="toppy.topgg.Bot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></a>]:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.search_one_bot">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search_one_bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#toppy.Bot" title="toppy.bot.Bot"><span class="pre">toppy.bot.Bot</span></a></span></span><a class="headerlink" href="#toppy.TopGGClient.search_one_bot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.search_one_bot">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search_one_bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#toppy.topgg.Bot" title="toppy.topgg.bot.Bot"><span class="pre">toppy.topgg.bot.Bot</span></a></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.search_one_bot" title="Permalink to this definition"></a></dt>
 <dd><p>Search a single bot on Top.gg</p>
 <dl class="simple">
-<dt>bot_id: Union[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The ID to search.
+<dt>bot_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>The ID to search.
 Positional only.</p>
 </dd>
 </dl>
-<p><a class="reference internal" href="#toppy.Bot" title="toppy.Bot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></a>:</p>
+<p><a class="reference internal" href="#toppy.topgg.Bot" title="toppy.topgg.Bot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bot</span></code></a>:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="toppy.TopGGClient.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.TopGGClient.start" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.topgg.TopGGClient.start" title="Permalink to this definition"></a></dt>
 <dd><p>Starts the autopost task.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="toppy.topgg.TopGGClient.task">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_asyncio.Task</span></em><a class="headerlink" href="#toppy.topgg.TopGGClient.task" title="Permalink to this definition"></a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt class="sig sig-object py" id="toppy.User">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.User" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.User">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.User" title="Permalink to this definition"></a></dt>
 <dd><p>A class that represents a user on Top.gg, not on discord.
 It will be initialized automatically. Not manually.</p>
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.User.avatar">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">avatar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.User.avatar" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.User.avatar">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">avatar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.User.avatar" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.User.id">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.User.id" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.User.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.topgg.User.id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.User.name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.User.name" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.User.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.User.name" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt class="sig sig-object py" id="toppy.Bot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.</span></span><span class="sig-name descname"><span class="pre">Bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.Bot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.topgg.</span></span><span class="sig-name descname"><span class="pre">Bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.topgg.Bot" title="Permalink to this definition"></a></dt>
 <dd><p>A class that represents a bot on Top.gg, not on discord.
 It will be initialized automatically. Not manually.</p>
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.avatar">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">avatar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.Bot.avatar" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.avatar">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">avatar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.Bot.avatar" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.certified">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">certified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#toppy.Bot.certified" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.certified">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">certified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#toppy.topgg.Bot.certified" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.date">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime.datetime</span></em><a class="headerlink" href="#toppy.Bot.date" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.date">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime.datetime</span></em><a class="headerlink" href="#toppy.topgg.Bot.date" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.discriminator">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">discriminator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.Bot.discriminator" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.discriminator">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">discriminator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.topgg.Bot.discriminator" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.featured_guilds">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">featured_guilds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.featured_guilds" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.featured_guilds">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">featured_guilds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.featured_guilds" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.github">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">github</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.github" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.github">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">github</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.github" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.id">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.Bot.id" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.topgg.Bot.id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.invite">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invite</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.invite" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.invite">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invite</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.invite" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.long_description">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">long_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.Bot.long_description" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.long_description">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">long_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.Bot.long_description" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.monthly_upvotes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">monthly_upvotes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.Bot.monthly_upvotes" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.monthly_upvotes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">monthly_upvotes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.topgg.Bot.monthly_upvotes" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.Bot.name" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.Bot.name" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.owners">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">owners</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.owners" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.owners">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">owners</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.owners" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.prefix">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.Bot.prefix" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.prefix">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.Bot.prefix" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.server_count">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">server_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.server_count" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.server_count">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">server_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.server_count" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.shard_count">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shard_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.shard_count" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.shard_count">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shard_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.shard_count" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.short_description">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">short_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.Bot.short_description" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.short_description">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">short_description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toppy.topgg.Bot.short_description" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.support">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">support</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.support" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.support">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">support</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.support" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.tags">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.tags" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.tags">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.tags" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.upvotes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upvotes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.Bot.upvotes" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.upvotes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upvotes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#toppy.topgg.Bot.upvotes" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.vanity">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vanity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.vanity" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.vanity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vanity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.vanity" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="toppy.Bot.website">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">website</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.Bot.website" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="toppy.topgg.Bot.website">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">website</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#toppy.topgg.Bot.website" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-toppy.errors"></span><dl class="py exception">
+</section>
+<section id="discord-bot-list">
+<h2>Discord Bot List<a class="headerlink" href="#discord-bot-list" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="toppy.dbl.DBLClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.dbl.</span></span><span class="sig-name descname"><span class="pre">DBLClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">toppy.protocols.Client</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_on_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.dbl.DBLClient" title="Permalink to this definition"></a></dt>
+<dd><p>A Client to access the Discord Bot List API. This includes auto-posting Discord Bot Stats.</p>
+<p><a class="reference external" href="https://discordbotlist.com/">https://discordbotlist.com/</a></p>
+<dl class="simple">
+<dt>client: <code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></dt><dd><p>The Discord Bot instance. Any Client derived from <code class="xref py py-class docutils literal notranslate"><span class="pre">discord.Client</span></code> or any other fork’s <cite>Client</cite></p>
+</dd>
+<dt>token: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The token for Discord Bot List</p>
+</dd>
+<dt>interval: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</dt><dd><p>The interval in seconds to auto-post the stats.
+Defaults to 600.</p>
+</dd>
+<dt>start_on_ready: <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>:</dt><dd><p>Whether to start the auto post task when the bot is ready.
+If False then it must be manually started with <cite>start</cite>
+Defaults to True</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toppy.dbl.DBLClient.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.dbl.DBLClient.cancel" title="Permalink to this definition"></a></dt>
+<dd><p>Cancels the task of auto posting stats to Discord Bot List</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toppy.dbl.DBLClient.post_stats">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">post_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.dbl.DBLClient.post_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Post your bots stats to Discord Bot List
+All stats are automatically found and posted</p>
+<p>dispatches <cite>dbl_autopost_error</cite> with the argument <code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientResponseError</span></code>
+or <cite>dbl_autopost_success</cite> with no arguments</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toppy.dbl.DBLClient.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toppy.dbl.DBLClient.start" title="Permalink to this definition"></a></dt>
+<dd><p>Starts the autopost task.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toppy.dbl.DBLClient.task">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_asyncio.Task</span></em><a class="headerlink" href="#toppy.dbl.DBLClient.task" title="Permalink to this definition"></a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-toppy.errors">
+<span id="errors"></span><h2>Errors<a class="headerlink" href="#module-toppy.errors" title="Permalink to this headline"></a></h2>
+<dl class="py exception">
 <dt class="sig sig-object py" id="toppy.errors.BadRequest">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.errors.</span></span><span class="sig-name descname"><span class="pre">BadRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">aiohttp.client_reqrep.ClientResponse</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toppy.errors.BadRequest" title="Permalink to this definition"></a></dt>
 <dd><p>Status 400</p>
 </dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="toppy.errors.ClientNotReady">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toppy.errors.</span></span><span class="sig-name descname"><span class="pre">ClientNotReady</span></span><a class="headerlink" href="#toppy.errors.ClientNotReady" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="toppy.errors.Forbidden">
@@ -339,6 +404,7 @@ It will be initialized automatically. Not manually.</p>
 <dd><p>Status 401</p>
 </dd></dl>
 
+</section>
 </section>
 
 

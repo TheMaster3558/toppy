@@ -12,7 +12,7 @@ class User:
     It will be initialized automatically. Not manually.
     """
 
-    def __init__(self, data):
+    def __init__(self, data: dict) -> None:
         self._data = data
 
     def __str__(self):
@@ -29,4 +29,3 @@ class User:
     @cached_property
     def avatar(self) -> str:
         return self._data['avatar']
-

@@ -1,9 +1,16 @@
-from typing import Any
+from __future__ import annotations
+
+from typing import Any, TypeVar
 
 
 __all__ = (
-    'MISSING'  # still shouldn't really be using this
+    'MISSING',
+    'cleanup_params',  # still shouldn't really be using this
 )
+
+
+K = TypeVar('K')
+V = TypeVar('V')
 
 
 class _MissingSentinel:
@@ -21,3 +28,7 @@ class _MissingSentinel:
 
 
 MISSING: Any = _MissingSentinel()
+
+
+def cleanup_params(params: dict[K, V]) -> dict[K, V]:
+    return {k: v for k, v in params.items() if v is not None}

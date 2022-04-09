@@ -32,7 +32,7 @@ Example
     bot.top_gg = toppy(
         bot, dbl_token=dbl_token,
         topgg_token=topgg_token
-)
+    )
     
     
     @bot.event

@@ -27,7 +27,7 @@ Example
     topgg_token = 'your Top.gg token here'
     
     bot = commands.Bot('!')  # or discord.Client()
-    bot.top_gg = toppy.Client(
+    toppy_client = toppy.Client(
         bot, dbl_token=dbl_token,
         topgg_token=topgg_token
     )

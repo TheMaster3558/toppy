@@ -10,9 +10,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import re
 import os
 import sys
+
+os.system('pip install git+https://github.com/chawkk6404/toppy')
 
 sys.path.insert(0, os.path.abspath('..'))
 

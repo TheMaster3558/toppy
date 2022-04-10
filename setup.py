@@ -19,7 +19,9 @@ with open('README.rst', 'r') as rm:
 
 
 packages = [
-    'toppy'
+    'toppy',
+    'toppy.dbl',
+    'toppy.topgg'
 ]
 
 

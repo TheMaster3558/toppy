@@ -12,6 +12,7 @@ A simple API wrapper for **Top.gg** and **Discord Bot List** in **Python** with 
 .. toctree::
   :maxdepth: 1
 
+  quickstart.rst
   both.rst
   dbl.rst
   topgg.rst

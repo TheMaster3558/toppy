@@ -2,5 +2,5 @@
 =========
 
 
-.. autoclass:: toppy.client.Client
+.. autoclass:: toppy.Client
   :members:

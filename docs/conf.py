@@ -18,6 +18,8 @@ os.system('pip install git+https://github.com/chawkk6404/toppy')
 sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
+with open('./index.rst', 'r') as r:
+    print(r.read())
 
 project = 'toppy'
 copyright = '2022, The Master and chawkk6404'

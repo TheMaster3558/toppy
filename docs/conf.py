@@ -14,7 +14,7 @@ import re
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('C:\\Users\chawk_jbu1gcm\\PycharmProjects\\topgg5'))
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
@@ -23,12 +23,7 @@ copyright = '2022, The Master and chawkk6404'
 author = 'The Master and chawkk6404'
 
 # The full version, including alpha/beta/rc tags
-with open('toppy/__init__.py', 'r') as v:
-    version = re.search(
-        r"'?__version__'? = '?\d\.\d\.\d'?",
-        v.read()
-    ).group().replace("'", '')
-    version = version[version.index('=')+1:]
+version = '1.1.1'
 
 # -- General configuration ---------------------------------------------------
 

@@ -5,6 +5,12 @@ A simple API wrapper for Top.gg and Discord Bot List made in Python.
 Specifically meant for discord.py and some forks.
 
 
+
+Documention
+-----------
+https://toppy-python.readthedocs.io/en/latest/
+
+
 Installation
 ------------
 **Python 3.8 or higher is needed**

@@ -145,6 +145,28 @@ class Client:
         The :class:`asyncio.Task` object for topgg autopost.
         """
         return self.__topgg.task
+    
+    @property
+    def dbl(self) -> DblClient:
+        """
+        Used for individually posting stats
+        
+        Returns
+        --------
+        :class:`DBLCLient`
+        """
+        return self.__dbl
+    
+    @property
+    def topgg(self) -> TopGGClient:
+        """
+        Used for individually posting stats
+        
+        Returns
+        --------
+        :class:`TopGGClient`
+        """
+        return self.__topgg
 
     async def post_stats(self) -> None:
         """Post your bots stats to Discord Bot List and Top.gg

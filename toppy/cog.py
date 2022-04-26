@@ -46,7 +46,7 @@ class ToppyCog(commands.Cog):
     @commands.Cog.listener('on_topgg_post_error')
     @commands.Cog.listener('on_dbl_post_error')
     async def post_error(error: aiohttp.ClientResponseError):
-        print(f'{__name__}: An error occured when posting stats. Status code: {error.status}')
+        print(f'{__name__}: An error occured when posting stats | Status code: {error.status}. Enable logging for more information.')
     
     @commands.command()
     @commands.is_owner()

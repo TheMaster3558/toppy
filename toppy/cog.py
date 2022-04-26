@@ -1,21 +1,26 @@
 from __future__ import annotations
 
 lib = inspect.getframeinfo(inspect.getouterframes(inspect.currentframe())[1][0])[0]  # get library name
-lib = lib.split('/')[-1][:-3]
+lib = lib.split('/')[-1]
+if lib.endswith('.py'):
+    lib = lib[:-3]
 
 discord = __import__(lib)
-commands = __import__(f'{lib}.ext.commands')
+from discord import commands
+
 
 from typing import TYPE_CHECKING
-from types import ModuleType
 import inspect
+import logging
 
 from . import Client, TopGGClient, DBLClient
 
 if TYPE_CHECKING:
+    import aiohttp
+    
+    from types import ModuleType
     discord: ModuleType
-    commands: ModuleType
-
+        
 
 class NoTokenSet(Exception):
     def __init__(self):
@@ -23,8 +28,8 @@ class NoTokenSet(Exception):
         super().__init__(message)
 
 
-class ToppyCog(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+class ToppyCog(commands.Cog):    
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         
         self.client = None
@@ -38,9 +43,14 @@ class ToppyCog(commands.Cog):
         else:
             raise NoTokenSet()
     
+    @commands.Cog.listener('on_topgg_post_error')
+    @commands.Cog.listener('on_dbl_post_error')
+    async def post_error(error: aiohttp.ClientResponseError):
+        print(f'{__name__}: An error occured when posting stats. Status code: {error.status}')
+    
     @commands.command()
     @commands.is_owner()
-    async def post(ctx: commands.Context, site: str = None) -> None:
+    async def post(ctx: commands.Context, site: str = None):
         if site is None or not isinstance(self.client, Client):
             await self.client.post_stats()
         elif site.lower() in ('dbl', 'd', 'discordbotlist'):
@@ -50,7 +60,17 @@ class ToppyCog(commands.Cog):
         else:
             await self.client.post_stats()
         
-        await ctx.send(f'Stats sucessfully posted.')
+        await ctx.send('Stats sucessfully posted.')
+    
+    @commands.command()
+    @commands.is_owner()
+    async def interval(ctx: commands.Context, interval: float):
+        if isinstance(self.client, Client):
+            self.client.intervals = intervals
+        else:
+            self.client.interval = interval
+            
+        await ctx.send(f'Interval changed to {interval}')
             
           
 if inspect.iscoroutinefunction(commands.Bot.add_cog):  # discord.py uses async setup but some forks don't

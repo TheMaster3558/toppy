@@ -210,9 +210,9 @@ class TopGGClient:
         try:
             resp.raise_for_status()
         except aiohttp.ClientResponseError as exc:
-            self.client.dispatch('topgg_autopost_error', exc)
+            self.client.dispatch('topgg_post_error', exc)
         else:
-            self.client.dispatch('topgg_autopost_success')
+            self.client.dispatch('topgg_post_success')
 
     async def _post_task(self) -> None:
         await self.client.wait_until_ready()

@@ -119,9 +119,9 @@ class DBLClient:
         try:
             resp.raise_for_status()
         except aiohttp.ClientResponseError as exc:
-            self.client.dispatch('dbl_autopost_error', exc)
+            self.client.dispatch('dbl_post_error', exc)
         else:
-            self.client.dispatch('dbl_autopost_success')
+            self.client.dispatch('dbl_post_success')
 
     async def _post_task(self) -> None:
         await self.client.wait_until_ready()

@@ -1,12 +1,7 @@
 from __future__ import annotations
 
-lib = inspect.getframeinfo(inspect.getouterframes(inspect.currentframe())[1][0])[0]  # get library name
-lib = lib.split('/')[-1]
-if lib.endswith('.py'):
-    lib = lib[:-3]
-
-discord = __import__(lib)
-from discord import commands
+import discord
+from discord.ext import commands
 
 
 from typing import TYPE_CHECKING
@@ -28,7 +23,6 @@ class NoTokenSet(Exception):
 class ToppyCog(commands.Cog):    
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-        
         self.client = None
         
         if hasattr(bot, 'dbl_token') and hasattr(bot, 'topgg_token'):
@@ -44,6 +38,11 @@ class ToppyCog(commands.Cog):
     @commands.Cog.listener('on_dbl_post_error')
     async def post_error(error: aiohttp.ClientResponseError):
         print(f'{__name__}: An error occured when posting stats | Status code: {error.status}. Enable logging for more information.')
+    
+    async def cog_command_error(ctx: commands.Context, error: commands.CommandError):
+        if isinstance(error, commands.NotOwner):
+            return
+        raise error
     
     @commands.command()
     @commands.is_owner()

@@ -18,9 +18,6 @@ from . import Client, TopGGClient, DBLClient
 if TYPE_CHECKING:
     import aiohttp
     
-    from types import ModuleType
-    discord: ModuleType
-        
 
 class NoTokenSet(Exception):
     def __init__(self):

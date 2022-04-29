@@ -3,7 +3,6 @@ from __future__ import annotations
 import discord
 from discord.ext import commands
 
-
 from typing import TYPE_CHECKING
 import inspect
 import logging

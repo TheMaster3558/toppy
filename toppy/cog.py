@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import inspect
-
-lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
-discord = __import__(lib)
-
+import importlib
 from typing import TYPE_CHECKING
 import inspect
 import logging
+
+lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
+discord = importlib.import_module(lib)
+commands = importlib.import_module(f'{lib}.ext.commands')
 
 from . import Client, TopGGClient, DBLClient
 

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Union, Any
 import inspect
 
 lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
-discord = importlib.import_module(lib)
+discord: Any = importlib.import_module(lib)
 commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
 from . import Client, TopGGClient, DBLClient

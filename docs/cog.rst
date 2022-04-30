@@ -22,7 +22,7 @@ If you just want a simple easy cog to load, you can use this!
 2. Load the extension
 
 discord.py's extensions are async but some forks are not.
-This library will automatically adjust it based on your library
+This library will automatically adjust it based on your library.
 
 .. code:: py
 

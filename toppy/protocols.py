@@ -1,7 +1,10 @@
 from __future__ import annotations
 
-from typing import Protocol, Any, Optional
+from typing import Protocol, Any, Optional, TYPE_CHECKING
 import asyncio
+
+if TYPE_CHECKING:
+    from types import ModuleType
 
 
 __all__ = (

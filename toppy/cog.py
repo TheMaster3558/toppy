@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-import inspect
 import importlib
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union, Any
 import inspect
-import logging
 
 lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
 discord = importlib.import_module(lib)
-commands = importlib.import_module(f'{lib}.ext.commands')
+commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
 from . import Client, TopGGClient, DBLClient
 
@@ -25,35 +23,36 @@ class NoTokenSet(Exception):
 class ToppyCog(commands.Cog):    
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-        self.client = None
+        self.client: Union[Client, DBLClient, TopGGClient]
         
         if hasattr(bot, 'dbl_token') and hasattr(bot, 'topgg_token'):
             self.client = Client(bot, dbl_token=bot.dbl_token, topgg_token=bot.topgg_token)  # type: ignore
         elif hasattr(bot, 'dbl_token'):
             self.client = DBLClient(bot, token=bot.dbl_token)  # type: ignore
         elif hasattr(bot, 'topgg_token'):
-            self.client = TopGG(bot, token=bot.topgg_token)
+            self.client = TopGGClient(bot, token=bot.topgg_token)
         else:
             raise NoTokenSet()
     
     @commands.Cog.listener('on_topgg_post_error')
     @commands.Cog.listener('on_dbl_post_error')
-    async def post_error(error: aiohttp.ClientResponseError):
-        print(f'{__name__}: An error occured when posting stats | Status code: {error.status}. Enable logging for more information.')
+    async def post_error(self, error: aiohttp.ClientResponseError):
+        print(f'{__name__}: An error occured when posting stats | Status code: {error.status}.'
+              f' Enable logging for more information.')
     
-    async def cog_command_error(ctx: commands.Context, error: commands.CommandError):
+    async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
         if isinstance(error, commands.NotOwner):
             return
         raise error
     
     @commands.command()
     @commands.is_owner()
-    async def post(ctx: commands.Context, site: str = None):
+    async def post(self, ctx: commands.Context, site: str = None):
         if site is None or not isinstance(self.client, Client):
             await self.client.post_stats()
-        elif site.lower() in ('dbl', 'd', 'discordbotlist'):
+        elif site.lower() in ('dbl', 'd', 'discordbotlist') and isinstance(self.client, Client):
             await self.client.dbl.post_stats()
-        elif site.lower() in ('topgg', 't', 'top.gg'):
+        elif site.lower() in ('topgg', 't', 'top.gg') and isinstance(self.client, Client):
             await self.client.topgg.post_stats()
         else:
             await self.client.post_stats()
@@ -62,18 +61,18 @@ class ToppyCog(commands.Cog):
     
     @commands.command()
     @commands.is_owner()
-    async def interval(ctx: commands.Context, interval: float):
+    async def interval(self, ctx: commands.Context, interval: float):
         if isinstance(self.client, Client):
-            self.client.intervals = intervals
+            self.client.intervals = interval  # type: ignore
         else:
             self.client.interval = interval
             
         await ctx.send(f'Interval changed to {interval}')
             
           
-if inspect.iscoroutinefunction(discord.ext.commands.Bot.add_cog):  # discord.py uses async setup but some forks don't
+if inspect.iscoroutinefunction(commands.Bot.add_cog):  # discord.py uses async setup but some forks don't
     async def setup(bot: commands.Bot) -> None:
         await bot.add_cog(ToppyCog(bot))
 else:
-    def setup(bot: commands.Bot) -> None:
+    def setup(bot: commands.Bot) -> None:  # type: ignore
         bot.add_cog(ToppyCog(bot))

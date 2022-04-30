@@ -147,7 +147,7 @@ class Client:
         return self.__topgg.task
     
     @property
-    def dbl(self) -> DblClient:
+    def dbl(self) -> DBLClient:
         """
         Used for individually posting stats
         

@@ -1,5 +1,5 @@
 import re
-import setuptools
+import setuptools  # type: ignore
 
 
 with open('toppy/__init__.py', 'r') as v:

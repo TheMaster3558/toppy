@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-import discord
-from discord.ext import commands
+import inspect
+
+lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
+discord = __import__(lib)
 
 from typing import TYPE_CHECKING
 import inspect
@@ -68,7 +70,7 @@ class ToppyCog(commands.Cog):
         await ctx.send(f'Interval changed to {interval}')
             
           
-if inspect.iscoroutinefunction(commands.Bot.add_cog):  # discord.py uses async setup but some forks don't
+if inspect.iscoroutinefunction(discord.ext.commands.Bot.add_cog):  # discord.py uses async setup but some forks don't
     async def setup(bot: commands.Bot) -> None:
         await bot.add_cog(ToppyCog(bot))
 else:

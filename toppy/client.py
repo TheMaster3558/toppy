@@ -49,7 +49,7 @@ class Client:
             *,
             interval: Optional[float] = None,
             post_shard_count: bool = False,
-            start_on_ready: bool,
+            start_on_ready: bool = True,
             session: Optional[aiohttp.ClientSession] = None
     ):
         self.client = client

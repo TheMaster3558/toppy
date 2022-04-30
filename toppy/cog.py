@@ -26,9 +26,9 @@ class ToppyCog(commands.Cog):
         self.client: Union[Client, DBLClient, TopGGClient]
         
         if hasattr(bot, 'dbl_token') and hasattr(bot, 'topgg_token'):
-            self.client = Client(bot, dbl_token=bot.dbl_token, topgg_token=bot.topgg_token)  # type: ignore
+            self.client = Client(bot, dbl_token=bot.dbl_token, topgg_token=bot.topgg_token)
         elif hasattr(bot, 'dbl_token'):
-            self.client = DBLClient(bot, token=bot.dbl_token)  # type: ignore
+            self.client = DBLClient(bot, token=bot.dbl_token)
         elif hasattr(bot, 'topgg_token'):
             self.client = TopGGClient(bot, token=bot.topgg_token)
         else:

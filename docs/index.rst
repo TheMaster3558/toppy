@@ -18,3 +18,4 @@ A simple API wrapper for **Top.gg** and **Discord Bot List** in **Python** with 
   topgg.rst
   errors.rst
   events.rst
+  cog.rst

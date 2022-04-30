@@ -4,7 +4,7 @@ Quickstart
 
 --------------
 Installation
-------------
+--------------
 **Python 3.8 or higher is needed**
 
 .. code:: sh

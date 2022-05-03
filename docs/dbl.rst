@@ -4,4 +4,3 @@
 
 .. autoclass:: toppy.dbl.DBLClient
   :members:
-  :undoc-members:

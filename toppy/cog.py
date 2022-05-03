@@ -41,6 +41,10 @@ class ToppyCog(commands.Cog):
               f' Enable logging for more information.')
     
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
+        """
+        Catches all errors in this cog raised by `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
+        """
+        
         if isinstance(error, commands.NotOwner):
             return
         raise error
@@ -48,6 +52,23 @@ class ToppyCog(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def post(self, ctx: commands.Context, site: str = None):
+        """
+        A command to post your stats to Discord Bot List or Top.gg
+        
+        Usage
+        ------
+        `[p]post [site]
+        
+        Command Parameters
+        -------------------
+        site: :class:`str`
+            Not required. The site to post to. If not provided it will either post to both or one.
+            
+        Checks
+        -------
+        `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
+        """
+        
         if site is None or not isinstance(self.client, Client):
             await self.client.post_stats()
         elif site.lower() in ('dbl', 'd', 'discordbotlist') and isinstance(self.client, Client):
@@ -62,6 +83,24 @@ class ToppyCog(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def interval(self, ctx: commands.Context, interval: float):
+        """
+        A command to post your stats to Discord Bot List or Top.gg
+        
+        Usage
+        ------
+        `[p]interval <interval>
+        
+        Command Parameters
+        -------------------
+        site: :class:`float`
+            The interval to change to. If we are using :class:`Client`
+            then both Discord Bot List and Top.gg intervals will be changed.
+            
+        Checks
+        -------
+        `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
+        """
+        
         if isinstance(self.client, Client):
             self.client.intervals = interval  # type: ignore
         else:

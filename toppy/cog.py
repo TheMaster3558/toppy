@@ -7,7 +7,7 @@ import inspect
 try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
 except IndexError:
-    # if not loaded property
+    # if not extension not loaded properly
     # happens when sphinx docs
     import discord
     from discord.ext import commands

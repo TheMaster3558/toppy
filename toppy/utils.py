@@ -26,9 +26,13 @@ class _MissingSentinel:
     def __repr__(self):
         return '...'
 
+    def __getattr__(self, item):
+        pass
+
 
 MISSING: Any = _MissingSentinel()
 
 
 def cleanup_params(params: dict[K, V]) -> dict[K, V]:
     return {k: v for k, v in params.items() if v is not None}
+

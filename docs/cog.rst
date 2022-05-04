@@ -49,7 +49,8 @@ This library will automatically adjust it based on your library.
     
     
 Cog Reference
-==============
+--------------
 
 .. autoclass:: toppy.cog.ToppyCog
   :members:
+  :undoc-members:

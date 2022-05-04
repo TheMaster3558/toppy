@@ -5,3 +5,4 @@ main.py
 venv/
 .mypy_cache
 *.log
+docs/build

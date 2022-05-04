@@ -4,9 +4,18 @@ import importlib
 from typing import TYPE_CHECKING, Union, Any
 import inspect
 
-lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
-discord: Any = importlib.import_module(lib)
-commands: Any = importlib.import_module(f'{lib}.ext.commands')
+try:
+    lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
+except IndexError:
+    # if not loaded property
+    # happens when sphinx docs
+    import discord
+    from discord.ext import commands
+
+    commands.command = lambda **attrs: (lambda func: func)
+else:
+    discord: Any = importlib.import_module(lib)
+    commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
 from . import Client, TopGGClient, DBLClient
 
@@ -20,7 +29,12 @@ class NoTokenSet(Exception):
         super().__init__(message)
 
 
-class ToppyCog(commands.Cog):    
+class ToppyCog(commands.Cog):
+    """
+    A cog to make it simple to use this library.
+
+    """
+
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.client: Union[Client, DBLClient, TopGGClient]
@@ -49,24 +63,19 @@ class ToppyCog(commands.Cog):
             return
         raise error
     
-    @commands.command()
+    @commands.command(description='Post the bots stats to DBL, Top.gg, or both.')
     @commands.is_owner()
     async def post(self, ctx: commands.Context, site: str = None):
         """
-        A command to post your stats to Discord Bot List or Top.gg
-        
-        Usage
-        ------
-        `[p]post [site]
-        
-        Command Parameters
-        -------------------
+        A command to post your stats to Discord Bot List, Top.gg, or both.
+
+        ``[p]post [site]``
+
         site: :class:`str`
             Not required. The site to post to. If not provided it will either post to both or one.
-            
-        Checks
-        -------
-        `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
+
+        The `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands
+        .is_owner>`__ check is used.
         """
         
         if site is None or not isinstance(self.client, Client):
@@ -80,25 +89,20 @@ class ToppyCog(commands.Cog):
         
         await ctx.send('Stats sucessfully posted.')
     
-    @commands.command()
+    @commands.command(description='A command to change the interval of the autopost.')
     @commands.is_owner()
     async def interval(self, ctx: commands.Context, interval: float):
         """
-        A command to post your stats to Discord Bot List or Top.gg
-        
-        Usage
-        ------
-        `[p]interval <interval>
-        
-        Command Parameters
-        -------------------
+        A command to change the interval of the autopost.
+
+        ``[p]interval <interval>``
+
         site: :class:`float`
             The interval to change to. If we are using :class:`Client`
             then both Discord Bot List and Top.gg intervals will be changed.
             
-        Checks
-        -------
-        `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
+        The `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext
+        .commands.is_owner>`__ check is used.
         """
         
         if isinstance(self.client, Client):

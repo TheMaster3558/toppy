@@ -12,7 +12,8 @@ except IndexError:
     import discord
     from discord.ext import commands
 
-    commands.command = lambda **attrs: (lambda func: func)
+    commands.command = lambda **attrs: (lambda func: func)  # so sphinx gets correct signature
+    # otherwise the function would be discord.ext.commands.Command
 else:
     discord: Any = importlib.import_module(lib)
     commands: Any = importlib.import_module(f'{lib}.ext.commands')

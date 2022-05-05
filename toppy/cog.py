@@ -1,16 +1,16 @@
 from __future__ import annotations
 
 import importlib
-from typing import TYPE_CHECKING, Union, Any
 import inspect
+from typing import TYPE_CHECKING, Union, Any
 
 try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
 except IndexError:
     # if not extension not loaded properly
     # happens when sphinx docs
-    import discord
-    from discord.ext import commands
+    import discord  # type: ignore
+    from discord.ext import commands  # type: ignore
 
     commands.command = lambda **attrs: (lambda func: func)  # so sphinx gets correct signature
     # otherwise the function would be discord.ext.commands.Command
@@ -18,11 +18,13 @@ else:
     discord: Any = importlib.import_module(lib)
     commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
-from . import Client, TopGGClient, DBLClient
+from .client import Client
+from .dbl import DBLClient
+from .topgg import TopGGClient
 
 if TYPE_CHECKING:
     import aiohttp
-    
+
 
 class NoTokenSet(Exception):
     def __init__(self):
@@ -34,12 +36,13 @@ class ToppyCog(commands.Cog):
     """
     A cog to make it simple to use this library.
 
+    Raises :class:`NoTokenSet` if not token has been set with bot vars.
     """
 
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.client: Union[Client, DBLClient, TopGGClient]
-        
+
         if hasattr(bot, 'dbl_token') and hasattr(bot, 'topgg_token'):
             self.client = Client(bot, dbl_token=bot.dbl_token, topgg_token=bot.topgg_token)
         elif hasattr(bot, 'dbl_token'):
@@ -48,22 +51,23 @@ class ToppyCog(commands.Cog):
             self.client = TopGGClient(bot, token=bot.topgg_token)
         else:
             raise NoTokenSet()
-    
+
     @commands.Cog.listener('on_topgg_post_error')
     @commands.Cog.listener('on_dbl_post_error')
     async def post_error(self, error: aiohttp.ClientResponseError):
         print(f'{__name__}: An error occured when posting stats | Status code: {error.status}.'
               f' Enable logging for more information.')
-    
+
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
         """
-        Catches all errors in this cog raised by `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
+        Catches all errors in this cog raised by `is_owner <https://discordpy.readthedocs.io/en/
+        latest/ext/commands/api.html#discord.ext.commands.is_owner>`__
         """
-        
+
         if isinstance(error, commands.NotOwner):
             return
         raise error
-    
+
     @commands.command(description='Post the bots stats to DBL, Top.gg, or both.')
     @commands.is_owner()
     async def post(self, ctx: commands.Context, site: str = None):
@@ -75,10 +79,10 @@ class ToppyCog(commands.Cog):
         site: :class:`str`
             Not required. The site to post to. If not provided it will either post to both or one.
 
-        The `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands
+        The `is_owner <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands
         .is_owner>`__ check is used.
         """
-        
+
         if site is None or not isinstance(self.client, Client):
             await self.client.post_stats()
         elif site.lower() in ('dbl', 'd', 'discordbotlist') and isinstance(self.client, Client):
@@ -87,9 +91,9 @@ class ToppyCog(commands.Cog):
             await self.client.topgg.post_stats()
         else:
             await self.client.post_stats()
-        
+
         await ctx.send('Stats sucessfully posted.')
-    
+
     @commands.command(description='A command to change the interval of the autopost.')
     @commands.is_owner()
     async def interval(self, ctx: commands.Context, interval: float):
@@ -105,15 +109,15 @@ class ToppyCog(commands.Cog):
         The `is_owner() <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext
         .commands.is_owner>`__ check is used.
         """
-        
+
         if isinstance(self.client, Client):
             self.client.intervals = interval  # type: ignore
         else:
             self.client.interval = interval
-            
+
         await ctx.send(f'Interval changed to {interval}')
-            
-          
+
+
 if inspect.iscoroutinefunction(commands.Bot.add_cog):  # discord.py uses async setup but some forks don't
     async def setup(bot: commands.Bot) -> None:
         await bot.add_cog(ToppyCog(bot))

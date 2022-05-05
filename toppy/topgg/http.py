@@ -6,7 +6,7 @@ import logging
 import aiohttp
 
 from ..errors import *
-from ..utils import cleanup_params
+from ..utils import cleanup_params, RateLimiter
 
 if TYPE_CHECKING:
     import asyncio
@@ -28,11 +28,26 @@ class TopGGHTTPClient:
         self.token = token
         self.session = session or aiohttp.ClientSession(loop=loop)
 
+        self.rate_limits: dict[str, RateLimiter] = {
+            '/': RateLimiter(100, 1),
+            '/bots': RateLimiter(60, 60)
+        }
+
     @property
     def headers(self):
         return {'Authorization': self.token}
 
+    async def check(self, url: str):
+        k: str
+        v: RateLimiter
+
+        for k, v in self.rate_limits:  # type: ignore
+            if k in url:
+                await v.check()
+
     async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
+        await self.check(url)
+
         resp = await self.session.request(method, self.TOPGG_BASE + url, **kwargs, headers=self.headers)
         json = await resp.json()
 

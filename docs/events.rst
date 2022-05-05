@@ -15,3 +15,9 @@ Event Reference
    async def on_dbl_post_error(error: aiohttp.ClientResponseError):
       ...
 
+   async def on_topgg_vote(payload: toppy.TopGGVotePayload):
+      ...
+
+   async def on_dbl_vote(payload: toppy.DiscordBotListPayload):
+      ...
+

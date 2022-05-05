@@ -6,6 +6,7 @@ import asyncio
 from aiohttp import web
 
 if TYPE_CHECKING:
+    from typing import Awaitable
     from .protocols import ClientProtocol, Snowflake
 
 
@@ -246,6 +247,19 @@ class WebhookServer(web.Application):
 
         self.get_loop = (lambda: loop) if loop else asyncio.get_running_loop
 
+    @_routes.post('/dbl')
+    async def dbl_votes(self, request: web.Request) -> web.Response:
+        if self.dbl_auth:
+            if request.headers.get('Authorization') != self.dbl_auth:
+                return web.Response(status=401)
+
+        data = await request.json()
+        payload = TopGGVotePayload(self.client, data)
+
+        self.client.dispatch('dbl_vote', payload)
+
+        return web.Response(status=200, body=__package__)
+
     @_routes.post('/top_gg')
     async def top_gg_votes(self, request: web.Request) -> web.Response:
         if self.topgg_auth:
@@ -259,18 +273,9 @@ class WebhookServer(web.Application):
 
         return web.Response(status=200, body=__package__)
 
-    @_routes.post('/dbl')
-    async def dbl_votes(self, request: web.Request) -> web.Response:
-        if self.dbl_auth:
-            if request.headers.get('Authorization') != self.dbl_auth:
-                return web.Response(status=401)
-
-        data = await request.json()
-        payload = TopGGVotePayload(self.client, data)
-
-        self.client.dispatch('dbl_vote', payload)
-
-        return web.Response(status=200, body=__package__)
+    if TYPE_CHECKING:
+        dbl_votes: Awaitable[web.Response]
+        top_gg_votes: Awaitable[web.Response]
 
     def run(self, **kwargs) -> asyncio.Task:
         """

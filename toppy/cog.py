@@ -4,19 +4,17 @@ import importlib
 import inspect
 from typing import TYPE_CHECKING, Union, Any
 
+SPHINX = False
 try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
 except IndexError:
     # if not extension not loaded properly
     # happens when sphinx docs
-    import discord  # type: ignore
-    from discord.ext import commands  # type: ignore
+    SPHINX = True
+    lib = 'discord'
 
-    commands.command = lambda **attrs: (lambda func: func)  # so sphinx gets correct signature
-    # otherwise the function would be discord.ext.commands.Command
-else:
-    discord: Any = importlib.import_module(lib)
-    commands: Any = importlib.import_module(f'{lib}.ext.commands')
+discord: Any = importlib.import_module(lib)
+commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
 from .client import Client
 from .dbl import DBLClient
@@ -24,6 +22,9 @@ from .topgg import TopGGClient
 
 if TYPE_CHECKING:
     import aiohttp
+
+if SPHINX:
+    commands.command = lambda **attrs: lambda func: func
 
 
 class NoTokenSet(Exception):

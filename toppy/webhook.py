@@ -239,8 +239,8 @@ class WebhookServer(web.Application):
     def __init__(self, client: ClientProtocol, dbl_auth: Optional[str] = None,
                  topgg_auth: Optional[str] = None, loop: Optional[asyncio.AbstractEventLoop] = None, **kwargs):
         self.client = client
-        self.dbl_auth = dbl_auth
-        self.topgg_auth = topgg_auth
+        self.dbl_auth: Optional[str] = dbl_auth
+        self.topgg_auth: Optional[str] = topgg_auth
 
         super().__init__(**kwargs)
         self.add_routes(self._routes)

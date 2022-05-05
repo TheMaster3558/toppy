@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from typing import Optional, TYPE_CHECKING
+from functools import wraps
 
 import aiohttp
 
@@ -57,10 +58,12 @@ class DBLClient:
         self.start_on_ready: bool = start_on_ready
 
         self.client = client
-        self.http: DBLHTTPClient = DBLHTTPClient(token, loop=self.client.loop, session=session)
+        self.http: DBLHTTPClient = MISSING
+        self.token = token
+        self.__session: Optional[aiohttp.ClientSession] = session  # protected because may not be real session
 
         self.__task: asyncio.Task = MISSING
-        self._merge_starts()
+        self._merge()
 
     @property
     def task(self) -> asyncio.Task:
@@ -71,18 +74,30 @@ class DBLClient:
         """
         return self.__task
 
-    def _merge_starts(self) -> None:
-        old = self.client.start
+    def _merge(self) -> None:
+        old_start = self.client.start
+        old_close = self.client.close
 
         # used over setup_hook for fork support
-
+        @wraps(old_start)
         async def start(*args, **kwargs) -> None:
+            task = self.client.loop.create_task(old_start(*args, **kwargs))
+
+            self.http = DBLHTTPClient(self.token, session=self.__session)
             if self.start_on_ready:
                 self.start()
 
-            await old(*args, **kwargs)
+            await task
+
+        @wraps(old_close)
+        async def close() -> None:
+            if not self.http.session.closed:
+                await self.http.session.close()
+
+            await old_close()
 
         self.client.start = start  # type: ignore # "Cannot assign to method"
+        self.client.close = close  # type: ignore
 
     def _get_bot_id(self) -> int:
         if self.client.application_id:

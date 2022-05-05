@@ -47,7 +47,6 @@ class TopGGHTTPClient:
 
     async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
         await self.check(url)
-
         resp = await self.session.request(method, self.TOPGG_BASE + url, **kwargs, headers=self.headers)
         json = await resp.json()
 

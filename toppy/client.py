@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import asyncio
 from typing import TYPE_CHECKING, Optional, Union, AsyncIterator
+from functools import wraps
 
 import aiohttp
 
 from .dbl import DBLClient
 from .topgg import TopGGClient
+from .utils import MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol
@@ -44,32 +46,13 @@ class Client:
             self,
             client: ClientProtocol,
             /,
-            dbl_token: str,
-            topgg_token: str,
-            *,
-            interval: Optional[float] = None,
-            post_shard_count: bool = False,
-            start_on_ready: bool = True,
-            session: Optional[aiohttp.ClientSession] = None
+            **options
     ):
         self.client = client
-        session = session or aiohttp.ClientSession()
+        self.original_options = options
 
-        self.__dbl: DBLClient = DBLClient(
-            client, token=dbl_token,
-            interval=interval,
-            start_on_ready=start_on_ready,
-            session=session
-        )
-
-        self.__topgg: TopGGClient = TopGGClient(
-            client,
-            token=topgg_token,
-            interval=interval,
-            post_shard_count=post_shard_count,
-            start_on_ready=start_on_ready,
-            session=session
-        )
+        self.__dbl: DBLClient = MISSING
+        self.__topgg: TopGGClient = MISSING
 
     @property
     def intervals(self) -> tuple[float, float]:
@@ -104,19 +87,74 @@ class Client:
             raise TypeError(f'Expected `float` or `tuple[float, float]` not {new.__class__.__name__!r}')
 
     def _merge_starts(self) -> None:
-        old = self.client.start
+        """
+                self.__dbl: DBLClient = DBLClient(
+            client, token=dbl_token,
+            interval=interval,
+            start_on_ready=start_on_ready,
+            session=session
+        )
+
+        self.__topgg: TopGGClient = TopGGClient(
+            client,
+            token=topgg_token,
+            interval=interval,
+            post_shard_count=post_shard_count,
+            start_on_ready=start_on_ready,
+            session=session
+        )
+        """
+        """
+                    dbl_token: str,
+                topgg_token: str,
+                *,
+                interval: Optional[float] = None,
+                post_shard_count: bool = False,
+                start_on_ready: bool = True,
+                session: Optional[aiohttp.ClientSession] = None
+        """
+        old_start = self.client.start
+        old_close = self.client.close
 
         # used over setup_hook for fork support
-
+        @wraps(old_start)
         async def start(*args, **kwargs) -> None:
-            if self.__dbl.start_on_ready:
+            task = self.client.loop.create_task(old_start(*args, **kwargs))
+
+            session = self.original_options.get('session', aiohttp.ClientSession(loop=self.client.loop))
+
+            self.__dbl = DBLClient(
+                self.client, token=self.original_options['dbl_token'],
+                interval=self.original_options.get('interval'),
+                start_on_ready=self.original_options.get('start_on_ready', True),
+                session=session
+            )
+
+            self.__topgg = TopGGClient(
+                self.client, token=self.original_options['topgg_token'],
+                interval=self.original_options.get('interval'),
+                post_shard_count=self.original_options.get('post_shard_count', False),
+                start_on_ready=self.original_options.get('start_on_ready', True),
+                session=session
+            )
+
+            if self.original_options.get('start_on_ready', True):
                 self.__dbl.start()
-            if self.__topgg.start_on_ready:
                 self.__topgg.start()
 
-            await old(*args, **kwargs)
+            await task
+
+        @wraps(old_close)
+        async def close() -> None:
+            if not self.__dbl.http.session.closed:
+                await self.__dbl.http.session.close()
+            if not self.__topgg.http.session.closed:
+                await self.__topgg.http.session.close()
+
+            await old_close()
 
         self.client.start = start  # type: ignore # "Cannot assign to method"
+        self.client.close = close  # type: ignore
 
     def start(self):
         """Starts the autopost task"""

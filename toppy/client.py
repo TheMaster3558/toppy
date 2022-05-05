@@ -87,32 +87,6 @@ class Client:
             raise TypeError(f'Expected `float` or `tuple[float, float]` not {new.__class__.__name__!r}')
 
     def _merge_starts(self) -> None:
-        """
-                self.__dbl: DBLClient = DBLClient(
-            client, token=dbl_token,
-            interval=interval,
-            start_on_ready=start_on_ready,
-            session=session
-        )
-
-        self.__topgg: TopGGClient = TopGGClient(
-            client,
-            token=topgg_token,
-            interval=interval,
-            post_shard_count=post_shard_count,
-            start_on_ready=start_on_ready,
-            session=session
-        )
-        """
-        """
-                    dbl_token: str,
-                topgg_token: str,
-                *,
-                interval: Optional[float] = None,
-                post_shard_count: bool = False,
-                start_on_ready: bool = True,
-                session: Optional[aiohttp.ClientSession] = None
-        """
         old_start = self.client.start
         old_close = self.client.close
 

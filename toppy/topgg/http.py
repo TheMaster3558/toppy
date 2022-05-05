@@ -41,7 +41,7 @@ class TopGGHTTPClient:
         k: str
         v: RateLimiter
 
-        for k, v in self.rate_limits:  # type: ignore
+        for k, v in self.rate_limits.items():
             if k in url:
                 await v.check()
 

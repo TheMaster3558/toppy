@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TYPE_CHECKING
+from typing import Literal, Optional, TYPE_CHECKING, Type, cast
 import asyncio
 from json.decoder import JSONDecodeError
 
@@ -226,7 +226,7 @@ class CopyClassMeta(type):
     # in result we must use this to make the class work as an instance
     def __call__(cls, *args, **kwargs) -> WebhookServer:
         webhook_server_copy = type(
-            'WebhookServerCopy', WebhookServer.__bases__, dict(WebhookServer.__dict__)
+            'WebhookServer', WebhookServer.__bases__, dict(WebhookServer.__dict__)
         )
         return webhook_server_copy(*args, **kwargs)
 
@@ -267,6 +267,9 @@ class WebhookServer(web.Application):
     @_routes.post('/dbl')
     @CallableClassMethod
     async def dbl_votes(cls, request: web.Request) -> web.Response:
+        if TYPE_CHECKING:
+            cast(Type[WebhookServer], cls)
+
         if cls.dbl_auth:
             if request.headers.get('Authorization') != cls.dbl_auth:
                 return web.Response(status=401)
@@ -284,6 +287,9 @@ class WebhookServer(web.Application):
     @_routes.get('/topgg')
     @CallableClassMethod
     async def top_gg_votes(cls, request: web.Request) -> web.Response:
+        if TYPE_CHECKING:
+            cast(Type[WebhookServer], cls)
+
         if cls.topgg_auth:
             if request.headers.get('Authorization') != cls.topgg_auth:
                 return web.Response(status=401)

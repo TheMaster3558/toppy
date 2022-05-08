@@ -37,4 +37,4 @@ __title__ = 'toppy'
 __authors__ = ('The Master', 'chawkk6404')
 __license__ = 'MIT'
 __copyright__ = '2022-present The Master and chawkk6404'
-__version__ = '1.3.1'
+__version__ = '1.3.2'

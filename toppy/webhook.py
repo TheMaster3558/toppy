@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TYPE_CHECKING, Type, cast
-import asyncio
+from typing import Literal, Optional, TYPE_CHECKING, Type
 from json.decoder import JSONDecodeError
 
 from aiohttp import web
@@ -215,23 +214,15 @@ class TopGGVotePayload:
         self.__user = await self.__client.fetch_user(self.user_id)
 
 
-class CallableClassMethod(classmethod):
-    async def __call__(self, *args, **kwargs):
-        return await self.__func__(WebhookServer, *args, **kwargs)
-
-
-class CopyClassMeta(type):
-    # class must be deep copied
-    # aiohttp doesn't support self so class methods must be used
-    # in result we must use this to make the class work as an instance
-    def __call__(cls, *args, **kwargs) -> WebhookServer:
-        webhook_server_copy = type(
-            'WebhookServer', WebhookServer.__bases__, dict(WebhookServer.__dict__)
-        )
-        return webhook_server_copy(*args, **kwargs)
-
-
-class WebhookServer(web.Application):
+def create_webhook_server(
+        client: ClientProtocol,
+        *,
+        dbl_auth: Optional[str] = None,
+        topgg_auth: Optional[str] = None,
+        web_app_class: Type[web.Application] = web.Application,
+        application: Optional[web.Application] = None,
+        **kwargs
+) -> web.Application:
     """
     A webhooks server to receives votes and dispatch them to your bot!
 
@@ -244,34 +235,26 @@ class WebhookServer(web.Application):
         The Discord Bot List webhook secret
     topgg_auth: Optional[:class:`str`]
         The Authorization for the webhook
+    web_app_class: Type[:class:`aiohttp.web.Application`]
+        The web application class to use. Must be derived from :class:`aiohttp.web.Application`.
+        If combined with ``application`` this will be ignored.
+    application: :class:`aiohttp.web.Application`
+        A pre-existing application to use.
     **kwargs:
-        Keyword arguments to pass onto the super call for :class:`aiohttp.web.Application`
+        Keyword arguments to pass onto ``web_app_class``
+
+    Returns
+    --------
+    The class from ``web_app_class`` with the routes added.
+    The routes are posts to ``/dbl`` and/or ``/topgg``
     """
 
-    _routes = web.RouteTableDef()
+    routes = web.RouteTableDef()
 
-    client: ClientProtocol
-    dbl_auth: Optional[str]
-    topgg_auth: Optional[str]
-
-    def __init__(self, client: ClientProtocol, dbl_auth: Optional[str] = None,
-                 topgg_auth: Optional[str] = None, **kwargs):
-        cls = self.__class__
-        cls.client = client
-        cls.dbl_auth = dbl_auth
-        cls.topgg_auth = topgg_auth
-
-        super().__init__(**kwargs)
-        self.add_routes(self._routes)
-
-    @_routes.post('/dbl')
-    @CallableClassMethod
-    async def dbl_votes(cls, request: web.Request) -> web.Response:
-        if TYPE_CHECKING:
-            cast(Type[WebhookServer], cls)
-
-        if cls.dbl_auth:
-            if request.headers.get('Authorization') != cls.dbl_auth:
+    @routes.post('/dbl')
+    async def dbl_votes(request: web.Request) -> web.Response:
+        if dbl_auth:
+            if request.headers.get('Authorization') != dbl_auth:
                 return web.Response(status=401)
 
         try:
@@ -279,19 +262,15 @@ class WebhookServer(web.Application):
         except JSONDecodeError:
             return web.Response(status=400)
 
-        payload = TopGGVotePayload(cls.client, data)
-        cls.client.dispatch('dbl_vote', payload)
+        payload = TopGGVotePayload(client, data)
+        client.dispatch('dbl_vote', payload)
 
         return web.Response(status=200, body=__package__)
 
-    @_routes.get('/topgg')
-    @CallableClassMethod
-    async def top_gg_votes(cls, request: web.Request) -> web.Response:
-        if TYPE_CHECKING:
-            cast(Type[WebhookServer], cls)
-
-        if cls.topgg_auth:
-            if request.headers.get('Authorization') != cls.topgg_auth:
+    @routes.post('/dbl')
+    async def topgg_votes(request: web.Request) -> web.Response:
+        if topgg_auth:
+            if request.headers.get('Authorization') != topgg_auth:
                 return web.Response(status=401)
 
         try:
@@ -299,31 +278,45 @@ class WebhookServer(web.Application):
         except JSONDecodeError:
             return web.Response(status=400)
 
-        payload = TopGGVotePayload(cls.client, data)
-        cls.client.dispatch('topgg_vote', payload)
+        payload = TopGGVotePayload(client, data)
+        client.dispatch('topgg_vote', payload)
 
         return web.Response(status=200, body=__package__)
 
-    def run(self, **kwargs) -> asyncio.Task:
-        """
-        Run the application in the background.
+    if not application:
+        app = web_app_class(**kwargs)
+    else:
+        app = application
 
-        Parameters
-        -----------
-        **kwargs: The kwargs to pass into `aiohttp.web.TCPSite
+    app.add_routes(routes)
+
+    return app
+
+
+async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite],
+                             **kwargs) -> web.BaseSite:
+    """
+    Run the webhook server created in ``create_webhook_server``
+
+    Parameters
+    -----------
+    application: :class:`aiohttp.web.Application`
+        The application to run.
+    site_class: :class:`web.BaseSite`
+        The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`
+    **kwargs:
+        The kwargs to pass into `aiohttp.web.TCPSite
         <https://docs.aiohttp.org/en/stable/web_reference.html?highlight=TCPSite>`__
 
-        Returns
-        --------
-        :class:`asyncio.Task`
-        """
+    Returns
+    --------
+    The instance of the site class passed into ``site_class``
+    """
 
-        async def runner_task():
-            runner = web.AppRunner(self)
-            await runner.setup()
+    runner = web.AppRunner(application)
+    await runner.setup()
 
-            site = web.TCPSite(runner, **kwargs)
-            await site.start()
+    site = site_class(runner, **kwargs)
+    await site.start()
 
-        loop = self.client.loop
-        return loop.create_task(runner_task())
+    return site

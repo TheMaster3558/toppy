@@ -25,16 +25,16 @@ MISSING = utils.MISSING
 
 class TopGGClient:
     """A Client to access the Top.gg API. This includes auto-posting Discord Bot Stats
-    and accessing data about other Discord Bots on Top.gg
+    and accessing data about other Discord Bots on Top.gg.
 
     https://top.gg/
 
     Parameters
     ----------
     client: :class:`Client`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
+        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
     token: :class:`str`
-        The DBL token found in the Webhooks tab of the bots owner only section.
+        The token found in the Webhooks tab of the bots owner only section.
     interval: Optional[:class:`float`]
         The interval in seconds to auto-post the stats.
         Defaults to 600.
@@ -43,8 +43,8 @@ class TopGGClient:
         Defaults to False.
     start_on_ready: :class:`bool`:
         Whether to start the auto post task when the bot is ready.
-        If False then it must be manually started with `start`
-        Defaults to True
+        If False then it must be manually started with `start`.
+        Defaults to True.
     session: Optional[:class:`aiohttp.ClientSession`]
         The session for the HTTP Client.
 
@@ -81,8 +81,6 @@ class TopGGClient:
     @property
     def task(self) -> asyncio.Task:
         """
-        Returns
-        --------
         The :class:`asyncio.Task` object for autopost.
         """
         return self.__task
@@ -124,7 +122,7 @@ class TopGGClient:
         self.__task = self.client.loop.create_task(self._post_task(), name='topgg_autopost')
 
     def cancel(self) -> None:
-        """Cancels the task of auto posting stats"""
+        """Cancels the task of auto posting stats."""
         self.task.cancel()
 
     async def search_bots(self, query: str, *, limit: Optional[int] = None, offset: Optional[int] = None
@@ -132,7 +130,7 @@ class TopGGClient:
         """Search up bots on Top.gg
 
         Parameters
-        ----------
+        -----------
         query: :class:`str`
             The query to use when searching.
         limit: Optional[:class:`int`]
@@ -144,7 +142,7 @@ class TopGGClient:
 
         Returns
         --------
-        list[:class:`Bot`]:
+        list[:class:`Bot`]
         """
         raw_bots = await self.http.search_bots(query, limit=limit, offset=offset)
         return [Bot(bot) for bot in raw_bots]
@@ -160,13 +158,13 @@ class TopGGClient:
 
         Returns
         --------
-        :class:`Bot`:
+        :class:`Bot`
         """
         data = await self.http.search_one_bot(bot_id)
         return Bot(data)
 
     async def last_1000_votes(self, bot_id: int = None, /) -> AsyncIterator[User]:
-        """Get the last 1000 votes of a bot on Top.gg
+        """Get the last 1000 votes of a bot on Top.gg.
 
         Parameters
         ----------
@@ -186,7 +184,7 @@ class TopGGClient:
             yield User(user)
 
     async def check_if_voted(self, bot_id: Optional[int], user_id: int) -> bool:
-        """Check if a user has voted on a bot
+        """Check if a user has voted on a bot.
 
         Parameters
         ----------
@@ -205,11 +203,11 @@ class TopGGClient:
         return await self.http.user_vote(bot_id, user_id)
 
     async def post_stats(self) -> None:
-        """Post your bots stats to Top.gg
-        All stats are automatically found and posted
+        """Post your bots stats to Top.gg.
+        All stats are automatically found and posted.
 
         dispatches `topgg_autopost_error` with the argument :class:`aiohttp.ClientResponseError`
-        or `topgg_autopost_success` with no arguments
+        or `topgg_autopost_success` with no arguments.
         """
 
         bot_id = self._get_bot_id()

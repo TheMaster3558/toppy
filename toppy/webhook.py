@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .protocols import ClientProtocol, Snowflake
 
 
+# the following documentation has been pulled from the Discord Bot List and Top.gg documentation
 class DiscordBotListPayload:
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
@@ -80,7 +81,7 @@ class DiscordBotListPayload:
     def user(self) -> Optional[Snowflake]:
         """
         Returns the ``User`` object for the user based on what library your client is from.
-        If missing use ``fetch()``
+        If missing use ``fetch()``.
 
         Returns
         --------
@@ -91,7 +92,7 @@ class DiscordBotListPayload:
 
     async def fetch(self) -> None:
         """
-        Fetches the user id from the Discord API to ensure ``user`` is not :class:`None`
+        Fetches the user id from the Discord API to ensure ``user`` is not ``None``.
         """
 
         self.__user = await self.__client.fetch_user(self.user_id)
@@ -196,7 +197,7 @@ class TopGGVotePayload:
     def user(self) -> Optional[Snowflake]:
         """
         Returns the ``User`` object for the user based on what library your client is from.
-        If missing use ``fetch()``
+        If missing use ``fetch()``.
 
         Returns
         --------
@@ -207,7 +208,7 @@ class TopGGVotePayload:
 
     async def fetch(self) -> None:
         """
-        Fetches the user id from the Discord API to ensure ``user`` and ``bot`` are not :class:`None`
+        Fetches the user id from the Discord API to ensure ``user`` and ``bot`` are not ``None``.
         """
 
         self.__bot = await self.__client.fetch_user(self.bot_id)
@@ -229,24 +230,24 @@ def create_webhook_server(
     Parameters
     -----------
     client: :class:`ClientProtocol`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
-        It must fit the :class:`ClientProtocol`
+        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+        It must fit the :class:`ClientProtocol`.
     dbl_auth: Optional[:class:`str`]
-        The Discord Bot List webhook secret
+        The Discord Bot List webhook secret.
     topgg_auth: Optional[:class:`str`]
-        The Authorization for the webhook
+        The Authorization for the webhook.
     web_app_class: Type[:class:`aiohttp.web.Application`]
         The web application class to use. Must be derived from :class:`aiohttp.web.Application`.
         If combined with ``application`` this will be ignored.
     application: :class:`aiohttp.web.Application`
         A pre-existing application to use.
     **kwargs:
-        Keyword arguments to pass onto ``web_app_class``
+        Keyword arguments to pass onto ``web_app_class``.
 
     Returns
     --------
     The class from ``web_app_class`` with the routes added.
-    The routes are posts to ``/dbl`` and/or ``/topgg``
+    The routes are posts to ``/dbl`` and/or ``/topgg``.
     """
 
     routes = web.RouteTableDef()
@@ -302,7 +303,7 @@ async def run_webhook_server(application: web.Application, site_class: Type[web.
     -----------
     application: :class:`aiohttp.web.Application`
         The application to run.
-    site_class: :class:`web.BaseSite`
+    site_class: :class:`aiohttp.web.BaseSite`
         The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`
     **kwargs:
         The kwargs to pass into `aiohttp.web.TCPSite

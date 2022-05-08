@@ -25,16 +25,16 @@ class DBLClient:
     Parameters
     ----------
     client: :class:`Client`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
+        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
     token: :class:`str`
-        The token for Discord Bot List
+        The token for Discord Bot List.
     interval: Optional[:class:`float`]
         The interval in seconds to auto-post the stats.
         Defaults to 600.
-    start_on_ready: :class:`bool`:
+    start_on_ready: :class:`bool`
         Whether to start the auto post task when the bot is ready.
-        If False then it must be manually started with `start`
-        Defaults to True
+        If False then it must be manually started with `start`.
+        Defaults to True.
     session: Optional[:class:`aiohttp.ClientSession`]
         The session for the HTTP Client.
 
@@ -68,8 +68,6 @@ class DBLClient:
     @property
     def task(self) -> asyncio.Task:
         """
-        Returns
-        --------
         The :class:`asyncio.Task` object for autopost.
         """
         return self.__task
@@ -111,15 +109,15 @@ class DBLClient:
         self.__task = self.client.loop.create_task(self._post_task(), name='dbl_autopost')
 
     def cancel(self) -> None:
-        """Cancels the task of auto posting stats"""
+        """Cancels the task of auto posting stats."""
         self.task.cancel()
 
     async def post_stats(self) -> None:
-        """Post your bots stats to Discord Bot List
-        All stats are automatically found and posted
+        """Post your bots stats to Discord Bot List.
+        All stats are automatically found and posted.
 
         dispatches `dbl_autopost_error` with the argument :class:`aiohttp.ClientResponseError`
-        or `dbl_autopost_success` with no arguments
+        or `dbl_autopost_success` with no arguments.
         """
 
         bot_id = self._get_bot_id()

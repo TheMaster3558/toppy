@@ -23,22 +23,22 @@ class Client:
     Parameters
     ----------
     client: :class:`ClientProtocol`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`
-        It must fit the :class:`ClientProtocol`
+        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+        It must fit the :class:`ClientProtocol`.
     dbl_token: :class:`str`
-        The authorization token for Discord Bot List
+        The authorization token for Discord Bot List.
     topgg_token: :class:`str`
-        The authorization token for Top.gg
+        The authorization token for Top.gg.
     interval: Optional[:class:`float`]
         The interval in seconds to auto-post the stats.
         Defaults to 600.
     post_shard_count: :class:`bool`
         Decides whether to post the shard count along with the server count.
         Defaults to False.
-    start_on_ready: :class:`bool`:
+    start_on_ready: :class:`bool`
         Whether to start the auto post task when the bot is ready.
-        If False then it must be manually started with `start`
-        Defaults to True
+        If False then it must be manually started with `start`.
+        Defaults to True.
     session: Optional[:class:`aiohttp.ClientSession`]
         The session for the HTTP Client.
     """
@@ -57,7 +57,10 @@ class Client:
     @property
     def intervals(self) -> tuple[float, float]:
         """Returns the intervals of the autopost task. First the dbl, then the topgg.
-        Returns tuple[:class:`float`]
+
+        Returns
+        --------
+        tuple[:class:`float`]
         """
         return self.__dbl.interval, self.__topgg.interval
 
@@ -131,20 +134,18 @@ class Client:
         self.client.close = close  # type: ignore
 
     def start(self):
-        """Starts the autopost task"""
+        """Starts the autopost task."""
         self.__dbl.start()
         self.__topgg.start()
 
     def cancel(self):
-        """Cancels the task of auto posting stats"""
+        """Cancels the task of auto posting stats."""
         self.__dbl.cancel()
         self.__topgg.cancel()
 
     @property
     def dbl_task(self) -> asyncio.Task:
         """
-        Returns
-        --------
         The :class:`asyncio.Task` object for dbl autopost.
         """
         return self.__dbl.task
@@ -152,8 +153,6 @@ class Client:
     @property
     def topgg_task(self) -> asyncio.Task:
         """
-        Returns
-        --------
         The :class:`asyncio.Task` object for topgg autopost.
         """
         return self.__topgg.task
@@ -161,7 +160,7 @@ class Client:
     @property
     def dbl(self) -> DBLClient:
         """
-        Used for individually posting stats
+        Access the interval Client for Discord Bot List.
         
         Returns
         --------
@@ -172,7 +171,7 @@ class Client:
     @property
     def topgg(self) -> TopGGClient:
         """
-        Used for individually posting stats
+        Access the interval Client for Top.gg
         
         Returns
         --------
@@ -181,7 +180,7 @@ class Client:
         return self.__topgg
 
     async def post_stats(self) -> None:
-        """Post your bots stats to Discord Bot List and Top.gg
+        """Post your bots stats to Discord Bot List and Top.gg.
         All stats are automatically found and posted."""
         await asyncio.gather(self.__dbl.post_stats(), self.__topgg.post_stats())
 
@@ -190,11 +189,11 @@ class Client:
         """Search up bots on Top.gg
 
         Parameters
-        ----------
+        -----------
         query: :class:`str`
             The query to use when searching.
         limit: Optional[:class:`int`]
-            The limit of :class:`Bot` to return.
+            The limit of :class:`Bot`'s to return.
             Keyword only.
         offset: Optional[:class:`int`]
             The amount of bots to skip in the results.
@@ -202,7 +201,7 @@ class Client:
 
         Returns
         --------
-        list[:class:`Bot`]:
+        list[:class:`Bot`]
         """
         return await self.__topgg.search_bots(query=query, limit=limit, offset=offset)
 
@@ -225,7 +224,7 @@ class Client:
         """Get the last 1000 votes of a bot on Top.gg
 
         Parameters
-        ----------
+        -----------
         bot_id: Optional[:class:`int`]
             The ID of the bot.
             Defaults to the Bot initialized with.

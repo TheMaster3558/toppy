@@ -29,7 +29,7 @@ if SPHINX:
 
 class NoTokenSet(Exception):
     def __init__(self):
-        message = 'Create a bot var named "topgg_token" or "dbl_token" to use this cog'
+        message = 'Create a bot var named "topgg_token" or "dbl_token" to use this cog.'
         super().__init__(message)
 
 
@@ -37,7 +37,9 @@ class ToppyCog(commands.Cog):
     """
     A cog to make it simple to use this library.
 
-    Raises :class:`NoTokenSet` if not token has been set with bot vars.
+    Raises
+    -------
+    :class:`NoTokenSet` if not token has been set with bot vars.
     """
 
     def __init__(self, bot: commands.Bot) -> None:

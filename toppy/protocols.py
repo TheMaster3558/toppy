@@ -11,7 +11,7 @@ __all__ = (
 
 
 class Snowflake(Protocol):
-    """A protocol that represents the discord snowflake"""
+    """A protocol that represents the discord snowflake."""
     id: int
 
 

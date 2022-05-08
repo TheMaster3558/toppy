@@ -12,6 +12,7 @@ from .client import Client
 from .errors import HTTPException, BadRequest, Unauthorized, Forbidden, RateLimited, ClientNotReady
 from .webhook import TopGGVotePayload, DiscordBotListPayload
 from .cog import NoTokenSet
+from .webhook import create_webhook_server, run_webhook_server
 
 from .dbl import DBLClient
 from .topgg import TopGGClient
@@ -29,7 +30,9 @@ __all__ = (
     'TopGGClient',
     'TopGGVotePayload',
     'DiscordBotListPayload',
-    'NoTokenSet'
+    'NoTokenSet',
+    'create_webhook_server',
+    'run_webhook_server'
 )
 
 

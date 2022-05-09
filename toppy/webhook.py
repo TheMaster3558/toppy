@@ -1,16 +1,28 @@
 from __future__ import annotations
 
 from typing import Literal, Optional, TYPE_CHECKING, Type
+import logging
+import os
 from json.decoder import JSONDecodeError
 
 from aiohttp import web
+
+from .utils import MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol, Snowflake
 
 
+_log = logging.getLogger(__name__)
+
+
 # the following documentation has been pulled from the Discord Bot List and Top.gg documentation
 class DiscordBotListPayload:
+    """
+    A class to represent the a Discord Bot List webhook payload
+
+    .. versionadded:: 1.3
+    """
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
         self.__data = data
@@ -99,6 +111,11 @@ class DiscordBotListPayload:
 
 
 class TopGGVotePayload:
+    """
+    A class to represent the a Top.gg webhook payload
+
+    .. versionadded:: 1.3
+    """
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
         self.__data = data
@@ -218,14 +235,15 @@ class TopGGVotePayload:
 def create_webhook_server(
         client: ClientProtocol,
         *,
-        dbl_auth: Optional[str] = None,
-        topgg_auth: Optional[str] = None,
+        dbl_auth: Optional[str] = MISSING,
+        topgg_auth: Optional[str] = MISSING,
         web_app_class: Type[web.Application] = web.Application,
         application: Optional[web.Application] = None,
         **kwargs
 ) -> web.Application:
     """
     A webhooks server to receives votes and dispatch them to your bot!
+    Go to your bot's edit page on Discord Bot List or Top.gg do add the link and authorization.
 
     Parameters
     -----------
@@ -233,9 +251,9 @@ def create_webhook_server(
         The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
         It must fit the :class:`ClientProtocol`.
     dbl_auth: Optional[:class:`str`]
-        The Discord Bot List webhook secret.
+        The Discord Bot List webhook secret. This can be made in the bot's edit section.
     topgg_auth: Optional[:class:`str`]
-        The Authorization for the webhook.
+        The Authorization for the webhook. You can make this in the webhooks section of the bot's edit section.
     web_app_class: Type[:class:`aiohttp.web.Application`]
         The web application class to use. Must be derived from :class:`aiohttp.web.Application`.
         If combined with ``application`` this will be ignored.
@@ -248,13 +266,20 @@ def create_webhook_server(
     --------
     The class from ``web_app_class`` with the routes added.
     The routes are posts to ``/dbl`` and/or ``/topgg``.
+
+    .. versionadded:: 1.3
     """
+
+    if dbl_auth is MISSING:
+        dbl_auth = os.urandom(16).hex()
+    if topgg_auth is MISSING:
+        topgg_auth = os.urandom(16).hex()
 
     routes = web.RouteTableDef()
 
     @routes.post('/dbl')
     async def dbl_votes(request: web.Request) -> web.Response:
-        if dbl_auth:
+        if dbl_auth is not None:
             if request.headers.get('Authorization') != dbl_auth:
                 return web.Response(status=401)
 
@@ -270,7 +295,7 @@ def create_webhook_server(
 
     @routes.post('/dbl')
     async def topgg_votes(request: web.Request) -> web.Response:
-        if topgg_auth:
+        if topgg_auth is not None:
             if request.headers.get('Authorization') != topgg_auth:
                 return web.Response(status=401)
 

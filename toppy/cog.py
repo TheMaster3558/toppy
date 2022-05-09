@@ -37,6 +37,8 @@ class ToppyCog(commands.Cog):
     """
     A cog to make it simple to use this library.
 
+    .. versionadded:: 1.2
+
     Raises
     -------
     :class:`NoTokenSet` if not token has been set with bot vars.

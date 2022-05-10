@@ -7,11 +7,16 @@ from functools import wraps
 import aiohttp
 
 from .http import DBLHTTPClient
-from .. import utils
-from ..errors import ClientNotReady
+from . import utils
+from .errors import ClientNotReady
 
 if TYPE_CHECKING:
-    from ..protocols import ClientProtocol
+    from .protocols import ClientProtocol
+
+
+__all__ = (
+    'DBLClient'
+)
 
 
 MISSING = utils.MISSING
@@ -42,6 +47,11 @@ class DBLClient:
     ----------
     interval: :class:`float`
         The interval in seconds to auto-post the stats.
+
+
+    .. versionchanged:: 1.4
+
+        Instead of a separate module it is just one file.
     """
     def __init__(
             self,

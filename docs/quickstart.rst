@@ -9,7 +9,7 @@ Installation
 
 .. code:: sh
 
-    $ pip install -U git+https://github.com/chawkk6404/toppy
+    $ pip install -U toppy-python
 
 
 

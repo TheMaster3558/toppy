@@ -10,7 +10,7 @@ in Python with many simple yet powerful features.
 
 from .client import Client
 from .errors import HTTPException, BadRequest, Unauthorized, Forbidden, RateLimited, ClientNotReady
-from .webhook import TopGGVotePayload, DiscordBotListPayload
+from .webhook import TopGGVotePayload, DiscordBotListVotePayload
 from .cog import NoTokenSet
 from .webhook import create_webhook_server, run_webhook_server
 
@@ -29,7 +29,7 @@ __all__ = (
     'DBLClient',
     'TopGGClient',
     'TopGGVotePayload',
-    'DiscordBotListPayload',
+    'DiscordBotListVotePayload',
     'NoTokenSet',
     'create_webhook_server',
     'run_webhook_server'

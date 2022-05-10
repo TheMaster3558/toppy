@@ -6,5 +6,7 @@ venv/
 .mypy_cache
 *.log
 docs/build
+docs/source
 *.egg-info
 dist/
+

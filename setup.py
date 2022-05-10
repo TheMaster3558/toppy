@@ -34,7 +34,7 @@ setuptools.setup(
     description='A simple API wrapper for Discord Bot List and Top.gg',
     url='https://github.com/chawkk6404/toppy',
     long_description=readme,
-    long_description_content_type='rst',
+    long_description_content_type='text/x-rst',
     include_package_data=True,
     install_requires=requirements,
     python_requires='>=3.8.0',

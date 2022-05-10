@@ -1,5 +1,6 @@
-Changes after 1.3.7
+Change Log
 =========================
+Starts after 1.3.7
 
 Breaking Changes
 -----------------

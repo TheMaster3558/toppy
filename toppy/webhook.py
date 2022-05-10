@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TYPE_CHECKING, Type
+from typing import Literal, Optional, TYPE_CHECKING, Type, TypeVar
 import logging
 import os
 from json.decoder import JSONDecodeError
@@ -11,6 +11,9 @@ from .utils import MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol, Snowflake
+
+
+BaseSiteT = TypeVar('BaseSiteT', bound=web.BaseSite)
 
 
 _log = logging.getLogger(__name__)
@@ -319,8 +322,8 @@ def create_webhook_server(
     return app
 
 
-async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite],
-                             **kwargs) -> web.BaseSite:
+async def run_webhook_server(application: web.Application, site_class: Type[BaseSiteT],
+                             **kwargs) -> BaseSiteT:
     """
     Run the webhook server created in ``create_webhook_server``
 

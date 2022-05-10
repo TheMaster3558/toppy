@@ -26,7 +26,7 @@ packages = [
 
 
 setuptools.setup(
-    name='toppy',
+    name='toppy-python',
     author='The Master',
     version=version,
     packages=packages,

@@ -12,8 +12,7 @@ from .utils import MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol
-    from .topgg.bot import Bot
-    from .topgg.user import User
+    from .topgg import Bot, User
 
 
 class Client:

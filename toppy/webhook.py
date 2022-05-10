@@ -41,7 +41,6 @@ class DiscordBotListVotePayload:
         --------
         :class:`dict`
         """
-
         return self.__data
 
     @property
@@ -53,7 +52,6 @@ class DiscordBotListVotePayload:
         --------
         :class:`bool`
         """
-
         return self.__data['admin']
 
     @property
@@ -65,7 +63,6 @@ class DiscordBotListVotePayload:
         --------
         :class:`str`
         """
-
         return self.__data['admin']
 
     @property
@@ -77,7 +74,6 @@ class DiscordBotListVotePayload:
         --------
         :class:`str`
         """
-
         return self.__data['username']
 
     @property
@@ -89,7 +85,6 @@ class DiscordBotListVotePayload:
         --------
         :class:`int`
         """
-
         return int(self.__data['id'])
 
     @property
@@ -102,14 +97,12 @@ class DiscordBotListVotePayload:
         --------
         Optional[:class:`Snowflake`]
         """
-
         return self.__user or self.__client.get_user(self.user_id)
 
     async def fetch(self) -> None:
         """
         Fetches the user id from the Discord API to ensure `user` is not ``None``.
         """
-
         self.__user = await self.__client.fetch_user(self.user_id)
 
 
@@ -138,7 +131,6 @@ class TopGGVotePayload:
         --------
         :class:`dict`
         """
-
         return self.__data
 
     @property
@@ -150,7 +142,6 @@ class TopGGVotePayload:
         --------
         :class:`int`
         """
-
         return self.__bot_id
 
     @property
@@ -173,7 +164,6 @@ class TopGGVotePayload:
         --------
         Literal["upvote", "test"]
         """
-
         return self.__data['type']
 
     @property
@@ -185,7 +175,6 @@ class TopGGVotePayload:
         --------
         :class:`bool`
         """
-
         return self.__data['isWeekend']
 
     @property
@@ -197,7 +186,6 @@ class TopGGVotePayload:
         --------
         :class:`str`
         """
-
         return self.__data.get('query')
 
     @property
@@ -210,7 +198,6 @@ class TopGGVotePayload:
         --------
         Optional[:class:`Snowflake`]
         """
-
         return self.__bot or self.__client.get_user(self.bot_id)
 
     @property
@@ -223,7 +210,6 @@ class TopGGVotePayload:
         --------
         Optional[:class:`Snowflake`]
         """
-
         return self.__user or self.__client.get_user(self.user_id)
 
     async def fetch(self) -> None:
@@ -231,7 +217,6 @@ class TopGGVotePayload:
         Fetches the user id from the Discord API to ensure `TopGGVotePayload.user` and `TopGGVotePayload.bot`
         are not ``None``.
         """
-
         self.__bot = await self.__client.fetch_user(self.bot_id)
         self.__user = await self.__client.fetch_user(self.user_id)
 
@@ -273,7 +258,6 @@ def create_webhook_server(
 
     .. versionadded:: 1.3
     """
-
     if dbl_auth is MISSING:
         dbl_auth = os.urandom(16).hex()
     if topgg_auth is MISSING:
@@ -342,7 +326,6 @@ async def run_webhook_server(application: web.Application, site_class: Type[Base
     --------
     The instance of the site class passed into `site_class`.
     """
-
     runner = web.AppRunner(application)
     await runner.setup()
 

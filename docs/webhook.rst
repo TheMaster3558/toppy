@@ -21,9 +21,8 @@ Top.gg
 4. Create authorization in the ``Authorization`` box
 
 
-Note about authorization
--------------------------
-If you would like all requests to be accepted regardless of authorization, set the authorization to ``None``
+.. note::
+  If you would like all requests to be accepted regardless of authorization, set the authorization to ``None``
 
 
 Webhooks Reference

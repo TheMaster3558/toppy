@@ -244,11 +244,6 @@ class TopGGClient:
     session: Optional[:class:`aiohttp.ClientSession`]
         The session for the HTTP Client.
 
-    Attributes
-    ----------
-    interval: :class:`float`
-        The interval in seconds to auto-post the stats.
-
 
     .. versionchanged:: 1.4
 

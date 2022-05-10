@@ -21,10 +21,10 @@ class ClientNotReady(Exception):
 
 class HTTPException(Exception):
     """The base HTTP exception class."""
-    def __init__(self, resp: Optional[ClientResponse] = None, message: str = None):
+    def __init__(self, resp: Optional[ClientResponse] = None, message: Optional[str] = None):
         self.resp = resp
 
-        super().__init__(message or ())
+        super().__init__(message or '')
 
 
 class BadRequest(HTTPException):

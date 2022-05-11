@@ -6,7 +6,7 @@ with open('toppy/__init__.py', 'r') as v:
     version = re.search(
         r"'?__version__'? = '?\d\.\d\.\d'?",
         v.read()
-    ).group().replace("'", '')
+    ).group().replace("'", '')  # type: ignore
     version = version[version.index('=')+1:]
 
 

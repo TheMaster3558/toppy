@@ -4,12 +4,12 @@ import aiohttp
 
 
 __all__ = (
-    'NoTokenSet',
-    'ClientResponseError',
-    'ClientNotReady',
     'BadRequest',
+    'ClientNotReady',
+    'ClientResponseError',
     'Forbidden',
     'HTTPException',
+    'NoTokenSet',
     'RateLimited',
     'Unauthorized'
 )

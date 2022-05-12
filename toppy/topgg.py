@@ -16,8 +16,8 @@ if TYPE_CHECKING:
 
 
 __all__ = (
-    'TopGGClient',
     'Bot',
+    'TopGGClient',
     'User'
 )
 

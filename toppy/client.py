@@ -15,6 +15,11 @@ if TYPE_CHECKING:
     from .topgg import Bot, User
 
 
+__all__ = (
+    'Client'
+)
+
+
 class Client:
     """A class designed to handle both Top.gg and Discord Bot List.
     For individual handling use :class:`DBLClient` or :class:`TopGGClient`

@@ -28,6 +28,11 @@ if SPHINX:
     commands.command = lambda **attrs: lambda func: func
 
 
+__all__ = (
+    'ToppyCog'
+)
+
+
 class ToppyCog(commands.Cog):
     """
     A cog to make it simple to use this library.

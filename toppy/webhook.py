@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TYPE_CHECKING, Type, TypeVar
+from typing import Literal, Optional, TYPE_CHECKING, Type
 import logging
 import os
 from json.decoder import JSONDecodeError
@@ -11,9 +11,6 @@ from .utils import MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol, Snowflake
-
-
-BaseSiteT = TypeVar('BaseSiteT', bound=web.BaseSite)
 
 
 _log = logging.getLogger(__name__)
@@ -305,31 +302,3 @@ def create_webhook_server(
     app.add_routes(routes)
 
     return app
-
-
-async def run_webhook_server(application: web.Application, site_class: Type[BaseSiteT],
-                             **kwargs) -> BaseSiteT:
-    """
-    Run the webhook server created in `create_webhook_server`
-
-    Parameters
-    -----------
-    application: :class:`aiohttp.web.Application`
-        The application to run.
-    site_class: :class:`aiohttp.web.BaseSite`
-        The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`
-    **kwargs:
-        The kwargs to pass into `aiohttp.web.TCPSite
-        <https://docs.aiohttp.org/en/stable/web_reference.html?highlight=TCPSite>`__
-
-    Returns
-    --------
-    The instance of the site class passed into `site_class`.
-    """
-    runner = web.AppRunner(application)
-    await runner.setup()
-
-    site = site_class(runner, **kwargs)
-    await site.start()
-
-    return site

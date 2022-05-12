@@ -20,4 +20,4 @@ A simple API wrapper for **Top.gg** and **Discord Bot List** in **Python** with 
   cog.rst
   webhook.rst
   events.rst
-  whatsnew.rst
+  changelog.rst

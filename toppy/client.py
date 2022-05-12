@@ -72,7 +72,7 @@ class Client:
 
          Raises
          -------
-         :class:`TypeError` If it didn't receive :class:`float`, :class:`int`, or :class:`tuple`
+         :exc:`TypeError` If it didn't receive :class:`float`, :class:`int`, or :class:`tuple`
          """
         if isinstance(new, (float, int)):
             self.__dbl.interval = new

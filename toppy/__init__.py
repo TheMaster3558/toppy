@@ -9,9 +9,17 @@ in Python with many simple yet powerful features.
 """
 
 from .client import Client
-from .errors import HTTPException, BadRequest, Unauthorized, Forbidden, RateLimited, ClientNotReady
+from .errors import (
+    HTTPException,
+    BadRequest,
+    Unauthorized,
+    Forbidden,
+    RateLimited,
+    ClientNotReady,
+    ClientResponseError,
+    NoTokenSet
+)
 from .webhook import TopGGVotePayload, DiscordBotListVotePayload
-from .cog import NoTokenSet
 from .webhook import create_webhook_server, run_webhook_server
 
 from .dbl import DBLClient

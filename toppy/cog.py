@@ -19,18 +19,13 @@ commands: Any = importlib.import_module(f'{lib}.ext.commands')
 from .client import Client
 from .dbl import DBLClient
 from .topgg import TopGGClient
+from .errors import NoTokenSet
 
 if TYPE_CHECKING:
     import aiohttp
 
 if SPHINX:
     commands.command = lambda **attrs: lambda func: func
-
-
-class NoTokenSet(Exception):
-    def __init__(self):
-        message = 'Create a bot var named "topgg_token" or "dbl_token" to use this cog.'
-        super().__init__(message)
 
 
 class ToppyCog(commands.Cog):
@@ -41,7 +36,7 @@ class ToppyCog(commands.Cog):
 
     Raises
     -------
-    :class:`NoTokenSet` if not token has been set with bot vars.
+    :exc:`toppy.NoTokenSet` if not token has been set with bot vars.
     """
 
     def __init__(self, bot: commands.Bot) -> None:

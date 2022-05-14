@@ -13,10 +13,9 @@ A simple API wrapper for **Top.gg** and **Discord Bot List** in **Python** with 
   :maxdepth: 1
 
   quickstart.rst
-  both.rst
-  dbl.rst
-  topgg.rst
+  client.rst
   errors.rst
+  models.rst
   cog.rst
   webhook.rst
   utils.rst

@@ -7,8 +7,7 @@ An API wrapper made for discord.py or any forks for Discord Bot List and/or Top.
 :license: MIT
 """
 
-from .client import Client
-from .dbl import DBLClient
+from .client import Client, DBLClient, TopGGClient
 from .errors import (
     BadRequest,
     ClientNotReady,
@@ -19,15 +18,14 @@ from .errors import (
     RateLimited,
     Unauthorized
 )
-from .topgg import TopGGClient
 from .webhook import create_webhook_server, DiscordBotListVotePayload, TopGGVotePayload
 
 
 __all__ = (
     # client.py
     'Client',
-    # dbl.py
     'DBLClient',
+    'TopGGClient',
     # errors
     'BadRequest',
     'ClientNotReady',
@@ -37,8 +35,6 @@ __all__ = (
     'NoTokenSet',
     'RateLimited',
     'Unauthorized',
-    # topgg.py
-    'TopGGClient',
     # webhook.py
     'create_webhook_server',
     'DiscordBotListVotePayload',

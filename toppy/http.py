@@ -4,6 +4,7 @@ import asyncio
 from typing import Any, Optional, TypeVar, Union
 import logging
 import time
+from abc import abstractmethod
 
 import aiohttp
 
@@ -11,6 +12,7 @@ from .errors import *
 
 
 __all__ = (
+    'BaseHTTPClient',
     'DBLHTTPClient',
     'TopGGHTTPClient'
 )
@@ -52,6 +54,14 @@ class BaseHTTPClient:
     BASE: str
     token: str
     session: aiohttp.ClientSession
+
+    @abstractmethod
+    def __init__(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    async def post_stats(self, *args, **kwargs):
+        pass
 
     @property
     def headers(self) -> dict:

@@ -16,9 +16,7 @@ except IndexError:
 discord: Any = importlib.import_module(lib)
 commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
-from .client import Client
-from .dbl import DBLClient
-from .topgg import TopGGClient
+from .client import Client, DBLClient, TopGGClient
 from .errors import NoTokenSet
 
 if TYPE_CHECKING:

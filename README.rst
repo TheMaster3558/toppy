@@ -1,8 +1,7 @@
 toppy
 ======
 
-A simple API wrapper for Top.gg and Discord Bot List made in Python.
-Specifically meant for discord.py and some forks.
+An API wrapper made for discord.py or any forks for Discord Bot List and/or Top.gg
 
 
 

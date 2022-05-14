@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 __all__ = (
-    'Client'
+    'Client',
 )
 
 
@@ -160,7 +160,7 @@ class Client:
         The :class:`asyncio.Task` object for topgg autopost.
         """
         return self.__topgg.task
-    
+
     @property
     def dbl(self) -> DBLClient:
         """
@@ -171,7 +171,7 @@ class Client:
         :class:`DBLCLient`
         """
         return self.__dbl
-    
+
     @property
     def topgg(self) -> TopGGClient:
         """

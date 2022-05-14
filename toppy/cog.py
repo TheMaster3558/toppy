@@ -29,7 +29,7 @@ if SPHINX:
 
 
 __all__ = (
-    'ToppyCog'
+    'ToppyCog',
 )
 
 
@@ -60,6 +60,9 @@ class ToppyCog(commands.Cog):
     @commands.Cog.listener('on_topgg_post_error')
     @commands.Cog.listener('on_dbl_post_error')
     async def post_error(self, error: aiohttp.ClientResponseError):
+        """
+        This listener will print ``on_topgg_post_error`` and ``on_dbl_post_error`` to the console.
+        """
         print(f'{__name__}: An error occured when posting stats | Status code: {error.status}.'
               f' Enable logging for more information.')
 

@@ -16,6 +16,7 @@ __all__ = (
 
 
 class NoTokenSet(Exception):
+    """An exception if the bot is missing bot vars to use the cog."""
     def __init__(self):
         message = 'Create a bot var named "topgg_token" or "dbl_token" to use this cog.'
         super().__init__(message)
@@ -41,17 +42,14 @@ class HTTPException(Exception):
 
 class BadRequest(HTTPException):
     """Status ``400``."""
-    pass
 
 
 class Unauthorized(HTTPException):
     """Status ``401``."""
-    pass
 
 
 class Forbidden(HTTPException):
     """Status ``403``."""
-    pass
 
 
 class RateLimited(HTTPException):

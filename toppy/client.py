@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Optional, Union, AsyncIterator
+from typing import TYPE_CHECKING, Optional, Union, AsyncGenerator
 from functools import wraps
 
 import aiohttp
@@ -53,7 +53,8 @@ class Client:
             **options
     ):
         self.client = client
-        self.original_options = options
+
+        self._original_options = options
 
         self.__dbl: DBLClient = MISSING
         self.__topgg: TopGGClient = MISSING
@@ -102,24 +103,24 @@ class Client:
         async def start(*args, **kwargs) -> None:
             task = self.client.loop.create_task(old_start(*args, **kwargs))
 
-            session = self.original_options.get('session', aiohttp.ClientSession(loop=self.client.loop))
+            session = self._original_options.get('session', aiohttp.ClientSession(loop=self.client.loop))
 
             self.__dbl = DBLClient(
-                self.client, token=self.original_options['dbl_token'],
-                interval=self.original_options.get('interval'),
-                start_on_ready=self.original_options.get('start_on_ready', True),
+                self.client, token=self._original_options['dbl_token'],
+                interval=self._original_options.get('interval'),
+                start_on_ready=self._original_options.get('start_on_ready', True),
                 session=session
             )
 
             self.__topgg = TopGGClient(
-                self.client, token=self.original_options['topgg_token'],
-                interval=self.original_options.get('interval'),
-                post_shard_count=self.original_options.get('post_shard_count', False),
-                start_on_ready=self.original_options.get('start_on_ready', True),
+                self.client, token=self._original_options['topgg_token'],
+                interval=self._original_options.get('interval'),
+                post_shard_count=self._original_options.get('post_shard_count', False),
+                start_on_ready=self._original_options.get('start_on_ready', True),
                 session=session
             )
 
-            if self.original_options.get('start_on_ready', True):
+            if self._original_options.get('start_on_ready', True):
                 self.__dbl.start()
                 self.__topgg.start()
 
@@ -224,7 +225,7 @@ class Client:
         """
         return await self.search_one_bot(bot_id)
 
-    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncIterator[User]:
+    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[None, User]:
         """Get the last 1000 votes of a bot on Top.gg
 
         Parameters

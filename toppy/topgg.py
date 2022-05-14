@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Optional, AsyncIterator, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, AsyncGenerator
 from functools import wraps, cached_property
 from datetime import datetime
 
@@ -359,7 +359,7 @@ class TopGGClient:
         data = await self.http.search_one_bot(bot_id)
         return Bot(data)
 
-    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncIterator[User]:
+    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[None, User]:
         """Get the last 1000 votes of a bot on Top.gg.
 
         Parameters

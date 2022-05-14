@@ -35,7 +35,7 @@ class RateLimiter:
         self.count = 0
         self.last_reset = time.time()
 
-    async def check(self):
+    async def block(self):
         if time.time() - self.per > self.last_reset:
             self.count = 0
 
@@ -57,11 +57,11 @@ class BaseHTTPClient:
     def headers(self) -> dict:
         return {'Authorization': self.token}
 
-    async def check(self, url: str):
+    async def block(self, url: str):
         pass
 
     async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
-        await self.check(url)
+        await self.block(url)
         resp = await self.session.request(method, self.BASE + url, **kwargs, headers=self.headers)
         data = await resp.json()
 
@@ -121,13 +121,13 @@ class TopGGHTTPClient(BaseHTTPClient):
             '/bots': RateLimiter(60, 60)
         }
 
-    async def check(self, url: str) -> None:
+    async def block(self, url: str) -> None:
         k: str
         v: RateLimiter
 
         for k, v in self.rate_limits.items():
             if k in url:
-                await v.check()
+                await v.block()
 
     async def search_bots(self, search: str, *, limit: Optional[int] = None,
                           offset: Optional[int] = None) -> list[dict[str, Any]]:

@@ -34,7 +34,7 @@ class _MissingSentinel:
 MISSING: Any = _MissingSentinel()
 
 
-async def run_webhook_server(application: web.Application, site_class: Type[BaseSiteT],
+async def run_webhook_server(application: web.Application, site_class: Type[BaseSiteT] = web.TCPSite,
                              **kwargs) -> BaseSiteT:
     """
     Run the webhook server created in `create_webhook_server`
@@ -44,7 +44,8 @@ async def run_webhook_server(application: web.Application, site_class: Type[Base
     application: :class:`aiohttp.web.Application`
         The application to run.
     site_class: :class:`aiohttp.web.BaseSite`
-        The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`
+        The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`.
+        Defaults to :class:`web.TCPSite`
     **kwargs:
         The kwargs to pass into `aiohttp.web.TCPSite
         <https://docs.aiohttp.org/en/stable/web_reference.html?highlight=TCPSite>`__
@@ -60,3 +61,4 @@ async def run_webhook_server(application: web.Application, site_class: Type[Base
     await site.start()
 
     return site
+

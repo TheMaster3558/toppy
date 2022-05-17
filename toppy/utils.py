@@ -15,20 +15,6 @@ __all__ = (
 T = TypeVar('T')
 
 
-class AsyncContextManager(Generic[T]):
-    def __init__(self, awaitable: Awaitable[T]):
-        self.awaitable = awaitable
-
-    def __await__(self):
-        self.awaitable.__await__()
-
-    async def __aenter__(self):
-        return await self.awaitable
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        return False
-
-
 class _MissingSentinel:
     def __eq__(self, other):
         return False
@@ -47,6 +33,28 @@ class _MissingSentinel:
 
 
 MISSING: Any = _MissingSentinel()
+    
+    
+class AsyncContextManager(Generic[T]):
+    def __init__(self, awaitable: Awaitable[T]):
+        self.awaitable = awaitable
+        self.ret: T = MISSING
+
+    def __await__(self):
+        self.awaitable.__await__()
+
+    async def __aenter__(self):
+        self.ret = await self.awaitable
+        try:
+            return self.ret.__aenter__()
+        except AttributeError:
+            return self.ret
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        try:
+            return await self.ret.__aexit__(exc_typ, exc_val, exc_tb)
+        except AttributeError:
+            return False
 
 
 async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,

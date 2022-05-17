@@ -1,17 +1,32 @@
 from __future__ import annotations
 
-from typing import Any, TypeVar, Type
+from typing import Any, Type, TypeVar, Awaitable, Generic
 
 from aiohttp import web
 
 
 __all__ = (
+    'AsyncContextManager',
     'MISSING',
     'run_webhook_server'
 )
 
 
-BaseSiteT = TypeVar('BaseSiteT', bound=web.BaseSite)
+T = TypeVar('T')
+
+
+class AsyncContextManager(Generic[T]):
+    def __init__(self, awaitable: Awaitable[T]):
+        self.awaitable = awaitable
+
+    def __await__(self):
+        self.awaitable.__await__()
+
+    async def __aenter__(self):
+        return await self.awaitable
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        return False
 
 
 class _MissingSentinel:
@@ -34,8 +49,8 @@ class _MissingSentinel:
 MISSING: Any = _MissingSentinel()
 
 
-async def run_webhook_server(application: web.Application, site_class: Type[BaseSiteT] = web.TCPSite,
-                             **kwargs) -> BaseSiteT:
+async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,
+                             **kwargs) -> web.BaseSite:
     """
     Run the webhook server created in `create_webhook_server`
 
@@ -47,8 +62,7 @@ async def run_webhook_server(application: web.Application, site_class: Type[Base
         The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`.
         Defaults to :class:`web.TCPSite`
     **kwargs:
-        The kwargs to pass into `aiohttp.web.TCPSite
-        <https://docs.aiohttp.org/en/stable/web_reference.html?highlight=TCPSite>`__
+        The kwargs to pass into ``site_class``.
 
     Returns
     --------
@@ -61,4 +75,3 @@ async def run_webhook_server(application: web.Application, site_class: Type[Base
     await site.start()
 
     return site
-

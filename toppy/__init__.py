@@ -20,6 +20,8 @@ from .errors import (
 )
 from .webhook import create_webhook_server, DiscordBotListVotePayload, TopGGVotePayload
 
+from . import http, utils, protocols, cog, models
+
 
 __all__ = (
     # client.py
@@ -46,4 +48,4 @@ __title__ = 'toppy'
 __authors__ = ('The Master', 'chawkk6404')
 __license__ = 'MIT'
 __copyright__ = '2022-present The Master and chawkk6404'
-__version__ = '1.4.2'
+__version__ = '1.5.0'

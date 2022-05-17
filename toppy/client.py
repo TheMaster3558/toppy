@@ -250,7 +250,7 @@ class TopGGClient(BaseClient):
         data = await self.http.search_one_bot(bot_id)
         return Bot(data)
 
-    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[None, User]:
+    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[User, None]:
         """Get the last 1000 votes of a bot on Top.gg.
 
         Parameters
@@ -516,7 +516,7 @@ class Client:
         """
         return await self.search_one_bot(bot_id)
 
-    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[None, User]:
+    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[User, None]:
         """Get the last 1000 votes of a bot on Top.gg
 
         Parameters

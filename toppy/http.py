@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Optional, TypeVar, Union
+from typing import Any, Optional, TypeVar, Union, Callable, Coroutine, ClassVar, Literal
 import logging
 import time
 from abc import abstractmethod
@@ -9,6 +9,7 @@ from abc import abstractmethod
 import aiohttp
 
 from .errors import *
+from .utils import AsyncContextManager
 
 
 __all__ = (
@@ -51,29 +52,42 @@ class RateLimiter:
 
 
 class BaseHTTPClient:
-    BASE: str
+    BASE: ClassVar[str]
     token: str
     session: aiohttp.ClientSession
 
     @abstractmethod
-    def __init__(self, *args, **kwargs):
-        pass
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        # client.py: 67
+        raise NotImplementedError
 
-    @abstractmethod
-    async def post_stats(self, *args, **kwargs):
-        pass
+    # method with signature (self, *args, **kwargs) doesn't work
+    post_stats: Callable[..., Coroutine[Any, Any, aiohttp.ClientResponse]]
 
     @property
     def headers(self) -> dict:
-        return {'Authorization': self.token}
+        return {'Authorization': str(self.token)}
 
     async def block(self, url: str):
         pass
 
-    async def request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
+    def request(self, method: str, url: str, **kwargs: Any) -> AsyncContextManager[aiohttp.ClientResponse]:
+        return AsyncContextManager(self._request(method, url, **kwargs))
+
+    async def _request(self, method: str, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
         await self.block(url)
         resp = await self.session.request(method, self.BASE + url, **kwargs, headers=self.headers)
-        data = await resp.json()
+
+        try:
+            data = await resp.json()
+        except aiohttp.ContentTypeError:
+            data = None
+        else:
+            async def json(*_, **__):
+                return data
+
+            # use only .json() once
+            resp.json = json  # type: ignore
 
         _log.info(
             f'%s %s with %s has returned status %d with %s',
@@ -106,7 +120,7 @@ class DBLHTTPClient(BaseHTTPClient):
         self.token = token
         self.session = session or aiohttp.ClientSession(loop=loop)
 
-    async def post_stats(self, bot_id: int, /, *, voice_connections: int, users: int, guilds: int
+    async def post_stats(self, bot_id: int, *, voice_connections: int, users: int, guilds: int
                          ) -> aiohttp.ClientResponse:
         data = {
             'voice_connections': voice_connections,
@@ -163,7 +177,7 @@ class TopGGHTTPClient(BaseHTTPClient):
             data = await resp.json()
             return data['voted'] is True
 
-    async def post_stats(self, bot_id: int, /, *, server_count: Union[int, list], shard_count: Optional[int] = None
+    async def post_stats(self, bot_id: int, *, server_count: Union[int, list], shard_count: Optional[int] = None
                          ) -> aiohttp.ClientResponse:
         data = cleanup_params({
             'server_count': server_count,

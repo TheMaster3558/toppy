@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Protocol, Any, Optional
+from typing import Protocol, Any, Optional, runtime_checkable
 import asyncio
 
 
@@ -10,11 +10,13 @@ __all__ = (
 )
 
 
+@runtime_checkable
 class Snowflake(Protocol):
     """A protocol that represents the discord snowflake."""
     id: int
 
 
+@runtime_checkable
 class ClientProtocol(Protocol):
     """A bot protocol that allows this library to support forks."""
     loop: asyncio.AbstractEventLoop

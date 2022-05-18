@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Optional, TypeVar, Union, Callable, Coroutine, ClassVar, Literal
+from typing import Any, Optional, TypeVar, Union, Callable, Coroutine, ClassVar
 import logging
 import time
 from abc import abstractmethod
@@ -9,7 +9,7 @@ from abc import abstractmethod
 import aiohttp
 
 from .errors import *
-from .utils import AsyncContextManager
+from .utils import AsyncContextManager, MISSING
 
 
 __all__ = (
@@ -53,6 +53,8 @@ class RateLimiter:
 
 class BaseHTTPClient:
     BASE: ClassVar[str]
+    latency: ClassVar[float] = MISSING
+
     token: str
     session: aiohttp.ClientSession
 
@@ -96,7 +98,7 @@ class BaseHTTPClient:
             resp.json = json  # type: ignore
 
         _log.info(
-            f'%s %s with %s has returned status %d with %s',
+            '%s %s with %s has returned status %d with %s',
             resp.method,
             resp.url,
             kwargs.get('data', kwargs.get('params')),
@@ -114,6 +116,14 @@ class BaseHTTPClient:
         elif resp.status == 403:
             raise Forbidden(resp)
         elif resp.status == 429:
+            _log.warning(
+                'Route %s has been ratelimited for %f seconds.',
+                data['retry-after']
+            )
+
+            if data['retry-after'] <= 60:
+                await asyncio.sleep(data['retry-after'])
+                return await self._request(method, url, **kwargs)
             raise RateLimited(data['retry-after'], resp)
         raise HTTPException()
 
@@ -168,7 +178,7 @@ class TopGGHTTPClient(BaseHTTPClient):
         })
         async with self.request('GET', '/bots', params=params) as resp:
             data = await resp.json()
-        return data.get('results')
+        return data['results']
 
     async def search_one_bot(self, bot_id: int, /) -> dict[str, Any]:
         async with self.request('GET', f'/bots/{bot_id}') as resp:
@@ -181,7 +191,7 @@ class TopGGHTTPClient(BaseHTTPClient):
     async def user_vote(self, bot_id: int, user_id: int) -> bool:
         async with self.request('GET', f'/bots/{bot_id}/check', params={'userId': user_id}) as resp:
             data = await resp.json()
-            return data['voted'] is True
+        return data['voted'] is True
 
     async def post_stats(self, bot_id: int, *, server_count: Union[int, list], shard_count: Optional[int] = None
                          ) -> aiohttp.ClientResponse:

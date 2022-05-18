@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Literal, Optional, TYPE_CHECKING, Type
+from typing import Literal, Optional, TYPE_CHECKING, Type, Union, ClassVar
 import logging
 import os
+from datetime import datetime
 from json.decoder import JSONDecodeError
 
 from aiohttp import web
@@ -30,11 +31,19 @@ class DiscordBotListVotePayload:
 
     .. versionadded:: 1.3
     """
+
+    SITE: ClassVar[str] = 'Discord Bot List'
+
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
         self.__data = data
+        self.__time = datetime.now()
 
         self.__user: Optional[Snowflake] = None
+
+    @property
+    def time(self) -> datetime:
+        return self.__time
 
     @property
     def raw(self) -> dict:
@@ -116,15 +125,23 @@ class TopGGVotePayload:
 
     .. versionadded:: 1.3
     """
+
+    SITE: ClassVar[str] = 'Top.gg'
+
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
         self.__data = data
+        self.__time = datetime.now()
 
         self.__bot_id: int = data['bot']
         self.__user_id: int = data['user']
 
         self.__bot: Optional[Snowflake] = None
         self.__user: Optional[Snowflake] = None
+
+    @property
+    def time(self) -> datetime:
+        return self.__time
 
     @property
     def raw(self) -> dict:

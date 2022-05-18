@@ -18,6 +18,13 @@ with open('README.rst', 'r') as rm:
     readme = rm.read()
 
 
+extra_require = {
+    'cache': [
+        'aiosqlite'
+    ]
+}
+
+
 packages = [
     'toppy'
 ]
@@ -38,6 +45,7 @@ setuptools.setup(
     long_description_content_type='text/x-rst',
     include_package_data=True,
     install_requires=requirements,
+    extra_require=extra_require,
     python_requires='>=3.8.0',
     classifiers=[
         'Development Status :: 5 - Production/Stable',

@@ -68,6 +68,12 @@ class BaseHTTPClient:
     def headers(self) -> dict:
         return {'Authorization': str(self.token)}
 
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.session.close()
+
     async def block(self, url: str):
         pass
 

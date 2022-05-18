@@ -40,21 +40,22 @@ class AsyncContextManager(Generic[T]):
         self.awaitable = awaitable
         self.ret: T = MISSING
 
-    def __await__(self):
-        self.awaitable.__await__()
+    def __await__(self) -> T:
+        return self.awaitable.__await__()
 
     async def __aenter__(self):
-        self.ret = await self.awaitable
+        self.ret = await self
+
         try:
-            return self.ret.__aenter__()
+            return await self.ret.__aenter__()
         except AttributeError:
             return self.ret
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         try:
-            return await self.ret.__aexit__(exc_typ, exc_val, exc_tb)
+            return await self.ret.__aexit__(exc_type, exc_val, exc_tb)
         except AttributeError:
-            return False
+            pass
 
 
 async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,

@@ -71,7 +71,8 @@ def create_webhook_server(
     The routes are posts to ``/dbl`` and/or ``/topgg``.
 
 
-    .. versionadded:: 1.3
+    .. versionadded:: 1.5
+        There are now options for a cache.
     """
     if dbl_auth is MISSING:
         dbl_auth = os.urandom(16).hex()

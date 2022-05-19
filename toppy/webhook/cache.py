@@ -36,7 +36,10 @@ class CachedVote:
 
 
 class SQLDatabase:
-    """A form of database for caching votes."""
+    """A form of database for caching votes.
+
+    .. versionadded:: 1.5
+    """
     def __init__(self):
         self.conn: aiosqlite.Connection = MISSING
         self.number: int = 0

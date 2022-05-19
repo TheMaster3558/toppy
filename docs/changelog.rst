@@ -11,7 +11,9 @@ Breaking Changes
     `run_webhook_server` moved to `toppy.utils`.
 
 1.5.0
-    ``DBLClient`` and ``TopGGClient`` have been moved to ``toppy.client``.
+    `DBLClient` and `TopGGClient` have been moved to `toppy.client`.
+    `webhook` is now a submodule.
+    `create_webhook_server` now returns `tuple[aiohttp.web.Application, SQLDatabse]`
 
 New Features
 -----------------

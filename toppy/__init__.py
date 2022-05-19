@@ -18,7 +18,6 @@ from .errors import (
     RateLimited,
     Unauthorized
 )
-from .webhook import create_webhook_server, DiscordBotListVotePayload, TopGGVotePayload
 
 from . import http, utils, protocols, cog, models
 
@@ -36,11 +35,7 @@ __all__ = (
     'HTTPException',
     'NoTokenSet',
     'RateLimited',
-    'Unauthorized',
-    # webhook.py
-    'create_webhook_server',
-    'DiscordBotListVotePayload',
-    'TopGGVotePayload'
+    'Unauthorized'
 )
 
 

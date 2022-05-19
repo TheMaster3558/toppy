@@ -20,13 +20,15 @@ with open('README.rst', 'r') as rm:
 
 extra_require = {
     'cache': [
-        'aiosqlite'
+        'aiosqlite',
+        'aiofiles'
     ]
 }
 
 
 packages = [
-    'toppy'
+    'toppy',
+    'toppy.webhook'
 ]
 
 

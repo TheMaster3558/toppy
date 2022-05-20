@@ -7,7 +7,7 @@ with open('toppy/__init__.py', 'r') as v:
         r"'?__version__'? = '?\d\.\d\.\d'?",
         v.read()
     ).group().replace("'", '')  # type: ignore
-    version = version[version.index('=')+1:]
+    version = version[version.index('=')+2:]
 
 
 with open('requirements.txt', 'r') as r:
@@ -18,7 +18,7 @@ with open('README.rst', 'r') as rm:
     readme = rm.read()
 
 
-extra_require = {
+extras_require = {
     'cache': [
         'aiosqlite',
         'aiofiles'
@@ -47,7 +47,7 @@ setuptools.setup(
     long_description_content_type='text/x-rst',
     include_package_data=True,
     install_requires=requirements,
-    extra_require=extra_require,
+    extras_require=extras_require,
     python_requires='>=3.8.0',
     classifiers=[
         'Development Status :: 5 - Production/Stable',

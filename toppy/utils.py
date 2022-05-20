@@ -5,7 +5,7 @@ from typing import Any, Type, TypeVar, Awaitable, Generic, TYPE_CHECKING, Option
 from aiohttp import web
 
 if TYPE_CHECKING:
-    from .webhook import SQLiteDatabase
+    from .webhook import AbstractDatabase
 
 
 __all__ = (
@@ -62,7 +62,7 @@ class AsyncContextManager(Generic[T]):
 
 
 async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,
-                             connect_db: Optional[SQLiteDatabase] = None, **kwargs) -> web.BaseSite:
+                             connect_db: Optional[AbstractDatabase] = None, **kwargs) -> web.BaseSite:
     """
     Run the webhook server created in `create_webhook_server`
 
@@ -73,9 +73,8 @@ async def run_webhook_server(application: web.Application, site_class: Type[web.
     site_class: :class:`aiohttp.web.BaseSite`
         The site for the application. Must have all methods from :class:`aiohttp.web.BaseSite`.
         Defaults to :class:`web.TCPSite`
-    connect_db: Optional[:class:`SQLiteDatabase`]
-        If you pass the :class:`SQLDatabase` instance from :func:`toppy.webhook.create_webhook_server`
-        it will automatically connection to the database.
+    connect_db: Optional[:class:`AbstractDatabase`]
+        Pass in an instance that fits the :class:`AbstractDatabase` protocol. This will automatically connect it.
     **kwargs:
         The kwargs to pass into ``site_class``.
 

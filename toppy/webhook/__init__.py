@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING, Type, Union
+from typing import Optional, TYPE_CHECKING, Type
 import logging
 import os
 from json.decoder import JSONDecodeError
@@ -8,11 +8,10 @@ from json.decoder import JSONDecodeError
 from aiohttp import web
 
 from .payload import DiscordBotListVotePayload, TopGGVotePayload
-from .cache import SQLDatabase, CachedVote, reset
+from .cache import SQLiteDatabase, CachedVote, AbstractDatabase, JSONDatabase
 from ..utils import MISSING
 
 if TYPE_CHECKING:
-    from os import PathLike
     from ..protocols import ClientProtocol
 
 
@@ -22,8 +21,10 @@ __all__ = (
     'DiscordBotListVotePayload',
     'TopGGVotePayload',
     # databases
-    'SQLDatabase',
-    'CachedVote'
+    'AbstractDatabase',
+    'CachedVote',
+    'JSONDatabase',
+    'SQLiteDatabase'
 )
 
 
@@ -37,9 +38,9 @@ def create_webhook_server(
         topgg_auth: Optional[str] = MISSING,
         web_app_class: Type[web.Application] = web.Application,
         application: Optional[web.Application] = None,
-        cache: bool = False,
+        db: Optional[AbstractDatabase] = None,
         **kwargs
-) -> tuple[web.Application, Optional[SQLDatabase]]:
+) -> web.Application:
     """
     A webhooks server to receives votes and dispatch them to your bot!
     Go to your bot's edit page on Discord Bot List or Top.gg do add the link and authorization.
@@ -60,8 +61,8 @@ def create_webhook_server(
         If combined with `application` this will be ignored.
     application: :class:`aiohttp.web.Application`
         A pre-existing application to use.
-    cache: :class:`bool`
-        Whether to cache the votes in a file. Defaults to `False`
+    db: Optional[:class:`AbstractDatabase`]
+        The instance of a database. Must fit the :class:`AbstractDatabase` protocol.
     **kwargs:
         Keyword arguments to pass onto `web_app_class`.
 
@@ -78,11 +79,6 @@ def create_webhook_server(
         dbl_auth = os.urandom(16).hex()
     if topgg_auth is MISSING:
         topgg_auth = os.urandom(16).hex()
-
-    if not cache:
-        db = None
-    else:
-        db = SQLDatabase()
 
     routes = web.RouteTableDef()
 
@@ -131,4 +127,4 @@ def create_webhook_server(
 
     app.add_routes(routes)
 
-    return app, db
+    return app

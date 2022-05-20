@@ -4,6 +4,7 @@ __pycache__
 main.py
 venv/
 .mypy_cache
+.pytest_cache
 *.log
 docs/build
 docs/source

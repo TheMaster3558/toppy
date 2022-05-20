@@ -21,7 +21,7 @@ copyright = '2022, The Master and chawkk6404'
 author = 'The Master and chawkk6404'
 
 # The full version, including alpha/beta/rc tags
-version = '1.1.1'
+version = '1.5.1'
 
 # -- General configuration ---------------------------------------------------
 
@@ -54,3 +54,7 @@ html_theme = 'furo'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path: list = []
+
+
+# Change output order to by source, not alphabetical
+autodoc_member_order = 'bysource'

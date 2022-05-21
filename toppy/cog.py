@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib
 import inspect
 from typing import TYPE_CHECKING, Union, Any
+import sys
 
 SPHINX = False
 try:
@@ -62,7 +63,7 @@ class ToppyCog(commands.Cog):
         This listener will print ``on_topgg_post_error`` and ``on_dbl_post_error`` to the console.
         """
         print(f'{__name__}: An error occured when posting stats | Status code: {error.status}.'
-              f' Enable logging for more information.')
+              f' Enable logging for more information.', file=sys.stderr)
 
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
         """

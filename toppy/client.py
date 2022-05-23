@@ -115,7 +115,7 @@ class BaseClient:
 
     @abstractmethod
     async def post_stats(self) -> None:
-        pass
+        raise NotImplementedError
 
 
 class DBLClient(BaseClient):

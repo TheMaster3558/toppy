@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Optional, Union, AsyncGenerator, Type
-from functools import wraps
 from abc import abstractmethod
+from functools import wraps
+from typing import TYPE_CHECKING, AsyncGenerator, Optional, Type, Union
 
 import aiohttp
 
-from .utils import MISSING
 from .errors import ClientNotReady
 from .http import BaseHTTPClient, DBLHTTPClient, TopGGHTTPClient
+from .utils import MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol
@@ -149,6 +149,10 @@ class DBLClient(BaseClient):
     """
 
     http_class = DBLHTTPClient
+    shortened = 'dbl'
+
+    if TYPE_CHECKING:
+        http: DBLHTTPClient
 
     async def post_stats(self) -> None:
         """Post your bots stats to Discord Bot List.
@@ -204,6 +208,7 @@ class TopGGClient(BaseClient):
     """
 
     http_class = TopGGHTTPClient
+    shortened = 'topgg'
 
     if TYPE_CHECKING:
         http: TopGGHTTPClient

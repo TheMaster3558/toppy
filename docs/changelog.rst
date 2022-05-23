@@ -20,6 +20,7 @@ New Features
     Base classes used now allow easier implementations of new bot websites.
     Cache for webhook votes.
 
-Bug Fixes
+Bug Fixes / Small Changes
 -----------------
-
+1.5.1
+    Cog errors now print to `stderr`.

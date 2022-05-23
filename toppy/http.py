@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Optional, TypeVar, Union, Callable, Coroutine, ClassVar
 import logging
 import time
 from abc import abstractmethod
+from typing import Any, Callable, ClassVar, Coroutine, Optional, TypeVar, Union
 
 import aiohttp
 

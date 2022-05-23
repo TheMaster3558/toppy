@@ -4,15 +4,11 @@ from typing import Optional
 from functools import cached_property
 from datetime import datetime
 
-from . import utils
-
 
 __all__ = (
     'Bot',
     'User'
 )
-
-MISSING = utils.MISSING
 
 
 # most of the doc strings have came from the documentation on Top.gg

@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING, Type
 import logging
 import os
 from json.decoder import JSONDecodeError
+from typing import TYPE_CHECKING, Optional, Type
 
 from aiohttp import web
 
+from .cache import AbstractDatabase, CachedVote, JSONDatabase, SQLiteDatabase
 from .payload import DiscordBotListVotePayload, TopGGVotePayload
-from .cache import SQLiteDatabase, CachedVote, AbstractDatabase, JSONDatabase
 from ..utils import MISSING
 
 if TYPE_CHECKING:

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from typing import Union, TYPE_CHECKING, Optional, Protocol, runtime_checkable
+import json
+import os
 from dataclasses import dataclass
 from datetime import datetime
-import os
-import json
+from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable, Union
 
 from ..errors import MissingExtraRequire
 from ..utils import MISSING
@@ -12,7 +12,7 @@ from ..utils import MISSING
 try:
     import aiosqlite
     import aiofiles
-except ModuleNotFoundError:
+except ImportError:
     raise MissingExtraRequire('cache')
 
 if TYPE_CHECKING:

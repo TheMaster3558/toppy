@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from typing import Protocol, Any, Optional, runtime_checkable
 import asyncio
+from typing import Any, Optional, Protocol, runtime_checkable
 
 
 __all__ = (

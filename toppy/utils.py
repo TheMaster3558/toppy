@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Type, TypeVar, Awaitable, Generic, TYPE_CHECKING, Optional, Generator
+from typing import TYPE_CHECKING, Any, Awaitable, Generator, Generic, Optional, Type, TypeVar
 
 from aiohttp import web
 

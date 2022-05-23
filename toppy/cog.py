@@ -2,17 +2,23 @@ from __future__ import annotations
 
 import importlib
 import inspect
-from typing import TYPE_CHECKING, Union, Any
 import sys
+from typing import TYPE_CHECKING, Any, Union
 
 SPHINX = False
 try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
-except IndexError:
+except ImportError:
     # if not extension not loaded properly
     # happens when sphinx docs
     SPHINX = True
     lib = 'discord'
+
+    import warnings
+    warnings.warn(
+        'You may have tried to load the cog incorrectly. Commands will not work.',
+        category=UserWarning
+    )
 
 discord: Any = importlib.import_module(lib)
 commands: Any = importlib.import_module(f'{lib}.ext.commands')

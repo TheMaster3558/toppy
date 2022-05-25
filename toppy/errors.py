@@ -30,10 +30,6 @@ class NoTokenSet(Exception):
         super().__init__(message)
 
 
-class ClientResponseError(aiohttp.ClientResponseError):
-    """An alias of :class:`aiohttp.ClientResponseError`"""
-
-
 class ClientNotReady(Exception):
     """The bot is not ready and does not have an application ID set so no ID could be found"""
     def __init__(self):

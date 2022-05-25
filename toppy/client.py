@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, AsyncGenerator, Optional, Type, Union
 
 import aiohttp
 
-from .errors import ClientNotReady
+from .errors import ClientNotReady, HTTPException
 from .http import BaseHTTPClient, DBLHTTPClient, TopGGHTTPClient
 from .utils import MISSING
 
@@ -102,7 +102,7 @@ class BaseClient:
         resp = await self.http.post_stats(bot_id, **kwargs)
         try:
             resp.raise_for_status()
-        except aiohttp.ClientResponseError as exc:
+        except HTTPException as exc:
             self.client.dispatch(f'{self.shortened}_post_error', exc)
         else:
             self.client.dispatch(f'{self.shortened}_post_success')
@@ -158,7 +158,7 @@ class DBLClient(BaseClient):
         """Post your bots stats to Discord Bot List.
         All stats are automatically found and posted.
 
-        dispatches `dbl_autopost_error` with the argument :class:`aiohttp.ClientResponseError`
+        dispatches `dbl_autopost_error` with the argument :class:`toppy.HTTPException` or derived classes
         or `dbl_autopost_success` with no arguments.
         """
 
@@ -298,7 +298,7 @@ class TopGGClient(BaseClient):
         """Post your bots stats to Top.gg.
         All stats are automatically found and posted.
 
-        dispatches `topgg_autopost_error` with the argument :class:`aiohttp.ClientResponseError`
+        dispatches `topgg_autopost_error` with the argument :class:`toppy.HTTPException` or derived classes
         or `topgg_autopost_success` with no arguments.
         """
 

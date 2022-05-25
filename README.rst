@@ -27,7 +27,6 @@ Example
 
     from discord.ext import commands
     import toppy
-    import aiohttp
     
 
     dbl_token = 'Your Discord Bot List token here'
@@ -47,7 +46,7 @@ Example
     
 
     @bot.event
-    async def on_dbl_autopost_error(error: aiohttp.ClientResponseError):  # or on_topgg_autopost_error
+    async def on_dbl_autopost_error(error: toppy.HTTPException):  # or on_topgg_autopost_error
         print(f'Uh oh. An error occurred: {error.message}')
        
     

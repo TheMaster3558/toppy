@@ -199,5 +199,5 @@ class TopGGHTTPClient(BaseHTTPClient):
             'server_count': server_count,
             'shard_count': shard_count
         })
-        async with self.request('POST', f'/bots/{bot_id}/stats', data=data) as resp:
+        async with self.request('POST', f'/bots/{bot_id}/stats', json=data) as resp:
             return resp

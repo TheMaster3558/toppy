@@ -126,7 +126,7 @@ class BaseHTTPClient:
                 await asyncio.sleep(data['retry-after'])
                 return await self._request(method, url, **kwargs)
             raise RateLimited(data['retry-after'], resp)
-        raise HTTPException(resp, f'Response with status {resp.status}')
+        raise HTTPException(resp, f'Status: {resp.status}')
 
 
 class DiscordBotListHTTPClient(BaseHTTPClient):

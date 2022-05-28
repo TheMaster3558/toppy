@@ -4,7 +4,7 @@ import json
 import os
 from dataclasses import dataclass
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable, Union
+from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable
 
 from ..errors import MissingExtraRequire
 from ..utils import MISSING
@@ -16,7 +16,7 @@ except ImportError:
     raise MissingExtraRequire('cache')
 
 if TYPE_CHECKING:
-    from .payload import DiscordBotListVotePayload, TopGGVotePayload
+    from .payload import BaseVotePayload
 
 
 __all__ = (
@@ -70,13 +70,13 @@ class AbstractDatabase(Protocol):
             content = await f.read()
             self.number = int(content)
 
-    async def insert(self, payload: Union[DiscordBotListVotePayload, TopGGVotePayload]) -> None:
+    async def insert(self, payload: BaseVotePayload) -> None:
         """
         Insert a payload into the database.
 
         Parameters
         -----------
-        payload: Union[:class:`DiscordBotListPayload`, :class:`TopGGVotePayload`]
+        payload: BaseVotePayload
             The payload to insert.
 
             .. note::
@@ -141,13 +141,13 @@ class SQLiteDatabase(AbstractDatabase):
         )
         await self.conn.commit()
 
-    async def insert(self, payload: Union[DiscordBotListVotePayload, TopGGVotePayload]) -> None:
+    async def insert(self, payload: BaseVotePayload) -> None:
         """
         Insert a payload into the database.
 
         Parameters
         -----------
-        payload: Union[:class:`DiscordBotListPayload`, :class:`TopGGVotePayload`]
+        payload: BaseVotePayload
             The payload to insert.
 
             .. note::
@@ -235,13 +235,13 @@ class JSONDatabase(AbstractDatabase):
             async with aiofiles.open('toppy_vote_cache/votes.json', 'w') as f:
                 await f.write(json.dumps([]))
 
-    async def insert(self, payload: Union[DiscordBotListVotePayload, TopGGVotePayload]) -> None:
+    async def insert(self, payload: BaseVotePayload) -> None:
         """
         Insert a payload into the database.
 
         Parameters
         -----------
-        payload: Union[:class:`DiscordBotListPayload`, :class:`TopGGVotePayload`]
+        payload: BaseVotePayload
             The payload to insert.
 
             .. note::

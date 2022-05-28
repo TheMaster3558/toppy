@@ -7,11 +7,10 @@ An API wrapper made for discord.py or any forks for Discord Bot List and/or Top.
 :license: MIT
 """
 
-from .client import Client, DBLClient, TopGGClient
+from .client import Client, DiscordBotListClient, DiscordBotsGGClient, TopGGClient
 from .errors import (
     BadRequest,
     ClientNotReady,
-    ClientResponseError,
     Forbidden,
     HTTPException,
     NoTokenSet,
@@ -25,12 +24,12 @@ from . import cog, http, models, protocols, utils
 __all__ = (
     # client.py
     'Client',
-    'DBLClient',
+    'DiscordBotListClient',
+    'DiscordBotsGGClient',
     'TopGGClient',
     # errors
     'BadRequest',
     'ClientNotReady',
-    'ClientResponseError',
     'Forbidden',
     'HTTPException',
     'NoTokenSet',
@@ -43,4 +42,4 @@ __title__ = 'toppy'
 __authors__ = ('The Master', 'chawkk6404')
 __license__ = 'MIT'
 __copyright__ = '2022-present The Master and chawkk6404'
-__version__ = '1.5.1'
+__version__ = '1.6.0'

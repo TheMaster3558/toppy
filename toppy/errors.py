@@ -6,7 +6,6 @@ import aiohttp
 __all__ = (
     'BadRequest',
     'ClientNotReady',
-    'ClientResponseError',
     'Forbidden',
     'HTTPException',
     'MissingExtraRequire',

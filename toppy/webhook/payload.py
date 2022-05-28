@@ -8,20 +8,15 @@ if TYPE_CHECKING:
 
 
 __all__ = (
+    'BaseVotePayload',
     'DiscordBotListVotePayload',
+    'DiscordBotsGGVotePayload',
     'TopGGVotePayload'
 )
 
 
-# the following documentation has been pulled from the Discord Bot List and Top.gg documentation
-class DiscordBotListVotePayload:
-    """
-    A class to represent the a Discord Bot List webhook payload
-
-    .. versionadded:: 1.3
-    """
-
-    SITE: ClassVar[str] = 'Discord Bot List'
+class BaseVotePayload:
+    SITE: ClassVar[str]
 
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
@@ -29,10 +24,6 @@ class DiscordBotListVotePayload:
         self.__time = datetime.now()
 
         self.__user: Optional[Snowflake] = None
-
-    @property
-    def time(self) -> datetime:
-        return self.__time
 
     @property
     def raw(self) -> dict:
@@ -44,6 +35,50 @@ class DiscordBotListVotePayload:
         :class:`dict`
         """
         return self.__data
+
+    @property
+    def time(self) -> datetime:
+        return self.__time
+
+    @property
+    def user_id(self) -> int:
+        """
+        The ID of the user who voted.
+
+        Returns
+        --------
+        :class:`int`
+        """
+        return int(self.__data['user'])
+
+    @property
+    def user(self) -> Optional[Snowflake]:
+        """
+        Returns the :class:`User` object for the user based on what library your client is from.
+        If missing use :func:`DiscordBotListVotePayload.fetch()`.
+
+        Returns
+        --------
+        Optional[:class:`Snowflake`]
+        """
+        return self.__user or self.__client.get_user(self.user_id)
+
+    async def fetch(self) -> None:
+        """
+        Fetches the user id from the Discord API to ensure `user` is not ``None``.
+        """
+        self.__user = await self.__client.fetch_user(self.user_id)
+
+
+# the following documentation has been pulled from the Discord Bot List and Top.gg documentation
+class DiscordBotListVotePayload(BaseVotePayload):
+    """
+    A class to represent the a Discord Bot List webhook payload
+
+    .. versionadded:: 1.3
+    """
+
+    SITE: ClassVar[str] = 'Discord Bot List'
 
     @property
     def admin(self) -> bool:
@@ -78,37 +113,16 @@ class DiscordBotListVotePayload:
         """
         return self.__data['username']
 
-    @property
-    def user_id(self) -> int:
-        """
-        The ID of the user who voted.
 
-        Returns
-        --------
-        :class:`int`
-        """
-        return int(self.__data['id'])
+class DiscordBotsGGVotePayload(BaseVotePayload):
+    """
+    A class to represent the a DiscordBotsGG webhook payload
 
-    @property
-    def user(self) -> Optional[Snowflake]:
+    .. versionadded:: 1.6
         """
-        Returns the :class:`User` object for the user based on what library your client is from.
-        If missing use :func:`DiscordBotListVotePayload.fetch()`.
-
-        Returns
-        --------
-        Optional[:class:`Snowflake`]
-        """
-        return self.__user or self.__client.get_user(self.user_id)
-
-    async def fetch(self) -> None:
-        """
-        Fetches the user id from the Discord API to ensure `user` is not ``None``.
-        """
-        self.__user = await self.__client.fetch_user(self.user_id)
 
 
-class TopGGVotePayload:
+class TopGGVotePayload(BaseVotePayload):
     """
     A class to represent the a Top.gg webhook payload
 
@@ -118,12 +132,7 @@ class TopGGVotePayload:
     SITE: ClassVar[str] = 'Top.gg'
 
     def __init__(self, client: ClientProtocol, data: dict):
-        self.__client = client
-        self.__data = data
-        self.__time = datetime.now()
-
-        self.__bot_id: int = data['bot']
-        self.__user_id: int = data['user']
+        super().__init__(client, data)
 
         self.__bot: Optional[Snowflake] = None
         self.__user: Optional[Snowflake] = None
@@ -131,17 +140,6 @@ class TopGGVotePayload:
     @property
     def time(self) -> datetime:
         return self.__time
-
-    @property
-    def raw(self) -> dict:
-        """
-        Returns the raw data sent.
-
-        Returns
-        --------
-        :class:`dict`
-        """
-        return self.__data
 
     @property
     def bot_id(self) -> int:
@@ -152,7 +150,7 @@ class TopGGVotePayload:
         --------
         :class:`int`
         """
-        return self.__bot_id
+        return self.__data['bot']
 
     @property
     def user_id(self) -> int:
@@ -163,7 +161,7 @@ class TopGGVotePayload:
         --------
         :class:`int`
         """
-        return self.__user_id
+        return self.__data['user']
 
     @property
     def type(self) -> Literal["upvote", "test"]:
@@ -210,22 +208,10 @@ class TopGGVotePayload:
         """
         return self.__bot or self.__client.get_user(self.bot_id)
 
-    @property
-    def user(self) -> Optional[Snowflake]:
-        """
-        Returns the ``User`` object for the user based on what library your client is from.
-        If missing use :func:`TopGGVotePayload.fetch()`
-
-        Returns
-        --------
-        Optional[:class:`Snowflake`]
-        """
-        return self.__user or self.__client.get_user(self.user_id)
-
     async def fetch(self) -> None:
         """
         Fetches the user id from the Discord API to ensure `TopGGVotePayload.user` and `TopGGVotePayload.bot`
         are not ``None``.
         """
         self.__bot = await self.__client.fetch_user(self.bot_id)
-        self.__user = await self.__client.fetch_user(self.user_id)
+        await super().fetch()

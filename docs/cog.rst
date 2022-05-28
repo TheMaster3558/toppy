@@ -15,6 +15,7 @@ If you just want a simple easy cog to load, you can use this!
 
     # we are making bot vars now!
     bot.dbl_token = 'Your Discord Bot List token here'
+    bot.dbgg_token = 'Your DiscordBotsGG token here'
     bot.topgg_token = 'Your Top.gg token here'
     # you need at least one token set to work
     # this library will choose the client based off what tokens you pass

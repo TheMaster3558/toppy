@@ -11,7 +11,7 @@ Discord Bot List and Top.gg
 Discord Bot List
 -----------------
 
-.. autoclass:: toppy.client.DBLClient
+.. autoclass:: toppy.client.DiscordBotListClient
   :members:
   :inherited-members:
 

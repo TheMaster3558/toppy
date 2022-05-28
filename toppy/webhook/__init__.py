@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Optional, Type
 from aiohttp import web
 
 from .cache import AbstractDatabase, CachedVote, JSONDatabase, SQLiteDatabase
-from .payload import DiscordBotListVotePayload, TopGGVotePayload
+from .payload import DiscordBotListVotePayload, DiscordBotsGGVotePayload, TopGGVotePayload
 from ..utils import MISSING
 
 if TYPE_CHECKING:
@@ -19,6 +19,7 @@ __all__ = (
     'create_webhook_server',
     # payloads
     'DiscordBotListVotePayload',
+    'DiscordBotsGGVotePayload',
     'TopGGVotePayload',
     # databases
     'AbstractDatabase',
@@ -35,6 +36,7 @@ def create_webhook_server(
         client: ClientProtocol,
         *,
         dbl_auth: Optional[str] = MISSING,
+        dbgg_auth: Optional[str] = MISSING,
         topgg_auth: Optional[str] = MISSING,
         web_app_class: Type[web.Application] = web.Application,
         application: Optional[web.Application] = None,
@@ -54,6 +56,8 @@ def create_webhook_server(
         It must fit the :class:`ClientProtocol`.
     dbl_auth: Optional[:class:`str`]
         The Discord Bot List webhook secret. This can be made in the bot's edit section.
+    dbgg_auth: Optional[:class:`str`]
+        The DiscordBotGG webhook secret. This can be found in the bots vote settings section.
     topgg_auth: Optional[:class:`str`]
         The Authorization for the webhook. You can make this in the webhooks section of the bot's edit section.
     web_app_class: Type[:class:`aiohttp.web.Application`]
@@ -69,7 +73,7 @@ def create_webhook_server(
     Returns
     --------
     The class from `web_app_class` with the routes added.
-    The routes are posts to ``/dbl`` and/or ``/topgg``.
+    The routes are posts to ``/dbl``, `/dbgg`, or ``/topgg``.
 
 
     .. versionadded:: 1.5
@@ -77,6 +81,8 @@ def create_webhook_server(
     """
     if dbl_auth is MISSING:
         dbl_auth = os.urandom(16).hex()
+    if dbgg_auth is MISSING:
+        dbgg_auth = os.urandom(16).hex()
     if topgg_auth is MISSING:
         topgg_auth = os.urandom(16).hex()
 
@@ -101,7 +107,26 @@ def create_webhook_server(
 
         return web.Response(status=200, body=__package__)
 
-    @routes.post('/dbl')
+    @routes.post('/dbgg')
+    async def dbgg_votes(request: web.Request) -> web.Response:
+        try:
+            data = await request.json()
+        except JSONDecodeError:
+            return web.Response(status=400)
+
+        if dbgg_auth is not None:
+            if data['secret'] != dbgg_auth:
+                return web.Response(status=401)
+
+        payload = DiscordBotsGGVotePayload(client, data)
+        client.dispatch('dbgg_vote', payload)
+
+        if db:
+            await db.insert(payload)
+
+        return web.Response(status=200, body=__package__)
+
+    @routes.post('/topgg')
     async def topgg_votes(request: web.Request) -> web.Response:
         if topgg_auth is not None:
             if request.headers.get('Authorization') != topgg_auth:

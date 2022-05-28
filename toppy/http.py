@@ -14,7 +14,8 @@ from .utils import AsyncContextManager, MISSING
 
 __all__ = (
     'BaseHTTPClient',
-    'DBLHTTPClient',
+    'DiscordBotListHTTPClient',
+    'DiscordBotsGGHTTPClient',
     'TopGGHTTPClient'
 )
 
@@ -58,13 +59,13 @@ class BaseHTTPClient:
     token: str
     session: aiohttp.ClientSession
 
-    @abstractmethod
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        # client.py: 67
-        raise NotImplementedError
+    def __init__(self, token, *, loop: Optional[asyncio.AbstractEventLoop] = None,
+                 session: Optional[aiohttp.ClientSession] = None):
+        self.token = token
+        self.session = session or aiohttp.ClientSession(loop=loop)
 
     # method with signature (self, *args, **kwargs) doesn't work
-    post_stats: Callable[..., Coroutine[Any, Any, aiohttp.ClientResponse]]
+    post_stats: Callable[..., Coroutine[Any, Any, Any]]
 
     @property
     def headers(self) -> dict:
@@ -128,24 +129,34 @@ class BaseHTTPClient:
         raise HTTPException(resp, f'Response with status {resp.status}')
 
 
-class DBLHTTPClient(BaseHTTPClient):
+class DiscordBotListHTTPClient(BaseHTTPClient):
     BASE = 'https://discordbotlist.com/api/v1'
 
-    def __init__(self, token, *, loop: Optional[asyncio.AbstractEventLoop] = None,
-                 session: Optional[aiohttp.ClientSession] = None):
-        self.token = token
-        self.session = session or aiohttp.ClientSession(loop=loop)
-
     async def post_stats(self, bot_id: int, *, voice_connections: int, users: int, guilds: int
-                         ) -> aiohttp.ClientResponse:
+                         ) -> None:
         data = {
             'voice_connections': voice_connections,
             'users': users,
             'guilds': guilds
         }
 
-        async with self.request('POST', f'/bots/{bot_id}/stats', params=data) as resp:
-            return resp
+        await self.request('POST', f'/bots/{bot_id}/stats', params=data)
+
+
+class DiscordBotsGGHTTPClient(BaseHTTPClient):
+    Base = 'https://discordbots.gg/api'
+
+    @property
+    def headers(self) -> dict:
+        return {'Authentication': str(self.token)}
+
+    async def post_stats(self, bot_id: int, guilds: int):
+        data = {
+            'client_id': bot_id,
+            'count': guilds
+        }
+
+        await self.request('POST', '/servers', params=data)
 
 
 class TopGGHTTPClient(BaseHTTPClient):
@@ -153,8 +164,7 @@ class TopGGHTTPClient(BaseHTTPClient):
 
     def __init__(self, token, *, loop: Optional[asyncio.AbstractEventLoop] = None,
                  session: Optional[aiohttp.ClientSession] = None):
-        self.token = token
-        self.session = session or aiohttp.ClientSession(loop=loop)
+        super().__init__(token, loop=loop, session=session)
 
         self.rate_limits: dict[str, RateLimiter] = {
             '/': RateLimiter(100, 1),
@@ -194,10 +204,9 @@ class TopGGHTTPClient(BaseHTTPClient):
         return data['voted'] is True
 
     async def post_stats(self, bot_id: int, *, server_count: Union[int, list], shard_count: Optional[int] = None
-                         ) -> aiohttp.ClientResponse:
+                         ) -> None:
         data = cleanup_params({
             'server_count': server_count,
             'shard_count': shard_count
         })
-        async with self.request('POST', f'/bots/{bot_id}/stats', json=data) as resp:
-            return resp
+        await self.request('POST', f'/bots/{bot_id}/stats', json=data)

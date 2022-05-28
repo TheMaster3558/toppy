@@ -11,14 +11,20 @@ Breaking Changes
     `run_webhook_server` moved to `toppy.utils`.
 
 1.5.0
-    `DBLClient` and `TopGGClient` have been moved to `toppy.client`.
+    `DiscordBotListClient` and `TopGGClient` have been moved to `toppy.client`.
     `webhook` is now a submodule.
+1.6.0
+    Most methods removed from `Client` to allow more websites.
+    `DBLClient` renamed to `DiscordBotListClient`
 
 New Features
 -----------------
 1.5.0
     Base classes used now allow easier implementations of new bot websites.
     Cache for webhook votes.
+
+1.6.0
+    `discordbotsgg` support added.
 
 Bug Fixes / Small Changes
 -----------------

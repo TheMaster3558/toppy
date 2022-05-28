@@ -31,3 +31,6 @@ Bug Fixes / Small Changes
 1.5.1
     Cog errors now print to `stderr`.
     Fix bug with incorrect error being dispatched.
+
+1.6.0
+    Fix bug with incorrect error being dispatched.

@@ -1,5 +1,5 @@
-``toppy.client`` - Clients to use
-=======================================================
+``toppy.client`` - Discord Bot List, DiscordBotsGG, and Top.gg
+================================================================
 
 
 .. automodule:: toppy.client

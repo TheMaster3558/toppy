@@ -25,30 +25,7 @@ Top.gg
   If you would like all requests to be accepted regardless of authorization, set the authorization to ``None``
 
 
-Webhook Server
+Reference
 -------------------
-.. automodule:: toppy.webhook.__init__
+.. automodule:: toppy.webhook
   :members:
-
-
-Cache
-------
-.. automodule:: toppy.cache
-  :members:
-
-
-Vote Payloads
---------------
-.. autoclass:: toppy.payload.DiscordBotListVotePayload
-  :members:
-  :inherited-members:
-
-.. autoclass:: toppy.payload.DiscordBotsGGVotePayload
-  :members:
-  :inherited-members:
-
-.. autoclass:: toppy.payload.TopGGVotePayload
-  :members:
-  :inherited-members:
-
-

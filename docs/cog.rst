@@ -18,7 +18,6 @@ If you just want a simple easy cog to load, you can use this!
     bot.dbgg_token = 'Your DiscordBotsGG token here'
     bot.topgg_token = 'Your Top.gg token here'
     # you need at least one token set to work
-    # this library will choose the client based off what tokens you pass
 
 
 2. Load the extension

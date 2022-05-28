@@ -1,23 +1,6 @@
-``toppy.client`` - Discord Bot List and Top.gg clients
+``toppy.client`` - Clients to use
 =======================================================
 
 
-Discord Bot List and Top.gg
-----------------------------
-
-.. autoclass:: toppy.Client
+.. automodule:: toppy.client
   :members:
-
-Discord Bot List
------------------
-
-.. autoclass:: toppy.client.DiscordBotListClient
-  :members:
-  :inherited-members:
-
-
-Top.gg
---------
-.. autoclass:: toppy.client.TopGGClient
-  :members:
-  :inherited-members:

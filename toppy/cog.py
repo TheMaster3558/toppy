@@ -8,7 +8,7 @@ from typing import Any, ClassVar
 SPHINX = False
 try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
-except ImportError:
+except IndexError:
     # if not extension not loaded properly
     # happens when sphinx docs
     SPHINX = True

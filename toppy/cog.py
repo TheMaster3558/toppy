@@ -96,7 +96,7 @@ class ToppyCog(commands.Cog):
         The `is_owner <https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands
         .is_owner>`__ check is used.
         """
-
+        await self.client.post_stats()
         await ctx.send('Stats sucessfully posted.')
 
     @commands.command(description='A command to change the interval of the autopost.')

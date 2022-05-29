@@ -1,4 +1,4 @@
-``toppy.webhook`` - Discord Bot List and Top.gg webhook servers
+``toppy.webhook`` - Discord Bot List, DiscordBotsGG, gand Top.gg webhook servers
 ================================================================
 
 Discord Bot List

@@ -9,7 +9,7 @@ import aiohttp
 
 from .errors import ClientNotReady, HTTPException
 from .http import BaseHTTPClient, DiscordBotListHTTPClient, DiscordBotsGGHTTPClient, TopGGHTTPClient
-from .utils import MISSING
+from .utils import copy_doc, MISSING
 
 if TYPE_CHECKING:
     from .protocols import ClientProtocol
@@ -466,11 +466,12 @@ class Client:
 
         return clients
 
+    @copy_doc(BaseClient.start)
     def start(self):
-        """Starts the autopost task."""
         for client in self._get_clients():
             client.start()
 
+    @copy_doc(BaseClient.cancel)
     def cancel(self):
         """Cancels the task of auto posting stats."""
         for client in self._get_clients():

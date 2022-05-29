@@ -1,4 +1,4 @@
-``toppy.models`` - Models on Discord Bot List or Top.gg
+``toppy.models`` - Models from relevant sites
 =========================================================
 
 

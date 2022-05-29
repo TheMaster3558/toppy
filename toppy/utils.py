@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Awaitable, Generator, Generic, Optional, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Awaitable, Callable, Generator, Generic, Optional, Type, TypeVar
 
 from aiohttp import web
 
@@ -9,13 +9,13 @@ if TYPE_CHECKING:
 
 
 __all__ = (
-    'AsyncContextManager',
     'MISSING',
     'run_webhook_server'
 )
 
 
 T = TypeVar('T')
+CallableT = TypeVar('CallableT', bound=Callable)
 
 
 class _MissingSentinel:
@@ -92,3 +92,10 @@ async def run_webhook_server(application: web.Application, site_class: Type[web.
     await site.start()
 
     return site
+
+
+def copy_doc(copy_from: Callable):
+    def inner(func: CallableT):
+        func.__doc__ = copy_from.__doc__
+        return func
+    return inner

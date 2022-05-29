@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable
 
 from ..errors import MissingExtraRequire
-from ..utils import MISSING
+from ..utils import copy_doc, MISSING
 
 try:
     import aiosqlite
@@ -121,10 +121,8 @@ class SQLiteDatabase(AbstractDatabase):
         self.conn: aiosqlite.Connection = MISSING
         self.number: int = 0
 
+    @copy_doc(AbstractDatabase.connect)
     async def connect(self) -> None:
-        """
-        Connect to the database.
-        """
         await super().connect()
 
         if not os.path.exists('toppy_vote_cache/votes.db'):
@@ -141,18 +139,8 @@ class SQLiteDatabase(AbstractDatabase):
         )
         await self.conn.commit()
 
+    @copy_doc(AbstractDatabase.insert)
     async def insert(self, payload: BaseVotePayload) -> None:
-        """
-        Insert a payload into the database.
-
-        Parameters
-        -----------
-        payload: BaseVotePayload
-            The payload to insert.
-
-            .. note::
-                This function is usually used internally by in the web application.
-        """
         await self.conn.execute(
             '''INSERT INTO votes VALUES (
                         ?, ?, ?, ?
@@ -198,14 +186,8 @@ class SQLiteDatabase(AbstractDatabase):
             site
         )
 
+    @copy_doc(AbstractDatabase.fetchmany)
     async def fetchmany(self) -> list[CachedVote]:
-        """
-        Fetch multiple votes. This will be expanded in the future with filters.
-
-        Returns
-        --------
-        list[:class:`CachedVote`]
-        """
         async with self.conn.execute(
             '''SELECT * FROM votes;'''
         ) as cursor:
@@ -225,28 +207,16 @@ class JSONDatabase(AbstractDatabase):
     def __init__(self):
         self.number: int = 0
 
+    @copy_doc(AbstractDatabase.connect)
     async def connect(self) -> None:
-        """
-        Connect to the database.
-        """
         await super().connect()
 
         if not os.path.exists('toppy_vote_cache/votes.json'):
             async with aiofiles.open('toppy_vote_cache/votes.json', 'w') as f:
                 await f.write(json.dumps([]))
 
+    @copy_doc(AbstractDatabase.insert)
     async def insert(self, payload: BaseVotePayload) -> None:
-        """
-        Insert a payload into the database.
-
-        Parameters
-        -----------
-        payload: BaseVotePayload
-            The payload to insert.
-
-            .. note::
-                This function is usually used internally by in the web application.
-        """
         async with aiofiles.open('toppy_vote_cache/votes.json', 'r') as f:
             text = await f.read()
 
@@ -289,14 +259,8 @@ class JSONDatabase(AbstractDatabase):
             data[3]
         )
 
+    @copy_doc(AbstractDatabase.fetchmany)
     async def fetchmany(self) -> list[CachedVote]:
-        """
-        Fetch multiple votes. This will be expanded in the future with filters.
-
-        Returns
-        --------
-        list[:class:`CachedVote`]
-        """
         async with aiofiles.open('toppy_vote_cache/votes.json', 'r') as f:
             text = await f.read()
 

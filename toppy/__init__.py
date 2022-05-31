@@ -1,7 +1,7 @@
 """
 toppy
 ~~~~~~
-An API wrapper made for discord.py or any forks for Discord Bot List and/or Top.gg
+An API wrapper made for discord.py or any forks for Discord Bot List, DiscordBotsGG, and/or Top.gg
 
 :copyright: (c) 2022-present The Master and chawkk6404
 :license: MIT
@@ -42,4 +42,4 @@ __title__ = 'toppy'
 __authors__ = ('The Master', 'chawkk6404')
 __license__ = 'MIT'
 __copyright__ = '2022-present The Master and chawkk6404'
-__version__ = '1.5.2'
+__version__ = '1.6.0'

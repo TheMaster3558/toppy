@@ -363,8 +363,7 @@ class TopGGClient(BaseClient):
 
 
 class Client:
-    """A class designed to handle both Top.gg and Discord Bot List.
-    For individual handling use :class:`DiscordBotListClient` or :class:`TopGGClient`
+    """A class designed to handle Discord Bot List, DiscordBotsGG, and/or Top.gg
 
     Parameters
     ----------

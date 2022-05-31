@@ -1,4 +1,4 @@
-``toppy.webhook`` - Discord Bot List, DiscordBotsGG, gand Top.gg webhook servers
+``toppy.webhook`` - Discord Bot List, DiscordBotsGG, and Top.gg webhook servers
 ================================================================
 
 Discord Bot List
@@ -26,6 +26,20 @@ Top.gg
 
 
 Reference
--------------------
-.. automodule:: toppy.webhook
+------------
+.. autoclass:: toppy.webhook.CachedVote
   :members:
+
+.. autofunction:: toppy.webhook.create_webhook_server
+
+.. autoclass:: toppy.webhook.AbstractDatabase
+  :members:
+
+.. autoclass:: toppy.webhook.SQLiteDatabase
+  :members:
+  
+.. autoclass:: toppy.webhook.JSONDatabase
+  :members:
+
+
+

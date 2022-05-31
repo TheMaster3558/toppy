@@ -45,7 +45,7 @@ class CachedVote:
 
 @runtime_checkable
 class AbstractDatabase(Protocol):
-    """A form of database for caching votes.
+    """A mostly unimplemented class for caching votes.
 
     This documentation is identical the following:
         :class:`JSONDatabase`

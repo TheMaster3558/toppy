@@ -316,6 +316,12 @@ class TopGGClient(BaseClient):
         Yields
         -------
         :class:`User`
+        
+        Example
+        ----------
+        .. code:: py
+            async for user in topgg.last_1000_votes():
+                ...
         """
         bot_id = bot_id or self._get_bot_id()
 

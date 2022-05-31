@@ -59,10 +59,9 @@ class BaseHTTPClient:
     token: str
     session: aiohttp.ClientSession
 
-    def __init__(self, token, *, loop: Optional[asyncio.AbstractEventLoop] = None,
-                 session: Optional[aiohttp.ClientSession] = None):
+    def __init__(self, token, *, session: Optional[aiohttp.ClientSession] = None):
         self.token = token
-        self.session = session or aiohttp.ClientSession(loop=loop)
+        self.session = session or aiohttp.ClientSession()
 
     # method with signature (self, *args, **kwargs) doesn't work
     post_stats: Callable[..., Coroutine[Any, Any, Any]]

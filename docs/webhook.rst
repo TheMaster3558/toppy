@@ -23,23 +23,3 @@ Top.gg
 
 .. note::
   If you would like all requests to be accepted regardless of authorization, set the authorization to ``None``
-
-
-Reference
-------------
-.. autoclass:: toppy.webhook.CachedVote
-  :members:
-
-.. autofunction:: toppy.webhook.create_webhook_server
-
-.. autoclass:: toppy.webhook.AbstractDatabase
-  :members:
-
-.. autoclass:: toppy.webhook.SQLiteDatabase
-  :members:
-  
-.. autoclass:: toppy.webhook.JSONDatabase
-  :members:
-
-
-

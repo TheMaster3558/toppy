@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 __all__ = (
     'MISSING',
-    'run_webhook_server'
+    'run_web_application'
 )
 
 
@@ -61,8 +61,8 @@ class AsyncContextManager(Generic[T]):
             pass
 
 
-async def run_webhook_server(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,
-                             connect_db: Optional[AbstractDatabase] = None, **kwargs) -> web.BaseSite:
+async def run_web_application(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,
+                              connect_db: Optional[AbstractDatabase] = None, **kwargs) -> web.BaseSite:
     """
     Run the webhook server created in `create_webhook_server`
 

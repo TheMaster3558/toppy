@@ -25,6 +25,7 @@ New Features
 
 1.6.0
     `discordbotsgg` support added.
+    `run_webhook_server` renamed to `run_web_application`
 
 Bug Fixes / Small Changes
 -----------------

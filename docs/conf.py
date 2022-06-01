@@ -17,8 +17,8 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 project = 'toppy'
-copyright = '2022, The Master and chawkk6404'
-author = 'The Master and chawkk6404'
+copyright = '2022, The Master'
+author = 'The Master'
 
 # The full version, including alpha/beta/rc tags
 version = '1.5.1'

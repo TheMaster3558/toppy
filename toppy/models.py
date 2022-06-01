@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Optional
+# NOTE: in this file, from imports will be accepted more often
+import datetime
 from functools import cached_property
-from datetime import datetime
+from typing import Optional
 
 
 __all__ = (

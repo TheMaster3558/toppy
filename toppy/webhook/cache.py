@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import dataclasses
+import datetime
 import json
 import os
-from dataclasses import dataclass
-from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable
 
 from ..errors import MissingExtraRequire
@@ -32,14 +32,14 @@ async def mkfile(name: str) -> None:
         pass
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class CachedVote:
     """
     A dataclass to represent a generic vote.
     """
     number: int
     id: int
-    time: datetime
+    time: datetime.datetime
     site: str
 
 
@@ -182,7 +182,7 @@ class SQLiteDatabase(AbstractDatabase):
         return CachedVote(
             number,
             id,
-            datetime.fromisoformat(time),
+            datetime.datetime.fromisoformat(time),
             site
         )
 
@@ -192,7 +192,7 @@ class SQLiteDatabase(AbstractDatabase):
             '''SELECT * FROM votes;'''
         ) as cursor:
             return [
-                CachedVote(number, id, datetime.fromisoformat(time), site)
+                CachedVote(number, id, datetime.datetime.fromisoformat(time), site)
                 async for number, id, time, site in cursor
             ]
 
@@ -255,7 +255,7 @@ class JSONDatabase(AbstractDatabase):
         return CachedVote(
             data[0],
             data[1],
-            datetime.fromisoformat(data[2]),
+            datetime.datetime.fromisoformat(data[2]),
             data[3]
         )
 
@@ -267,6 +267,6 @@ class JSONDatabase(AbstractDatabase):
         data: list = json.loads(text)
 
         return [
-            CachedVote(d[0], d[1], datetime.fromisoformat(d[2]), d[3])
+            CachedVote(d[0], d[1], datetime.datetime.fromisoformat(d[2]), d[3])
             for d in data
         ]

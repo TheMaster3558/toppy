@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import json
 import logging
 import os
-from json.decoder import JSONDecodeError
 from typing import TYPE_CHECKING, Optional, Type
 
 from aiohttp import web
@@ -96,7 +96,7 @@ def create_webhook_server(
 
         try:
             data = await request.json()
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             return web.Response(status=400)
 
         payload = TopGGVotePayload(client, data)
@@ -111,7 +111,7 @@ def create_webhook_server(
     async def dbgg_votes(request: web.Request) -> web.Response:
         try:
             data = await request.json()
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             return web.Response(status=400)
 
         if dbgg_auth is not None:
@@ -134,7 +134,7 @@ def create_webhook_server(
 
         try:
             data = await request.json()
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             return web.Response(status=400)
 
         payload = TopGGVotePayload(client, data)

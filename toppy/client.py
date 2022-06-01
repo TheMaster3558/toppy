@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import asyncio
+import functools
 from abc import abstractmethod
-from functools import wraps
 from typing import TYPE_CHECKING, AsyncGenerator, ClassVar, Optional, Type
 
 import aiohttp
@@ -61,7 +61,7 @@ class BaseClient:
         old_close = self.client.close
 
         # used over setup_hook for fork support
-        @wraps(old_start)
+        @functools.wraps(old_start)
         async def start(*args, **kwargs) -> None:
             task = self.client.loop.create_task(old_start(*args, **kwargs))
 
@@ -71,7 +71,7 @@ class BaseClient:
 
             await task
 
-        @wraps(old_close)
+        @functools.wraps(old_close)
         async def close() -> None:
             if not self.http.session.closed:
                 await self.http.session.close()
@@ -448,12 +448,12 @@ class Client:
         old_close = self.client.close
 
         # used over setup_hook for fork support
-        @wraps(old_start)
+        @functools.wraps(old_start)
         async def start(*args, **kwargs) -> None:
             self.__session = aiohttp.ClientSession(loop=self.client.loop)
             await old_start(*args, **kwargs)
 
-        @wraps(old_close)
+        @functools.wraps(old_close)
         async def close() -> None:
             await self.__session.close()
             await old_close()

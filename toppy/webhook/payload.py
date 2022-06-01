@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+import datetime
 from typing import TYPE_CHECKING, ClassVar, Literal, Optional
 
 if TYPE_CHECKING:
@@ -21,7 +21,7 @@ class BaseVotePayload:
     def __init__(self, client: ClientProtocol, data: dict):
         self.__client = client
         self.__data = data
-        self.__time = datetime.now()
+        self.__time = datetime.datetime.now()
 
         self.__user: Optional[Snowflake] = None
 

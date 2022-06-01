@@ -39,7 +39,7 @@ __all__ = (
 
 
 __title__ = 'toppy'
-__authors__ = ('The Master', 'chawkk6404')
+__author__ = 'The Master'
 __license__ = 'MIT'
-__copyright__ = '2022-present The Master and chawkk6404'
+__copyright__ = '2022-present The Master'
 __version__ = '1.6.0'

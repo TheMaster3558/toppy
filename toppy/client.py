@@ -320,6 +320,7 @@ class TopGGClient(BaseClient):
         Example
         ----------
         .. code:: py
+
             async for user in topgg.last_1000_votes():
                 ...
         """

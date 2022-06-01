@@ -7,65 +7,54 @@ Clients
 --------
 Mixed
 ~~~~~~
-.. attributetable:: Client
-
 .. autoclass:: Client
   :members:
 
 Discord Bot List
 ~~~~~~~~~~~~~~~~~
-.. attributetable:: DiscordBotListClient
-
 .. autoclass:: DiscordBotListClient
   :members:
   
 DiscordBotsGG
 ~~~~~~~~~~~~~~~~~
-.. attributetable:: DiscordBotsGGClient
-
 .. autoclass:: DiscordBotsGGClient
   :members:
   
 Top.gg
 ~~~~~~~~~~~~~~~~~
-.. attributetable:: TopGGClient
-
 .. autoclass:: TopGGClient
   :members:
-  
+
+.. currentmodule:: toppy.cog
+
 Cog
 ----
 Use `load_extension('toppy.cog')` to load the cog.
 
-.. attributetable:: .cog.ToppyCog
-
-.. autoclass:: .cog.ToppyCog
+.. autoclass:: ToppyCog
   :members:
-  
+
 Useful Utilities
 -----------------
-.. automodule:: .utils
+.. automodule:: toppy.utils
   :members:
   
 Models
 -------
 These models represent objects on relavent websites.
 
+.. currentmodule:: toppy
+
 Top.gg
 ~~~~~~~
-.. attributetable:: .models.Bot
-
-.. autoclass:: .models.Bot
-  :members:
-  
-.. attributetable:: .models.User
-
-.. autoclass:: .models.User
+.. autoclass:: toppy.models.Bot
   :members:
 
+.. autoclass:: toppy.models.User
+  :members:
 
 Exceptions
 -----------
-.. autmodule:: .errors
+.. automodule:: toppy.errors
   :members:
 

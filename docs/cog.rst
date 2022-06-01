@@ -46,11 +46,3 @@ This library will automatically adjust it based on your library.
             await bot.start(...)
 
     asyncio.run(main())
-    
-    
-Cog Reference
---------------
-
-.. autoclass:: toppy.cog.ToppyCog
-  :members:
-  :undoc-members:

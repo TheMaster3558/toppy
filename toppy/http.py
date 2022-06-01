@@ -160,9 +160,8 @@ class DiscordBotsGGHTTPClient(BaseHTTPClient):
 class TopGGHTTPClient(BaseHTTPClient):
     BASE = 'https://top.gg/api'
 
-    def __init__(self, token, *, loop: Optional[asyncio.AbstractEventLoop] = None,
-                 session: Optional[aiohttp.ClientSession] = None):
-        super().__init__(token, loop=loop, session=session)
+    def __init__(self, token, *, session: Optional[aiohttp.ClientSession] = None):
+        super().__init__(token, session=session)
 
         self.rate_limits: dict[str, RateLimiter] = {
             '/': RateLimiter(100, 1),

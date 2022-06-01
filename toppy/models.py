@@ -124,11 +124,11 @@ class Bot:
         return self._data.get('invite')
 
     @cached_property
-    def date_of_approval(self) -> datetime:
+    def date_of_approval(self) -> datetime.datetime:
         """
         The date when the bot was approved.
         """
-        return datetime.fromisoformat(self._data['date'])
+        return datetime.datetime.fromisoformat(self._data['date'])
 
     @cached_property
     def server_count(self) -> Optional[int]:

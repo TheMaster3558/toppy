@@ -37,7 +37,7 @@ class BaseVotePayload:
         return self.__data
 
     @property
-    def time(self) -> datetime:
+    def time(self) -> datetime.datetime:
         return self.__time
 
     @property
@@ -136,10 +136,6 @@ class TopGGVotePayload(BaseVotePayload):
 
         self.__bot: Optional[Snowflake] = None
         self.__user: Optional[Snowflake] = None
-
-    @property
-    def time(self) -> datetime:
-        return self.__time
 
     @property
     def bot_id(self) -> int:

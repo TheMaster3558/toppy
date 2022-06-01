@@ -8,15 +8,20 @@ Welcome to toppy's documentation!
 
 A simple API wrapper for **Top.gg** and **Discord Bot List** in **Python** with many *simple* yet *powerful* features.
 
-
+Guides
+-------
 .. toctree::
   :maxdepth: 1
 
   quickstart.rst
-  client.rst
   cog.rst
-  webhook.rst
-  utils.rst
-  events.rst
-  errors.rst
-  models.rst
+  webhook/guide.rst
+  
+  
+API Reference
+---------------
+.. toctree::
+  :maxdepth: 1
+  
+  api.rst
+  webhook/api.rst

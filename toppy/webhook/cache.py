@@ -36,6 +36,17 @@ async def mkfile(name: str) -> None:
 class CachedVote:
     """
     A dataclass to represent a generic vote.
+    
+    Attributes
+    ------------
+    number: :class:`int`
+        The number increases by one every time someone votes.
+    id: :class:`int`
+        The ID of the user who voted.
+    time: :class:`datetime.datetime`
+        The time the user voted at.
+    site: :class:`str:
+        The site the user voted on.
     """
     number: int
     id: int

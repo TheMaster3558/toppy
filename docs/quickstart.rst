@@ -34,13 +34,13 @@ Example
     
     
     @bot.event
-    async def on_dbl_autopost_success():  # or on_topgg_autopost_success
+    async def on_dbl_autopost_success():  # dbl/dbgg/topgg
         print('Server count posted')
         print(f'Server count: {len(bot.guilds)}')
     
 
     @bot.event
-    async def on_dbl_autopost_error(error: toppy.ClientResponseError):  # or on_topgg_autopost_error
+    async def on_dbl_autopost_error(error: toppy.ClientResponseError):  # dbl/dbgg/topgg
         print(f'Uh oh. An error occurred: {error.message}')
        
     

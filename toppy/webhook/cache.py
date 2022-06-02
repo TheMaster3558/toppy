@@ -45,7 +45,7 @@ class CachedVote:
         The ID of the user who voted.
     time: :class:`datetime.datetime`
         The time the user voted at.
-    site: :class:`str:
+    site: :class:`str`
         The site the user voted on.
     """
     number: int

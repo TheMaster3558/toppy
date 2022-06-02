@@ -28,7 +28,7 @@ New Features
     `run_webhook_server` renamed to `run_web_application`
 
 Bug Fixes / Small Changes
------------------
+--------------------------
 1.5.1
     Cog errors now print to `stderr`.
     Fix bug with incorrect error being dispatched.

@@ -1,5 +1,3 @@
-.. currentmodule:: toppy
-
 API Reference
 ==============
 
@@ -7,31 +5,29 @@ Clients
 --------
 Mixed
 ~~~~~~
-.. autoclass:: Client
+.. autoclass:: toppy.Client
   :members:
 
 Discord Bot List
 ~~~~~~~~~~~~~~~~~
-.. autoclass:: DiscordBotListClient
+.. autoclass:: toppy.DiscordBotListClient
   :members:
   
 DiscordBotsGG
 ~~~~~~~~~~~~~~~~~
-.. autoclass:: DiscordBotsGGClient
+.. autoclass:: toppy.DiscordBotsGGClient
   :members:
   
 Top.gg
 ~~~~~~~~~~~~~~~~~
-.. autoclass:: TopGGClient
+.. autoclass:: toppy.TopGGClient
   :members:
-
-.. currentmodule:: toppy.cog
 
 Cog
 ----
 Use `load_extension('toppy.cog')` to load the cog.
 
-.. autoclass:: ToppyCog
+.. autoclass:: toppy.cog.ToppyCog
   :members:
 
 Useful Utilities
@@ -42,8 +38,6 @@ Useful Utilities
 Models
 -------
 These models represent objects on relavent websites.
-
-.. currentmodule:: toppy
 
 Top.gg
 ~~~~~~~

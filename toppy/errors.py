@@ -18,8 +18,9 @@ __all__ = (
 class MissingExtraRequire(Exception):
     """If a user is missing extra requirements"""
     def __init__(self, require: str):
-        message = f'Missing extra requirements. Install with `pip install toppy[{require}]`'
-        super().__init__(message)
+        # attribute so sphinx can continue
+        self.message = f'Missing extra requirements. Install with `pip install toppy[{require}]`'
+        super().__init__self.(message)
 
 
 class NoTokenSet(Exception):

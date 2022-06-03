@@ -102,23 +102,18 @@ HTTP Exceptions
 
 .. autoclass:: toppy.HTTPException
   :members:
-  :inherited-members:
   
 .. autoclass:: toppy.BadRequest
   :members:
-  :inherited-members:
   
 .. autoclass:: toppy.Unauthorized
   :members:
-  :inherited-members:
   
 .. autoclass:: toppy.Forbidden
   :members:
-  :inherited-members:
   
 .. autoclass:: toppy.RateLimited
   :members:
-  :inherited-members:
   
 Missing Extra Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -137,6 +132,3 @@ No Token Set
 
 .. autoclass:: toppy.NoTokenSet
   :members:
-
-
-

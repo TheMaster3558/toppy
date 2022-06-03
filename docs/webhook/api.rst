@@ -1,38 +1,40 @@
+.. currentmodule:: toppy.webhook
+
 Webhook API Reference
 =======================
 
-.. autofunction:: toppy.webhook.create_webhook_server
+.. autofunction:: create_webhook_server
 
 Payloads
 ----------
 
-.. autoclass:: toppy.webhook.DiscordBotListVotePayload
+.. autoclass:: DiscordBotListVotePayload
   :members:
   :inherited-members:
 
-.. autoclass:: toppy.webhook.DiscordBotsGGVotePayload
+.. autoclass:: DiscordBotsGGVotePayload
   :members:
   :inherited-members:
 
-.. autoclass:: toppy.webhook.TopGGVotePayload
+.. autoclass:: TopGGVotePayload
   :members:
   :inherited-members:
   
 Caching Votes
 ---------------
 
-.. autoclass:: toppy.webhook.CachedVote
+.. autoclass:: CachedVote
   :members:
 
-.. autoclass:: toppy.webhook.AbstractDatabase
+.. autoclass:: AbstractDatabase
   :members:
   :inherited-members:
 
-.. autoclass:: toppy.webhook.JSONDatabase
+.. autoclass:: JSONDatabase
   :members:
   :inherited-members:
   
-.. autoclass:: toppy.webhook.SQLiteDatabase
+.. autoclass:: SQLiteDatabase
   :members:
   :inherited-members:
   

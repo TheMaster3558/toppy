@@ -95,7 +95,6 @@ async def run_web_application(application: web.Application, site_class: Type[web
 
 
 run_webhook_server = run_web_application
-run_webhook_server.__doc__ = 'Alias to :func:`run_web_application`\n' + run_web_application.__doc__
 
 
 def copy_doc(copy_from: Callable):

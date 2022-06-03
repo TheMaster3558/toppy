@@ -42,6 +42,7 @@ Event Reference
 ----------------
 
 .. function:: on_dbl_vote(payload)
+
     This is called when you have a webhook server made with :func:`create_webhook_server`
     and someone votes for your bot on Discord Bot List.
     
@@ -49,6 +50,7 @@ Event Reference
     :type payload: :class:`DiscordBotListVotePayload`
     
 .. function:: on_dbgg_vote(payload)
+
     This is called when you have a webhook server made with :func:`create_webhook_server`
     and someone votes for your bot on DiscordBotsGG.
     
@@ -56,6 +58,7 @@ Event Reference
     :type payload: :class:`DiscordBotsGGVotePayload`
     
 .. function:: on_topgg_vote(payload)
+
     This is called when you have a webhook server made with :func:`create_webhook_server`
     and someone votes for your bot on Top.gg.
     

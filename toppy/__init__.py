@@ -13,6 +13,7 @@ from .errors import (
     ClientNotReady,
     Forbidden,
     HTTPException,
+    MissingExtraRequire,
     NoTokenSet,
     RateLimited,
     Unauthorized
@@ -32,6 +33,7 @@ __all__ = (
     'ClientNotReady',
     'Forbidden',
     'HTTPException',
+    'MissingExtraRequire',
     'NoTokenSet',
     'RateLimited',
     'Unauthorized'

@@ -20,7 +20,7 @@ class MissingExtraRequire(Exception):
     def __init__(self, require: str):
         # attribute so sphinx can continue
         self.message = f'Missing extra requirements. Install with `pip install toppy[{require}]`'
-        super().__init__self.(message)
+        super().__init__(self.message)
 
 
 class NoTokenSet(Exception):
@@ -33,7 +33,7 @@ class NoTokenSet(Exception):
 class ClientNotReady(Exception):
     """The bot is not ready and does not have an application ID set so no ID could be found"""
     def __init__(self):
-        super().__init__(ClientNotReady.__doc__)
+        super().__init__(self.__class__.__doc__)
 
 
 class HTTPException(Exception):

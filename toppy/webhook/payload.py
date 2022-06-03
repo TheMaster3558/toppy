@@ -38,6 +38,13 @@ class BaseVotePayload:
 
     @property
     def time(self) -> datetime.datetime:
+        """
+        The time the user voted at.
+        
+        Returns
+        --------
+        :class:`datetime.datetime`
+        """
         return self.__time
 
     @property

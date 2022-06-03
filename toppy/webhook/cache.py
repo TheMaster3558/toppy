@@ -13,7 +13,9 @@ try:
     import aiosqlite
     import aiofiles
 except ImportError:
-    raise MissingExtraRequire('cache')
+    import sys
+    exc = MissingExtraRequire('cache')
+    print(f'{exc.__class__.__name__}: {exc.message}')
 
 if TYPE_CHECKING:
     from .payload import BaseVotePayload

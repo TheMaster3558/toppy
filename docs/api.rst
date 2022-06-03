@@ -15,18 +15,21 @@ Discord Bot List
 
 .. autoclass:: toppy.DiscordBotListClient
   :members:
+  :inherited-members:
 
 DiscordBotsGG
 ~~~~~~~~~~~~~~~~~
 
 .. autoclass:: toppy.DiscordBotsGGClient
   :members:
+  :inherited-members:
 
 Top.gg
 ~~~~~~~~~~~~~~~~~
 
 .. autoclass:: toppy.TopGGClient
   :members:
+  :inherited-members:
 
 
 Cog

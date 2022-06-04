@@ -8,18 +8,16 @@ from typing import TYPE_CHECKING, Optional, Type
 from aiohttp import web
 
 from .cache import AbstractDatabase, CachedVote, JSONDatabase, SQLiteDatabase
-from .payload import DiscordBotListVotePayload, DiscordBotsGGVotePayload, TopGGVotePayload
+from .payload import DiscordBotListVotePayload, TopGGVotePayload
 from ..utils import MISSING
 
 if TYPE_CHECKING:
-    from ..protocols import ClientProtocol
+    from ..abc import ClientProtocol
 
 
 __all__ = (
     'create_webhook_server',
     # payloads
-    'DiscordBotListVotePayload',
-    'DiscordBotsGGVotePayload',
     'TopGGVotePayload',
     # databases
     'AbstractDatabase',
@@ -101,25 +99,6 @@ def create_webhook_server(
 
         payload = TopGGVotePayload(client, data)
         client.dispatch('dbl_vote', payload)
-
-        if db:
-            await db.insert(payload)
-
-        return web.Response(status=200, body=__package__)
-
-    @routes.post('/dbgg')
-    async def dbgg_votes(request: web.Request) -> web.Response:
-        try:
-            data = await request.json()
-        except json.JSONDecodeError:
-            return web.Response(status=400)
-
-        if dbgg_auth is not None:
-            if data['secret'] != dbgg_auth:
-                return web.Response(status=401)
-
-        payload = DiscordBotsGGVotePayload(client, data)
-        client.dispatch('dbgg_vote', payload)
 
         if db:
             await db.insert(payload)

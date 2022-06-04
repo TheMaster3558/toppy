@@ -14,6 +14,7 @@ Guides
   :maxdepth: 1
 
   quickstart.rst
+  sites.rst
   cog.rst
   webhook/guide.rst
   

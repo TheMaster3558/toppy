@@ -9,11 +9,11 @@ import aiohttp
 
 from .errors import ClientNotReady, HTTPException
 from .http import BaseHTTPClient, DiscordBotListHTTPClient, DiscordBotsGGHTTPClient, TopGGHTTPClient
+from .models import DiscordBotsGGBot, TopGGBot, TopGGUser
 from .utils import copy_doc, MISSING
 
 if TYPE_CHECKING:
-    from .protocols import ClientProtocol
-    from .models import Bot, User
+    from .abc import ClientProtocol
 
 
 __all__ = (
@@ -183,7 +183,7 @@ class DiscordBotsGGClient(BaseClient):
     client: :class:`ClientProtocol`
         The Discord Bot instance. Any Client derived from `discord.Client` or any other fork's `Client`.
     token: :class:`str`
-        The token for DiscordBotsGG.
+        The token for DiscordBotsGG. This can be found in the API section.
     interval: Optional[:class:`float`]
         The interval in seconds to auto-post the stats.
         Defaults to 600.
@@ -195,7 +195,7 @@ class DiscordBotsGGClient(BaseClient):
         The session for the HTTP Client.
 
 
-    .. versionadded:: 1.6
+    .. versionadded:: 2.0
     """
 
     http_class = DiscordBotsGGHTTPClient
@@ -204,8 +204,62 @@ class DiscordBotsGGClient(BaseClient):
     if TYPE_CHECKING:
         http: DiscordBotsGGHTTPClient
 
+    def __init__(self, *args, post_shard_count: bool = False, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.post_shard_count = post_shard_count
+
+    async def search_one_bot(self, bot_id: int, /) -> DiscordBotsGGBot:
+        """Search a single bot on DiscordBotsGG.
+
+        Parameters
+        ----------
+        bot_id: :class:`int`
+            The ID to search.
+            Positional only.
+
+        Returns
+        --------
+        :class:`DiscordBotsGGBot`
+        """
+        data = await self.http.search_one_bot(bot_id)
+        return DiscordBotsGGBot(data)
+
+    async def search_bots(self, *args, **kwargs) -> list[DiscordBotsGGBot]:
+        """
+        Search up bots on DiscordBotsGG.
+
+        Parameters
+        -----------
+        query: Optional[:class:`str`]:
+            Searches for bots that contain the query in their username or short description.
+        page: Optional[:class:`int`]:
+            The page to look at.
+        limit: Optional[:class:`int`]:
+            The number of results to retrieve. Must be between 1 and 100.
+            Defaults to 50.
+        author_id: Optional[:class:`int`]:
+            Retrieves bots by the specified auther/co-owner's ID.
+        author: Optional[:class:`str`]:
+            Retrieves bots by the specified author/co-owner’s username and discriminator.
+            This should not be a User or Member object in your bot library.
+        unverified: Optional[:class:`bool`]:
+            Retrieves unapproved bots.
+        lib: Optional[:class:`str`]:
+            Retrieves bots written in a specific library.
+        sort: Literal['username', 'id', 'guildcount', 'library', 'author']:
+            Sorts the results by any of the following keys: username, id, guildcount, library, author.
+        order: Optional[Literal['ASC', 'DESC']]:
+            Sorts the results in ASC or DESC order.
+
+        Returns
+        --------
+        list[:class:`DiscordBotsGGBot`]
+        """
+        data = await self.http.search_bots(*args, **kwargs)
+        return [DiscordBotsGGBot(bot) for bot in data['bots']]
+
     async def post_stats(self) -> None:
-        """Post your bots stats to DiscordBotsGG
+        """Post your bots stats to DiscordBotsGG.
         All stats are automatically found and posted.
 
         dispatches `dbgg_post_error` with the argument :class:`toppy.HTTPException` or derived classes
@@ -215,8 +269,11 @@ class DiscordBotsGGClient(BaseClient):
         bot_id = self._get_bot_id()
 
         kwargs = {
-            'guilds': len(self.client.guilds or [])
+            'guild_count': len(self.client.guilds or []),
         }
+
+        if self.post_shard_count:
+            kwargs['shard_count'] = self.client.shard_count or 1
 
         await self._post_stats_handler(bot_id, **kwargs)
 
@@ -266,7 +323,7 @@ class TopGGClient(BaseClient):
         self.post_shard_count = post_shard_count
 
     async def search_bots(self, query: str, *, limit: Optional[int] = None, offset: Optional[int] = None
-                          ) -> list[Bot]:
+                          ) -> list[TopGGBot]:
         """Search up bots on Top.gg.
 
         Parameters
@@ -282,12 +339,12 @@ class TopGGClient(BaseClient):
 
         Returns
         --------
-        list[:class:`Bot`]
+        list[:class:`TopGGBot`]
         """
         raw_bots = await self.http.search_bots(query, limit=limit, offset=offset)
-        return [Bot(bot) for bot in raw_bots]
+        return [TopGGBot(bot) for bot in raw_bots]
 
-    async def search_one_bot(self, bot_id: int, /) -> Bot:
+    async def search_one_bot(self, bot_id: int, /) -> TopGGBot:
         """Search a single bot on Top.gg.
 
         Parameters
@@ -298,12 +355,12 @@ class TopGGClient(BaseClient):
 
         Returns
         --------
-        :class:`Bot`
+        :class:`TopGGBot`
         """
         data = await self.http.search_one_bot(bot_id)
-        return Bot(data)
+        return TopGGBot(data)
 
-    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[User, None]:
+    async def last_1000_votes(self, bot_id: int = None, /) -> AsyncGenerator[TopGGUser, None]:
         """Get the last 1000 votes of a bot on Top.gg.
 
         Parameters
@@ -315,8 +372,8 @@ class TopGGClient(BaseClient):
 
         Yields
         -------
-        :class:`User`
-        
+        :class:`TopGGUser`
+
         Example
         ----------
         .. code:: py
@@ -328,7 +385,7 @@ class TopGGClient(BaseClient):
 
         users = await self.http.last_1000_votes(bot_id)
         for user in users:
-            yield User(user)
+            yield TopGGUser(user)
 
     async def check_if_voted(self, bot_id: Optional[int], user_id: int) -> bool:
         """Check if a user has voted on a bot.
@@ -399,10 +456,10 @@ class Client:
     .. versionchanged:: 1.5
         ``client`` is no longer positional only.
 
-    .. versionchanged:: 1.6
+    .. versionchanged:: 2.0.0
         Add support for DiscordBotsGG
     """
-    clients: ClassVar[tuple] = (
+    clients: ClassVar[tuple[tuple[str, Type[BaseClient]], ...]] = (
         ('dbl', DiscordBotListClient),
         ('dbgg', DiscordBotsGGClient),
         ('topgg', TopGGClient)

@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import re
 import time
-from typing import Any, Callable, ClassVar, Coroutine, Optional, TypeVar, Union
+from typing import Any, Callable, ClassVar, Coroutine, Literal, Optional, TypeVar, Union
 
 import aiohttp
 
@@ -62,6 +63,8 @@ class BaseHTTPClient:
         self.token = token
         self.session = session or aiohttp.ClientSession()
 
+        self.rate_limits: dict[re.Pattern, RateLimiter] = {}
+
     # method with signature (self, *args, **kwargs) doesn't work
     post_stats: Callable[..., Coroutine[Any, Any, Any]]
 
@@ -75,8 +78,14 @@ class BaseHTTPClient:
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.session.close()
 
-    async def block(self, url: str):
-        pass
+    async def block(self, url: str) -> None:
+        k: re.Pattern
+        v: RateLimiter
+
+        for k, v in self.rate_limits.items():
+            if k.search(url):
+                await v.block()
+                break  # to not allow get post aliases to get mixed up
 
     def request(self, method: str, url: str, **kwargs: Any) -> AsyncContextManager[aiohttp.ClientResponse]:
         return AsyncContextManager(self._request(method, url, **kwargs))
@@ -142,19 +151,46 @@ class DiscordBotListHTTPClient(BaseHTTPClient):
 
 
 class DiscordBotsGGHTTPClient(BaseHTTPClient):
-    Base = 'https://discordbots.gg/api'
+    BASE = 'https://discord.bots.gg/api/v1'
 
-    @property
-    def headers(self) -> dict:
-        return {'Authentication': str(self.token)}
+    def __init__(self, token, *, session: Optional[aiohttp.ClientSession] = None):
+        super().__init__(token, session=session)
 
-    async def post_stats(self, bot_id: int, guilds: int):
-        data = {
-            'client_id': bot_id,
-            'count': guilds
+        self.rate_limits: dict[re.Pattern, RateLimiter] = {
+            re.compile(r'/bots/\d{15,20}'): RateLimiter(1, 5),
+            re.compile('/bots'): RateLimiter(10, 5)
         }
 
-        await self.request('POST', '/servers', params=data)
+    async def search_bots(self, query: Optional[str] = None, *, page: Optional[int] = None, limit: Optional[int] = None,
+                          author_id: Optional[int] = None, author: Optional[str] = None,
+                          unverified: Optional[bool] = None, lib: Optional[str] = None,
+                          sort: Literal['username', 'id', 'guildcount', 'library', 'author'] = 'guildcount',
+                          order: Optional[Literal['ASC', 'DESC']] = None) -> dict[str, Any]:
+        params = cleanup_params({
+            'q': query,
+            'page': page,
+            'limit': limit,
+            'authorId': author_id,
+            'authorName': author,
+            'unverified': unverified,
+            'lib': lib,
+            'sort': sort,
+            'order': order
+        })
+        async with self.request('GET', '/bots', params=params) as resp:
+            data = await resp.json()
+        return data['results']
+
+    async def search_one_bot(self, bot_id: int, /) -> dict[str, Any]:
+        async with self.request('GET', f'/bots/{bot_id}') as resp:
+            return await resp.json()
+
+    async def post_stats(self, bot_id: int, *, guild_count: int, shard_count: Optional[int] = None):
+        data = cleanup_params({
+            'guildCount': guild_count,
+            'shardCount': shard_count
+        })
+        await self.request('POST', f'bots/{bot_id}/stats', json=data)
 
 
 class TopGGHTTPClient(BaseHTTPClient):
@@ -163,18 +199,10 @@ class TopGGHTTPClient(BaseHTTPClient):
     def __init__(self, token, *, session: Optional[aiohttp.ClientSession] = None):
         super().__init__(token, session=session)
 
-        self.rate_limits: dict[str, RateLimiter] = {
-            '/': RateLimiter(100, 1),
-            '/bots': RateLimiter(60, 60)
+        self.rate_limits: dict[re.Pattern, RateLimiter] = {
+            re.compile('/'): RateLimiter(100, 1),
+            re.compile('/bots'): RateLimiter(60, 60)
         }
-
-    async def block(self, url: str) -> None:
-        k: str
-        v: RateLimiter
-
-        for k, v in self.rate_limits.items():
-            if k in url:
-                await v.block()
 
     async def search_bots(self, search: str, *, limit: Optional[int] = None,
                           offset: Optional[int] = None) -> list[dict[str, Any]]:

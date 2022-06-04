@@ -1,4 +1,4 @@
-``toppy.webhook`` - Discord Bot List, DiscordBotsGG, and Top.gg webhook servers
+``toppy.webhook`` - Discord Bot List and Top.gg webhook servers
 ================================================================================
 
 Discord Bot List
@@ -10,13 +10,6 @@ Discord Bot List
 3. Set ``Upvote Webhook`` to the url your will host the server on
 
 4. Create authorization in ``Webhook Secret``
-
-
-DiscordBotsGG
---------------
-1. Go to your vote settings page
-
-2. Provide the required variables
 
 
 Top.gg

@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import dataclasses
 import datetime
 import json
 import os
+from abc import abstractmethod
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable
 
 from ..errors import MissingExtraRequire
@@ -34,7 +35,7 @@ async def mkfile(name: str) -> None:
         pass
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class CachedVote:
     """
     A dataclass to represent a generic vote.
@@ -100,6 +101,7 @@ class AbstractDatabase(Protocol):
         async with aiofiles.open('toppy_vote_cache/number.txt') as f:
             await f.write(str(self.number))
 
+    @abstractmethod
     async def fetchone(self, number: int) -> Optional[CachedVote]:
         """
         Fetch a vote. Use :func:`SQLDatabase.fetchmany` to fetch multiple votes.
@@ -115,6 +117,7 @@ class AbstractDatabase(Protocol):
         """
         raise NotImplementedError
 
+    @abstractmethod
     async def fetchmany(self) -> list[CachedVote]:
         """
         Fetch multiple votes. This will be expanded in the future with filters.

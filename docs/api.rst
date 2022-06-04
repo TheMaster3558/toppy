@@ -52,13 +52,21 @@ Models
 -------
 These models represent objects on relavent websites.
 
+DiscordBotsGG
+~~~~~~~~~~~~~~~
+.. autoclass:: toppy.models.DiscordBotsGGBot
+  :members:
+
+.. autoclass:: toppy.models.DiscordBotsGGOwner
+  :members:
+
 Top.gg
 ~~~~~~~
 
-.. autoclass:: toppy.models.Bot
+.. autoclass:: toppy.models.TopGGBot
   :members:
 
-.. autoclass:: toppy.models.User
+.. autoclass:: toppy.models.TopGGUser
   :members:
   
 Event Reference

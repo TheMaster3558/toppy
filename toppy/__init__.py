@@ -19,7 +19,7 @@ from .errors import (
     Unauthorized
 )
 
-from . import cog, http, models, protocols, utils
+from . import abc, cog, http, models, utils
 
 
 __all__ = (

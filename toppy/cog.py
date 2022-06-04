@@ -5,6 +5,9 @@ import inspect
 import sys
 from typing import Any, ClassVar
 
+from .client import Client
+from .errors import HTTPException, NoTokenSet
+
 SPHINX = False
 try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
@@ -21,10 +24,7 @@ except IndexError:
     )
 
 discord: Any = importlib.import_module(lib)
-commands: Any = importlib.import_module(f'{lib}.ext.commands')     
-
-from .client import Client
-from .errors import HTTPException, NoTokenSet
+commands: Any = importlib.import_module(f'{lib}.ext.commands')
 
 if SPHINX:
     commands.command = lambda **attrs: lambda func: func
@@ -45,7 +45,7 @@ class ToppyCog(commands.Cog):
     -------
     :exc:`toppy.NoTokenSet` if not token has been set with bot vars.
     """
-    token_names: ClassVar[tuple] = (
+    token_names: ClassVar[tuple[str, ...]] = (
         'dbl_token',
         'dbgg_token',
         'topgg_token'

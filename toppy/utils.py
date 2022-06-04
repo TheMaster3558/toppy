@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Awaitable, Callable, Generator, Generic, Optional, Type, TypeVar
 
+import aiohttp
 from aiohttp import web
 
 if TYPE_CHECKING:
@@ -59,6 +60,10 @@ class AsyncContextManager(Generic[T]):
             return await self.ret.__aexit__(exc_type, exc_val, exc_tb)
         except AttributeError:
             pass
+
+    def __del__(self):
+        if isinstance(self.ret, aiohttp.ClientResponse):
+            self.ret.release()
 
 
 async def run_web_application(application: web.Application, site_class: Type[web.BaseSite] = web.TCPSite,

@@ -13,9 +13,10 @@ Breaking Changes
 1.5.0
     `DiscordBotListClient` and `TopGGClient` have been moved to `toppy.client`.
     `webhook` is now a submodule.
-1.6.0
+2.0.0
     Most methods removed from `Client` to allow more websites.
     `DBLClient` renamed to `DiscordBotListClient`
+    `protocols.py` has been renamed to `abc.py`
 
 New Features
 -----------------
@@ -23,7 +24,7 @@ New Features
     Base classes used now allow easier implementations of new bot websites.
     Cache for webhook votes.
 
-1.6.0
+2.0.0
     `discordbotsgg` support added.
     `run_webhook_server` renamed to `run_web_application`
 
@@ -33,5 +34,5 @@ Bug Fixes / Small Changes
     Cog errors now print to `stderr`.
     Fix bug with incorrect error being dispatched.
 
-1.6.0
+2.0.0
     Fix bug with incorrect error being dispatched.

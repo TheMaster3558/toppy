@@ -4,13 +4,12 @@ import datetime
 from typing import TYPE_CHECKING, ClassVar, Literal, Optional
 
 if TYPE_CHECKING:
-    from ..protocols import ClientProtocol, Snowflake
+    from ..abc import ClientProtocol, Snowflake
 
 
 __all__ = (
     'BaseVotePayload',
     'DiscordBotListVotePayload',
-    'DiscordBotsGGVotePayload',
     'TopGGVotePayload'
 )
 
@@ -121,14 +120,6 @@ class DiscordBotListVotePayload(BaseVotePayload):
         return self.__data['username']
 
 
-class DiscordBotsGGVotePayload(BaseVotePayload):
-    """
-    A class to represent the a DiscordBotsGG webhook payload
-
-    .. versionadded:: 1.6
-        """
-
-
 class TopGGVotePayload(BaseVotePayload):
     """
     A class to represent the a Top.gg webhook payload
@@ -142,7 +133,6 @@ class TopGGVotePayload(BaseVotePayload):
         super().__init__(client, data)
 
         self.__bot: Optional[Snowflake] = None
-        self.__user: Optional[Snowflake] = None
 
     @property
     def bot_id(self) -> int:

@@ -2,8 +2,6 @@ toppy
 ======
 
 .. image:: https://raw.githubusercontent.com/chawkk6404/toppy/master/docs/toppy-logo.png
-   :height: 256x
-   :width: 256x
    :alt: toppy logo
 
 

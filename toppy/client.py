@@ -125,8 +125,8 @@ class DiscordBotListClient(BaseClient):
 
     Parameters
     ----------
-    client: :class:`Client`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+    client: :class:`ClientProtocol`
+        The Discord Bot instance. Any Client derived from `discord.Client` or any other fork's `Client`.
     token: :class:`str`
         The token for Discord Bot List.
     interval: Optional[:class:`float`]
@@ -180,8 +180,8 @@ class DiscordBotsGGClient(BaseClient):
 
     Parameters
     ----------
-    client: :class:`Client`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+    client: :class:`ClientProtocol`
+        The Discord Bot instance. Any Client derived from `discord.Client` or any other fork's `Client`.
     token: :class:`str`
         The token for DiscordBotsGG.
     interval: Optional[:class:`float`]
@@ -229,8 +229,8 @@ class TopGGClient(BaseClient):
 
     Parameters
     ----------
-    client: :class:`Client`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+    client: :class:`ClientProtocol`
+        The Discord Bot instance. Any Client derived from `discord.Client` or any other fork's `Client`.
     token: :class:`str`
         The token found in the Webhooks tab of the bots owner only section.
     interval: Optional[:class:`float`]
@@ -375,7 +375,7 @@ class Client:
     Parameters
     ----------
     client: :class:`ClientProtocol`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+        The Discord Bot instance. Any Client derived from `discord.Client` or any other fork's `Client`.
         It must fit the :class:`ClientProtocol`.
     dbl_token: :class:`str`
         The authorization token for Discord Bot List.

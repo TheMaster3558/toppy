@@ -16,19 +16,19 @@ except IndexError:
 
     import warnings
     warnings.warn(
-        'You may have tried to load the cog incorrectly. Commands will not work.',
+        'You may have tried to load the cog incorrectly. Commands will not work. Use load_extension(\'toppy.cog\')',
         category=UserWarning
     )
 
 discord: Any = importlib.import_module(lib)
-commands: Any = importlib.import_module(f'{lib}.ext.commands')
+commands: Any = importlib.import_module(f'{lib}.ext.commands')     
 
 from .client import Client
 from .errors import HTTPException, NoTokenSet
 
 if SPHINX:
     commands.command = lambda **attrs: lambda func: func
-
+    
 
 __all__ = (
     'ToppyCog',

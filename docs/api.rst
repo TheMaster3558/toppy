@@ -46,8 +46,7 @@ ToppyCog
 Useful Utilities
 -----------------
 
-.. automodule:: toppy.utils
-  :members:
+.. autofunction:: toppy.utils.run_web_application
 
 Models
 -------
@@ -61,9 +60,78 @@ Top.gg
 
 .. autoclass:: toppy.models.User
   :members:
+  
+Event Reference
+----------------
+
+.. function:: on_dbl_post_success()
+
+    Called with a successful post of stats to Discord Bot List has been made.
+
+.. function:: on_dbl_post_error(error)
+
+    Called when an HTTP exception occursed during a post of stats to Discord Bot List.
+    
+    :param error: The exception that occured.
+    :type error: :class:`toppy.HTTPException`
+    
+.. function:: on_dbgg_post_success()
+
+    Called with a successful post of stats to DiscordBotsGG has been made.
+
+.. function:: on_dbgg_post_error(error)
+
+    Called when an HTTP exception occursed during a post of stats to DiscordBotsGG.
+    
+    :param error: The exception that occured.
+    :type error: :class:`toppy.HTTPException`
+    
+.. function:: on_topgg_post_success()
+
+    Called with a successful post of stats to Top.gg has been made.
+
+.. function:: on_topgg_post_error(error)
+
+    Called when an HTTP exception occursed during a post of stats to Top.gg.
+    
+    :param error: The exception that occured.
+    :type error: :class:`toppy.HTTPException`
 
 Exceptions
 -----------
 
-.. automodule:: toppy.errors
+HTTP Exceptions
+~~~~~~~~~~~~~~~~
+
+.. autoclass:: toppy.HTTPException
+  :members:
+  
+.. autoclass:: toppy.BadRequest
+  :members:
+  
+.. autoclass:: toppy.Unauthorized
+  :members:
+  
+.. autoclass:: toppy.Forbidden
+  :members:
+  
+.. autoclass:: toppy.RateLimited
+  :members:
+  
+Missing Extra Requirements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: toppy.MissingExtraRequire
+  :members:
+  
+Client Not Ready
+~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: toppy.ClientNotReady
+  :members:
+  
+No Token Set
+~~~~~~~~~~~~~~
+
+.. autoclass:: toppy.NoTokenSet
   :members:

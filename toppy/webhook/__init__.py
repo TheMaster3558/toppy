@@ -52,7 +52,7 @@ def create_webhook_server(
     Parameters
     -----------
     client: :class:`ClientProtocol`
-        The Discord Bot instance. Any Client derived from :class:`discord.Client` or any other fork's `Client`.
+        The Discord Bot instance. Any Client derived from ``discord.Client`` or any other fork's `Client`.
         It must fit the :class:`ClientProtocol`.
     dbl_auth: Optional[:class:`str`]
         The Discord Bot List webhook secret. This can be made in the bot's edit section.

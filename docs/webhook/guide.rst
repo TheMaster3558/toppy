@@ -12,6 +12,13 @@ Discord Bot List
 4. Create authorization in ``Webhook Secret``
 
 
+DiscordBotsGG
+--------------
+1. Go to your vote settings page
+
+2. Provide the required variables
+
+
 Top.gg
 -------
 1. Go the the ``Webhooks`` section of your bot's edit page

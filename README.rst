@@ -2,9 +2,9 @@ toppy
 ======
 
 .. image:: https://raw.githubusercontent.com/chawkk6404/toppy/master/docs/toppy-logo.png
-   :height: 64px
-   :width: 64px
-   :alt: aiohttp logo
+   :height: 192x
+   :width: 156px
+   :alt: toppy logo
 
 
 An API wrapper made for discord.py or any forks for Discord Bot List, DiscordBotsGG, and Top.gg

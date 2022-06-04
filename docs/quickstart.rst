@@ -1,8 +1,6 @@
 Quickstart
 ===========
 
-
---------------
 Installation
 --------------
 **Python 3.8 or higher is needed**
@@ -18,9 +16,9 @@ Example
 
 .. code:: py
 
-    from discord.ext import commands
     import toppy
     import aiohttp
+    from discord.ext import commands
     
 
     dbl_token = 'Your Discord Bot List token here'

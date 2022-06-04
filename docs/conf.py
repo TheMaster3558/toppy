@@ -11,17 +11,23 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 project = 'toppy'
-copyright = '2022, The Master'
+copyright = '2022-present, The Master'
 author = 'The Master'
 
 # The full version, including alpha/beta/rc tags
-version = '1.5.1'
+with open('../toppy/__init__.py', 'r') as v:
+    version = re.search(
+        r"'?__version__'? = '?\d\.\d\.\d'?",
+        v.read()
+    ).group().replace("'", '')  # type: ignore
+    version = version[version.index('=')+2:]
 
 # -- General configuration ---------------------------------------------------
 
@@ -48,7 +54,8 @@ pygments_style = 'friendly'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'furo'
+html_theme = 'python_docs_theme'
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

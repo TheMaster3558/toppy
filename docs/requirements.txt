@@ -1,2 +1,3 @@
 furo
 numpydoc
+git+https://github.com/chawkk6404/python-docs-theme

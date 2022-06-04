@@ -1,7 +1,13 @@
 toppy
 ======
 
-An API wrapper made for discord.py or any forks for Discord Bot List and/or Top.gg
+.. image:: https://raw.githubusercontent.com/chawkk6404/toppy/master/docs/toppy-logo.png
+   :height: 64px
+   :width: 64px
+   :alt: aiohttp logo
+
+
+An API wrapper made for discord.py or any forks for Discord Bot List, DiscordBotsGG, and Top.gg
 
 
 
@@ -25,8 +31,8 @@ Example
 
 .. code:: py
 
-    from discord.ext import commands
     import toppy
+    from discord.ext import commands
     
 
     dbl_token = 'Your Discord Bot List token here'

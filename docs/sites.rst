@@ -1,5 +1,5 @@
-What it means when we refer to something
-==========================================
+Shortened Website Names
+=========================
 
 Discord Bot List
 -----------------

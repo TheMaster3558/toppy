@@ -18,8 +18,9 @@ from .errors import (
     RateLimited,
     Unauthorized
 )
+from .models import DiscordBotsGGBot, DiscordBotsGGOwner, TopGGBot, TopGGUser
 
-from . import abc, cog, http, models, utils
+from . import abc, cog, http, utils
 
 
 __all__ = (
@@ -36,7 +37,12 @@ __all__ = (
     'MissingExtraRequire',
     'NoTokenSet',
     'RateLimited',
-    'Unauthorized'
+    'Unauthorized',
+    # models
+    'DiscordBotsGGBot',
+    'DiscordBotsGGowner',
+    'TopGGBot',
+    'TopGGUser'
 )
 
 

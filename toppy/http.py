@@ -133,6 +133,7 @@ class BaseHTTPClient:
                 await asyncio.sleep(data['retry-after'])
                 return await self._request(method, url, **kwargs)
             raise RateLimited(data['retry-after'], resp)
+            # Top.gg ratelimits can be too long for a reasonable retry
         raise HTTPException(resp, f'Status: {resp.status}')
 
 

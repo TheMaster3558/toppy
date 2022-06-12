@@ -8,8 +8,8 @@ toppy
 An API wrapper made for discord.py or any forks for Discord Bot List, DiscordBotsGG, and Top.gg.
 
 
-Documention
------------
+Documentation
+--------------
 https://toppy-python.readthedocs.io/en/latest/
 
 

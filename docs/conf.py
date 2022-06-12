@@ -23,11 +23,7 @@ author = 'The Master'
 
 # The full version, including alpha/beta/rc tags
 with open('../toppy/__init__.py', 'r') as v:
-    version = re.search(
-        r"'?__version__'? = '?\d\.\d\.\d'?",
-        v.read()
-    ).group().replace("'", '')  # type: ignore
-    version = version[version.index('=')+2:]
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', v.read(), re.MULTILINE).group(1)
 
 # -- General configuration ---------------------------------------------------
 

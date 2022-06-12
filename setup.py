@@ -3,11 +3,7 @@ import setuptools  # type: ignore
 
 
 with open('toppy/__init__.py', 'r') as v:
-    version = re.search(
-        r"'?__version__'? = '?\d\.\d\.\d'?",
-        v.read()
-    ).group().replace("'", '')  # type: ignore
-    version = version[version.index('=')+2:]
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', v.read(), re.MULTILINE).group(1)
 
 
 with open('requirements.txt', 'r') as r:

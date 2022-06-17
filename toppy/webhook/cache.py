@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import json
 import os
 from abc import abstractmethod
@@ -16,7 +17,7 @@ try:
 except ImportError:
     import sys
     exc = MissingExtraRequire('cache')
-    print(f'{exc.__class__.__name__}: {exc.message}')
+    print(f'{exc.__class__.__name__}: {exc.message}', file=sys.stderr)
 
 if TYPE_CHECKING:
     from .payload import BaseVotePayload
@@ -30,9 +31,28 @@ __all__ = (
 )
 
 
+_log = logging.getLogger(__name__)
+
+
+async def mkdir(name: str):  # async just to make consistent with `mkfile`
+    _log.info(f'Creating directory `{name}`...')
+    try:
+        os.mkdir(name)
+    except Exception as exc:
+        _log.error(f'Creating file `{name}` failed with an exception {exc.__class__.__name__!r}.')
+    else:
+        _log.info(f'Created directory `{name}.`')
+
+
 async def mkfile(name: str) -> None:
-    async with aiofiles.open(name, 'w'):
-        pass
+    _log.info(f'Creating file `{name}`')
+    try:
+        file = await aiofiles.open(name, 'w')
+    except Exception as exc:
+        _log.error(f'Creating file `{name}` failed with an exception {exc.__class__.__name__!r}.')
+    else:
+        await file.close()
+        _log.info(f'Created file `{name}.`')
 
 
 @dataclass(frozen=True)
@@ -75,7 +95,7 @@ class AbstractDatabase(Protocol):
         Connect to the database.
         """
         if not os.path.exists('toppy_vote_cache'):
-            os.mkdir('toppy_vote_cache')
+            await mkdir('toppy_vote_cache')
 
         if not os.path.exists('toppy_vote_cache/number.txt'):
             await mkfile('toppy_vote_cache/number.txt')
@@ -101,10 +121,12 @@ class AbstractDatabase(Protocol):
         async with aiofiles.open('toppy_vote_cache/number.txt') as f:
             await f.write(str(self.number))
 
+        _log.debug('Inserted vote into database with data %s', payload.raw)
+
     @abstractmethod
     async def fetchone(self, number: int) -> Optional[CachedVote]:
         """
-        Fetch a vote. Use :func:`SQLDatabase.fetchmany` to fetch multiple votes.
+        Fetch a vote. Use :func:`fetchmany` to fetch multiple votes.
 
         Parameters
         ------------
@@ -252,7 +274,7 @@ class JSONDatabase(AbstractDatabase):
 
     async def fetchone(self, number: int) -> Optional[CachedVote]:
         """
-        Fetch a vote. Use :func:`SQLDatabase.fetchmany` to fetch multiple votes.
+        Fetch a vote. Use :func:`JSONDatabase.fetchmany` to fetch multiple votes.
 
         Parameters
         ------------

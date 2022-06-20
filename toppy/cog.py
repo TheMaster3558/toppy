@@ -13,15 +13,16 @@ try:
     lib = inspect.getouterframes(inspect.currentframe())[4].filename.split('\\')[-4]
 except IndexError:
     # if not extension not loaded properly
-    # happens when sphinx docs
-    SPHINX = True
     lib = 'discord'
-
-    import warnings
-    warnings.warn(
-        'You may have tried to load the cog incorrectly. Commands will not work. Use load_extension(\'toppy.cog\')',
-        category=UserWarning
-    )
+    
+    if 'sphinx' in sys.modules:
+        SPHINX = True
+    else:
+        import warnings
+        warnings.warn(
+            'You may have tried to load the cog incorrectly. Commands will not work. Use load_extension(\'toppy.cog\')',
+            category=UserWarning
+        )
 
 discord: Any = importlib.import_module(lib)
 commands: Any = importlib.import_module(f'{lib}.ext.commands')

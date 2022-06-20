@@ -40,7 +40,7 @@ __all__ = (
     'Unauthorized',
     # models
     'DiscordBotsGGBot',
-    'DiscordBotsGGowner',
+    'DiscordBotsGGOwner',
     'TopGGBot',
     'TopGGUser'
 )
@@ -50,4 +50,4 @@ __title__ = 'toppy'
 __author__ = 'The Master'
 __license__ = 'MIT'
 __copyright__ = '2022-present The Master'
-__version__ = '2.0.0a'
+__version__ = '2.0.0'

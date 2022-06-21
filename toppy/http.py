@@ -23,11 +23,11 @@ __all__ = (
 _log = logging.getLogger(__name__)
 
 
-K = TypeVar('K')
-V = TypeVar('V')
+KT = TypeVar('KT')
+VT = TypeVar('VT')
 
 
-def cleanup_params(params: dict[K, V]) -> dict[K, V]:
+def cleanup_params(params: dict[KT, VT]) -> dict[KT, VT]:
     return {k: v for k, v in params.items() if v is not None}
 
 

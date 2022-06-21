@@ -39,12 +39,17 @@ class RateLimiter:
         self.count = 0
         self.last_reset = time.time()
 
+    @property
+    def next_reset(self) -> float:
+        return self.last_reset + self.per
+
     async def block(self):
         if time.time() - self.per > self.last_reset:
             self.count = 0
+            self.last_reset = time.time()
 
         if self.count >= self.rate:
-            sleep_until = self.last_reset - time.time() - self.per
+            sleep_until = self.next_reset - time.time()
 
             if sleep_until <= 0:
                 return
